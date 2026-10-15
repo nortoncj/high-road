@@ -1,5 +1,7 @@
 name: Deploy
 on:
+concurrency:
+  group: deploy
   push:
     branches: [main]
 
