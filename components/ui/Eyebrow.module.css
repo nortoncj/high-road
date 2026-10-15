@@ -1,0 +1,24 @@
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0;
+  font-family: var(--font-text);
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 20px;
+  letter-spacing: 0.02em;
+  color: var(--accent-text);
+}
+
+.rule {
+  flex: none;
+  width: 32px;
+  height: 2px;
+  background: var(--accent);
+}
+
+.center {
+  justify-content: center;
+  text-align: center;
+}

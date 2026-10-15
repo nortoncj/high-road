@@ -1,0 +1,108 @@
+.button {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 52px;
+  padding: 0 24px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  font-family: var(--font-text);
+  font-weight: 700;
+  font-size: 17px;
+  line-height: 1.2;
+  text-decoration: none;
+  text-align: center;
+  cursor: pointer;
+  transition: color var(--dur-base) var(--ease-tide), transform var(--dur-quick) var(--ease-settle);
+}
+
+/* Tide fill: a darker layer sweeps in from the left */
+.button::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform var(--dur-base) var(--ease-tide);
+}
+
+.button:hover::before {
+  transform: scaleX(1);
+}
+
+.button:active {
+  transform: translateY(1px);
+}
+
+.primary {
+  background: var(--brand);
+  color: var(--on-brand);
+  box-shadow: 0 1px 0 rgba(1, 39, 43, 0.08), 0 14px 28px -16px rgba(1, 39, 43, 0.45);
+}
+
+.primary::before {
+  background: var(--brand-hover);
+}
+
+.primary:hover,
+.primary:focus-visible {
+  color: var(--on-brand);
+}
+
+.secondary {
+  background: transparent;
+  color: var(--brand-text);
+  border-color: var(--brand);
+}
+
+.secondary::before {
+  background: var(--brand-tint);
+}
+
+.secondary:hover {
+  color: var(--on-brand-tint);
+}
+
+.quiet {
+  min-height: 44px;
+  padding: 0 4px;
+  background: transparent;
+  color: var(--brand-text);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.quiet::before {
+  display: none;
+}
+
+.sm {
+  min-height: 44px;
+  padding: 0 18px;
+  font-size: 15px;
+}
+
+.block {
+  display: flex;
+  width: 100%;
+}
+
+.icon {
+  display: inline-flex;
+  font-size: 1.15em;
+}
+
+.arrow {
+  flex: none;
+  font-size: 1.15em;
+  transition: transform var(--dur-base) var(--ease-settle);
+}
+
+.button:hover .arrow {
+  transform: translateX(3px);
+}

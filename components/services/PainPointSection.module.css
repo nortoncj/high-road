@@ -1,0 +1,153 @@
+.section {
+  padding-block: 40px;
+  scroll-margin-top: calc(var(--nav-height) + 16px);
+}
+
+.grid {
+  display: grid;
+  gap: 28px;
+  align-items: start;
+}
+
+.media {
+  min-width: 0;
+}
+
+.photo {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--surface-photo);
+  box-shadow: var(--shadow-float);
+}
+
+.photoImg {
+  object-fit: cover;
+}
+
+.copy {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  min-width: 0;
+}
+
+.number {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 44px;
+  line-height: 1;
+  color: var(--brand-soft);
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(30px, 5.5vw, 42px);
+  line-height: 1.12;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+
+.quote {
+  position: relative;
+  margin: 4px 0 0;
+  padding: 20px 20px 16px;
+  border-radius: var(--radius-lg);
+  background: var(--surface-sunken);
+  border: 1px solid var(--border);
+}
+
+.quoteIcon {
+  font-size: 26px;
+  color: var(--accent);
+}
+
+.quote blockquote {
+  margin: 6px 0 0;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 20px;
+  line-height: 1.45;
+  color: var(--ink);
+}
+
+.quote figcaption {
+  padding-top: 10px;
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--accent-text);
+}
+
+.body {
+  margin: 0;
+  font-size: 18px;
+  line-height: 1.65;
+  color: var(--ink-muted);
+}
+
+.listTitle {
+  margin: 0 0 10px;
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.list svg {
+  flex: none;
+  margin-top: 3px;
+  font-size: 18px;
+  color: var(--brand-text);
+}
+
+.note {
+  margin: 0;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--ink-muted);
+}
+
+@media (min-width: 1080px) {
+  .section {
+    padding-block: 64px;
+  }
+
+  .grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 64px;
+  }
+
+  .media {
+    align-self: stretch;
+  }
+
+  .photo {
+    position: sticky;
+    top: calc(var(--nav-height) + 32px);
+    aspect-ratio: 4 / 5;
+  }
+
+  .reverse .media {
+    order: 2;
+  }
+}

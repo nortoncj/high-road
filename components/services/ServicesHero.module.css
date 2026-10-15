@@ -1,0 +1,186 @@
+.hero {
+  padding-block: 40px 56px;
+}
+
+.grid {
+  display: grid;
+  gap: 40px;
+  align-items: center;
+}
+
+.copy {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-width: 0;
+}
+
+.headline {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(36px, 7.5vw, 58px);
+  line-height: 1.06;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+.body {
+  margin: 0;
+  max-width: 540px;
+  font-size: 18px;
+  line-height: 1.65;
+  color: var(--ink-muted);
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-top: 4px;
+}
+
+.reassurances {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 15px;
+  line-height: 22px;
+  color: var(--ink-muted);
+}
+
+.reassurances li {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.reassurances svg {
+  color: var(--brand-text);
+}
+
+/* Photo with the "What I fix" jump card overlapping it */
+.visual {
+  position: relative;
+  min-width: 0;
+}
+
+.photo {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--surface-photo);
+  box-shadow: var(--shadow-float);
+}
+
+.photoImg {
+  object-fit: cover;
+}
+
+.jump {
+  position: relative;
+  margin: -40px 12px 0;
+  padding: 18px 20px 10px;
+  border-radius: var(--radius-lg);
+  background: var(--surface-card);
+  box-shadow: var(--shadow-float);
+}
+
+.jumpHeading {
+  margin: 0 0 4px;
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.02em;
+  color: var(--accent-text);
+}
+
+.jump ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.jump li + li {
+  border-top: 1px solid var(--border);
+}
+
+.jump a {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 52px;
+  padding-block: 8px;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.jumpNumber {
+  flex: none;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  color: var(--brand-text);
+}
+
+.jumpTitle {
+  flex: 1;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 1.3;
+}
+
+.jumpArrow {
+  flex: none;
+  font-size: 18px;
+  color: var(--brand-soft);
+  transition: transform var(--dur-base) var(--ease-settle);
+}
+
+.jump a:hover .jumpTitle {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.jump a:hover .jumpArrow {
+  transform: translateY(3px);
+}
+
+@media (min-width: 640px) {
+  .actions {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .jump {
+    margin: -64px 40px 0;
+    padding: 22px 26px 12px;
+  }
+}
+
+@media (min-width: 1080px) {
+  .hero {
+    padding-block: 72px 96px;
+  }
+
+  .grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 64px;
+  }
+
+  .photo {
+    aspect-ratio: 5 / 4;
+  }
+
+  .jump {
+    position: absolute;
+    left: -48px;
+    right: auto;
+    bottom: -40px;
+    width: 380px;
+    margin: 0;
+  }
+}

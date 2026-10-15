@@ -1,0 +1,155 @@
+.footer {
+  background: var(--surface-nav);
+  color: var(--on-nav);
+  /* Leaves room for the mobile call bar so it never covers the last line */
+  padding-bottom: 88px;
+}
+
+.inner {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  padding-block: 56px 24px;
+}
+
+.columns {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 32px 24px;
+}
+
+.brandCol {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--on-nav);
+  text-decoration: none;
+}
+
+.mark {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: var(--radius-md);
+  background: #1f5c63;
+  border: 1px solid #30929d;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 17px;
+  color: #f6f2ea;
+}
+
+.wordmark {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 26px;
+  line-height: 1.15;
+}
+
+.oneLiner {
+  margin: 0;
+  max-width: 340px;
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--on-nav-muted);
+}
+
+.colTitle {
+  margin: 0 0 10px;
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--on-nav);
+}
+
+.col ul {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--on-nav-muted);
+}
+
+.col a {
+  display: inline-block;
+  padding-block: 6px; /* 44px-ish tap targets on phones */
+  color: var(--on-nav-muted);
+  text-decoration: none;
+}
+
+.col a:hover {
+  color: var(--on-nav);
+  text-decoration: underline;
+}
+
+.col li:not(:has(a)) {
+  padding-block: 6px;
+}
+
+.mono {
+  font-family: var(--font-mono);
+}
+
+.bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border-nav);
+  font-size: 14px;
+  color: var(--on-nav-muted);
+}
+
+.bottom p {
+  margin: 0;
+}
+
+.tagline {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 20px;
+  color: var(--on-nav);
+}
+
+@media (min-width: 720px) {
+  .columns {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .bottom {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+@media (min-width: 960px) {
+  .footer {
+    padding-bottom: 0;
+  }
+}
+
+@media (min-width: 1080px) {
+  .inner {
+    padding-top: 64px;
+  }
+
+  .columns {
+    grid-template-columns: minmax(0, 1.6fr) repeat(4, minmax(0, 1fr));
+  }
+
+  .brandCol {
+    grid-column: auto;
+  }
+}

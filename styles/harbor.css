@@ -1,0 +1,200 @@
+/* Harbor design tokens for WebTech Ninjas.
+   Import once in app/layout.tsx. Every component reads these variables,
+   so a color or font change happens here (or in app/fonts.ts) and nowhere else. */
+
+:root {
+  /* Surfaces */
+  --surface-page: #f6f2ea;
+  --surface-card: #ffffff;
+  --surface-sunken: #efe9de;
+  --surface-nav: #211c16;
+  --surface-photo: #cbbfaf;
+
+  /* Text */
+  --ink: #211c16;
+  --ink-muted: #56524c;
+  --ink-subtle: #6c6863;
+  --on-nav: #f6f2ea;
+  --on-nav-muted: #b9b7b4;
+
+  /* Lines */
+  --border: #d3d0ce;
+  --border-control: #837f7b;
+  --border-nav: #3e3a34;
+
+  /* Brand */
+  --brand: #1f5c63;
+  --brand-hover: #004047;
+  --on-brand: #ffffff;
+  --brand-text: #1f5c63;
+  --brand-tint: #e7f9fc;
+  --brand-tint-border: #caf0f5;
+  --on-brand-tint: #004047;
+  --brand-soft: #30929d;
+  --accent: #9d7b0f;
+  --accent-text: #694e00;
+  --focus: #087781;
+  --status-good: #276e37;
+
+  /* Fonts: app/fonts.ts sets the --font-*-face variables via next/font.
+     Swap fonts there; the fallbacks below keep the site readable if a face fails. */
+  --font-display: var(--font-display-face, "Newsreader"), Georgia, "Times New Roman", serif;
+  --font-text: var(--font-text-face, "Atkinson Hyperlegible"), system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: var(--font-mono-face, ui-monospace), "SFMono-Regular", Menlo, monospace;
+
+  /* Shape */
+  --radius-sm: 3px;
+  --radius-md: 6px;
+  --radius-lg: 12px;
+
+  /* Tide shadows: crisp contact line plus a long, low teal-tinted fall */
+  --shadow-rest: 0 1px 0 rgba(1, 39, 43, 0.06), 0 1px 2px rgba(1, 39, 43, 0.06);
+  --shadow-lift: 0 1px 0 rgba(1, 39, 43, 0.08), 0 14px 28px -16px rgba(1, 39, 43, 0.28);
+  --shadow-float: 0 2px 0 rgba(1, 39, 43, 0.06), 0 28px 56px -24px rgba(1, 39, 43, 0.45);
+
+  /* Motion */
+  --dur-quick: 160ms;
+  --dur-base: 220ms;
+  --dur-settle: 360ms;
+  --ease-settle: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-tide: cubic-bezier(0.65, 0, 0.35, 1);
+
+  /* Layout */
+  --container: 1240px;
+  --gutter: 16px;
+  --nav-height: 64px;
+  --section-y: 64px;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --gutter: 32px;
+    --nav-height: 76px;
+    --section-y: 96px;
+  }
+}
+
+/* Night shift theme: set data-theme="dark" on <html> to opt in. */
+[data-theme="dark"] {
+  --surface-page: #141311;
+  --surface-card: #1d1b18;
+  --surface-sunken: #0f0e0c;
+  --surface-nav: #0b0a09;
+  --surface-photo: #2a2621;
+  --ink: #f3eee6;
+  --ink-muted: #c2bcb2;
+  --ink-subtle: #a39d93;
+  --on-nav: #f3eee6;
+  --on-nav-muted: #a39d93;
+  --border: #34302b;
+  --border-control: #7a746c;
+  --brand: #7ec9d2;
+  --brand-hover: #a6e0e8;
+  --on-brand: #01272b;
+  --brand-text: #a6e0e8;
+  --brand-tint: #10292c;
+  --brand-tint-border: #1f3f43;
+  --on-brand-tint: #caf0f5;
+  --accent: #d3b463;
+  --accent-text: #d3b463;
+  --focus: #7ec9d2;
+  --status-good: #4ba05c;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-padding-top: calc(var(--nav-height) + 16px);
+}
+
+body {
+  margin: 0;
+  background: var(--surface-page);
+  color: var(--ink);
+  font-family: var(--font-text);
+  font-size: 18px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: var(--brand-text);
+}
+
+:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.container {
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  left: 12px;
+  top: -100px;
+  z-index: 100;
+  padding: 12px 16px;
+  border-radius: var(--radius-md);
+  background: var(--surface-card);
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.skip-link:focus {
+  top: 12px;
+}
+
+/* Settle: the one entrance move. Add class="settle" and style={{ "--i": n }} for a 60ms stagger. */
+@keyframes settle {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.settle {
+  animation: settle var(--dur-settle) var(--ease-settle) both;
+  animation-delay: calc(var(--i, 0) * 60ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-delay: 0ms !important;
+    transition-duration: 1ms !important;
+  }
+}

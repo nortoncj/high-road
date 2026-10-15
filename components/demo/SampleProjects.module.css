@@ -1,0 +1,141 @@
+.section {
+  padding-block: var(--section-y);
+  scroll-margin-top: calc(var(--nav-height) + 16px);
+}
+
+.placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 18px;
+  padding: 28px 24px;
+  border: 1.5px dashed var(--border-control);
+  border-radius: var(--radius-lg);
+}
+
+.placeholderIcon {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-md);
+  background: var(--brand-tint);
+  color: var(--brand-text);
+  font-size: 26px;
+}
+
+.placeholderText h3 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 1.2;
+}
+
+.placeholderText p {
+  margin: 8px 0 0;
+  max-width: 620px;
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--ink-muted);
+}
+
+.grid {
+  display: grid;
+  gap: 28px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.label {
+  margin: 8px 0 0;
+  align-self: flex-start;
+  padding: 3px 8px;
+  border: 1px solid var(--accent);
+  border-radius: var(--radius-sm);
+  color: var(--accent-text);
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.name {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 26px;
+  line-height: 1.2;
+}
+
+.package {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  color: var(--ink-muted);
+}
+
+.oneLine {
+  margin: 0;
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+.lookAt {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 15px;
+  color: var(--ink-muted);
+}
+
+.lookAt li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.lookAt svg {
+  color: var(--brand-text);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+  padding-top: 6px;
+}
+
+.textLink {
+  font-weight: 700;
+  font-size: 16px;
+  text-underline-offset: 4px;
+}
+
+@media (min-width: 720px) {
+  .placeholder {
+    flex-direction: row;
+    align-items: center;
+    padding: 32px;
+  }
+
+  .placeholderText {
+    flex: 1;
+  }
+}
+
+@media (min-width: 1080px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 40px;
+  }
+}
