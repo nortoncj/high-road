@@ -1,0 +1,258 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.field,
+.fieldset {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.fieldset {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.label {
+  padding: 0;
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--ink);
+}
+
+.optional {
+  font-weight: 400;
+  color: var(--ink-subtle);
+}
+
+.input,
+.textarea {
+  width: 100%;
+  min-height: 52px;
+  padding: 12px 14px;
+  font: inherit;
+  font-size: 17px; /* 16px+ stops iPhones from zooming in */
+  color: var(--ink);
+  background: var(--surface-card);
+  border: 1px solid var(--border-control);
+  border-radius: var(--radius-md);
+  transition: border-color var(--dur-quick) var(--ease-settle), box-shadow var(--dur-quick) var(--ease-settle);
+}
+
+.textarea {
+  min-height: 132px;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+.input::placeholder,
+.textarea::placeholder {
+  color: var(--ink-subtle);
+  opacity: 0.8;
+}
+
+.input:hover,
+.textarea:hover {
+  border-color: var(--ink-muted);
+}
+
+.input:focus-visible,
+.textarea:focus-visible {
+  outline: none;
+  border-color: var(--focus);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--focus) 25%, transparent);
+}
+
+.input[aria-invalid="true"],
+.textarea[aria-invalid="true"] {
+  border-color: #b3261e;
+}
+
+.hint {
+  margin: 0;
+  font-size: 14px;
+  color: var(--ink-subtle);
+}
+
+.error {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  font-size: 14px;
+  font-weight: 700;
+  color: #b3261e;
+}
+
+:global([data-theme="dark"]) .error {
+  color: #f2b8b5;
+}
+
+.formError {
+  display: flex;
+  gap: 10px;
+  margin: 0;
+  padding: 12px 14px;
+  border-radius: var(--radius-md);
+  background: color-mix(in srgb, #b3261e 10%, transparent);
+  border: 1px solid color-mix(in srgb, #b3261e 40%, transparent);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.formError svg {
+  flex: none;
+  margin-top: 2px;
+  font-size: 18px;
+  color: #b3261e;
+}
+
+/* ---------- Email / phone toggle ---------- */
+
+.toggle {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  padding: 4px;
+  background: var(--surface-sunken);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+
+.toggleOption {
+  position: relative;
+  display: block;
+}
+
+.toggleOption input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  margin: 0;
+  cursor: pointer;
+}
+
+.toggleOption span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 10px;
+  border-radius: calc(var(--radius-md) - 2px);
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--ink-muted);
+  transition: background var(--dur-quick) var(--ease-settle), color var(--dur-quick) var(--ease-settle);
+  pointer-events: none;
+}
+
+.toggleOption input:checked + span {
+  background: var(--surface-card);
+  color: var(--brand-text);
+  box-shadow: var(--shadow-rest);
+}
+
+.toggleOption input:focus-visible + span {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+/* ---------- Submit ---------- */
+
+.submit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 52px;
+  padding: 0 24px;
+  font: inherit;
+  font-weight: 700;
+  font-size: 17px;
+  color: var(--on-brand);
+  background: var(--brand);
+  border: 0;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: background var(--dur-quick) var(--ease-settle);
+}
+
+.submit:hover:not(:disabled) {
+  background: var(--brand-hover);
+}
+
+.submit:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 3px;
+}
+
+.submit:disabled {
+  cursor: progress;
+  opacity: 0.8;
+}
+
+.arrow {
+  transition: transform var(--dur-quick) var(--ease-settle);
+}
+
+.submit:hover:not(:disabled) .arrow {
+  transform: translateX(3px);
+}
+
+.spin {
+  animation: spin 900ms linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.privacy {
+  margin: 0;
+  font-size: 14px;
+  color: var(--ink-subtle);
+  text-align: center;
+}
+
+/* Honeypot: off-screen, not display:none (some bots skip hidden fields). */
+.trap {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+@media (min-width: 720px) {
+  .submit {
+    width: auto;
+    align-self: flex-start;
+  }
+
+  .privacy {
+    text-align: left;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .input,
+  .textarea,
+  .toggleOption span,
+  .submit,
+  .arrow {
+    transition: none;
+  }
+
+  .spin {
+    animation-duration: 2.5s;
+  }
+}

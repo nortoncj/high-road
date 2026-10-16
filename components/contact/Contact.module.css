@@ -1,0 +1,152 @@
+/* ---------- /contact page ---------- */
+
+.section {
+  padding-block: 32px var(--section-y);
+}
+
+.grid {
+  display: grid;
+  gap: 24px;
+  align-items: start;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  max-width: 640px;
+}
+
+.headline {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(34px, 7vw, 54px);
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+.intro {
+  margin: 0;
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--ink-muted);
+}
+
+.card {
+  min-width: 0;
+  padding: 22px 18px;
+  background: var(--surface-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lift);
+}
+
+.side {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 22px 20px;
+  background: var(--surface-sunken);
+  border-radius: var(--radius-lg);
+}
+
+.sideTitle {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 26px;
+}
+
+.sideBody {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--ink-muted);
+}
+
+.call {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 48px;
+  font-weight: 700;
+  color: var(--brand-text);
+}
+
+.spanish {
+  margin: 0;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 17px;
+  color: var(--ink-muted);
+  text-align: center;
+}
+
+/* ---------- "Not ready to book?" block on /book ---------- */
+
+.quick {
+  padding-block: var(--section-y);
+  background: var(--surface-sunken);
+  border-top: 1px solid var(--border);
+}
+
+.quickInner {
+  display: grid;
+  gap: 24px;
+  align-items: start;
+}
+
+.quickCopy {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.quickHeadline {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(28px, 5.5vw, 40px);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+
+@media (min-width: 720px) {
+  .card {
+    padding: 32px 32px;
+  }
+}
+
+@media (min-width: 1080px) {
+  .section {
+    padding-top: 72px;
+  }
+
+  .grid {
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr);
+    column-gap: 56px;
+    row-gap: 32px;
+  }
+
+  .header {
+    grid-column: 1 / -1;
+  }
+
+  .side {
+    position: sticky;
+    top: calc(var(--nav-height) + 32px);
+  }
+
+  .quickInner {
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+    gap: 64px;
+  }
+
+  .quickCopy {
+    position: sticky;
+    top: calc(var(--nav-height) + 40px);
+  }
+}

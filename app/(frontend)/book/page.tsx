@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { BookSection } from "@/components/book";
+import { QuickMessage } from "@/components/contact";
 import { bookMeta } from "@/content/book";
 
 export const metadata: Metadata = {
@@ -12,5 +13,10 @@ export const metadata: Metadata = {
 
 // TopNav and Footer come from app/layout.tsx. MobileCtaBar hides itself on /book.
 export default function BookPage() {
-  return <BookSection />;
+  return (
+    <>
+      <BookSection />
+      <QuickMessage />
+    </>
+  );
 }

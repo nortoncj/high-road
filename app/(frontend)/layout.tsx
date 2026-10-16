@@ -1,7 +1,7 @@
 import Script from "next/script";
 import React from "react";
 import { Footer, MobileCtaBar, TopNav } from "@/components/home";
-import { buildMetadata } from "@/libs/seo";
+import { buildMetadata } from "@/lib/seo";
 
 export const metadata = buildMetadata({});
 

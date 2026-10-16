@@ -6,8 +6,7 @@ import {
   RecentWork,
   TrustStrip,
 } from "@/components/home";
-import { buildMetadata } from "@/libs/seo";
-
+import { buildMetadata } from "@/lib/seo";
 
 export const metadata = buildMetadata({
   title: "Websites for Florida home care agencies | WebTech Ninjas",
