@@ -52,7 +52,7 @@ export const background = {
   paragraphs: [
     "I studied electrical engineering at Florida International University. Engineers are trained to build things that work under pressure, and that's how I build websites: forms that actually send, alerts that actually arrive, pages that load fast on an old phone.",
     // TODO: your role at Carrier Enterprise in one short line.
-    "I worked at Carrier Enterprise, one of the big HVAC equipment distributors, where [your role in one short line]. It was my first look at how service businesses run on phone calls, follow-ups, and trust.",
+    "I worked at Carrier Enterprise, one of the big HVAC equipment distributors, where I built out interal data systems. It was my first look at how service businesses run on phone calls, follow-ups, and trust.",
     "Then I moved into marketing. At a content agency I produced YouTube videos, Instagram reels, and blogs, and helped grow one Instagram account from about 200 followers to over 2,000. I also managed a Meta ad budget of $500 a week for a client.",
     "Since then I've built and launched websites for local businesses on my own, from a woodworker to a veterans post to an assisted living provider. I found every one of those clients myself, mostly by phone and word of mouth.",
     "Off the clock, I build hardware and cloud projects, like an energy monitoring system that tracks power use in real time. It keeps my engineering sharp.",
@@ -80,7 +80,7 @@ export const howIWork = {
     { title: "Prices up front.", body: "Every package price is on the site. No surprise invoices." },
     { title: "Real numbers.", body: "Care Plan clients get a monthly report of calls, inquiries, and applications, in words, not charts you need a decoder ring for." },
     // TODO: set a reply time you can actually keep.
-    { title: "Fast replies.", body: "I answer within [one business day]." },
+    { title: "Fast replies.", body: "I answer within 24 hours." },
     { title: "No promises I can't keep.", body: "I won't guarantee you a Google ranking. Anyone who does is selling something." },
   ],
 };
@@ -89,7 +89,7 @@ export const quickFacts = {
   eyebrow: "Quick facts",
   heading: "The short version",
   facts: [
-    { icon: "pin", label: "Based in", value: "[Your city], Florida" },
+    { icon: "pin", label: "Based in", value: "Orlando, Florida" },
     { icon: "world", label: "Serving", value: "Sarasota, Venice, North Port, Lakewood Ranch, and Orlando" },
     { icon: "language", label: "Languages", value: "English and Spanish" },
     { icon: "school", label: "Education", value: "B.S. in Electrical Engineering, Florida International University" },

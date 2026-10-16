@@ -100,7 +100,7 @@ export const featuredSite = {
       body: "Calls, form fills, and applications are counted, so results are numbers, not guesses.",
     },
   ] as const,
-  builtWith: "Built with Next.js, Sanity, and a custom design system",
+  builtWith: "Built with WordPress and a custom design system",
 };
 
 export const applySection = {
@@ -200,16 +200,16 @@ export const caseStudies = {
       oneLine:
         "A website for an assisted living and senior housing provider, built for the families who read every page before they call.",
       needed:
-        "[One or two sentences: what their site was missing or what they asked you for.]",
+        "A way to represent their business online and source talent without sharing with agencies.",
       built: [
-        "[Pages you built, e.g. home, services, about, contact]",
-        "[Any trust pieces: photos, licensing, tour request form]",
-        "[Anything mobile or bilingual]",
+        "Home, Services, About, Contact, Careers",
+        "Tour Request Form",
+        "Responsive and Bilingual",
       ],
-      results: [], // TODO: only numbers you can show, with source and dates
+      results: [ "Qualify for Government contracts", "Spend less time searching for employees."], // TODO: only numbers you can show, with source and dates
       quote: {
-        text: "[A real quote from Casa de la Paz, with written permission.]",
-        by: "[Name], [Title]",
+        text: "This is so much easier!",
+        by: "Petra, Owner",
       },
       href: "#", // TODO
       image: {
@@ -238,8 +238,8 @@ export const caseStudies = {
         "Google Business Profile shows 20+ reviews, averaging close to 5 stars",
       ],
       quote: {
-        text: "[A real quote from the owner, with permission.]",
-        by: "[Name], Owner",
+        text: "I'm so glad I met you man.I love your work and I want to stay on with you.",
+        by: "Troy, Owner",
       },
       href: null, // site is offline for a couple of months; set the URL when it's back
       image: {
@@ -263,9 +263,9 @@ export const caseStudies = {
         "A Google Business Profile, set up and filled out, with review requests sent to past customers",
         "A regular Facebook posting schedule",
       ],
-      results: [], // TODO: add his best current numbers with dates
+      results: ["Grew my social media presence","More online leads"], // TODO: add his best current numbers with dates
       quote: {
-        text: "[A real quote from John, with permission.]",
+        text: "This is game changing!",
         by: "John Clark, Owner",
       },
       href: "https://johnclarkco.com",
@@ -280,16 +280,16 @@ export const caseStudies = {
       name: "VFW Post 6827",
       badges: ["Veterans post", "Website and hosting"],
       oneLine:
-        "A website for a local veterans post. [Finish the line: what the site helps members or the community do.]",
-      needed: "[One or two sentences.]",
-      built: ["[Page or feature]", "[Page or feature]"],
+        "A website for a local veterans post. They hold events weekly.",
+      needed: "An official website and a place to display their events.",
+      built: ["A dynamic slider for announcements", "An online form for hall rentals with notifications.", "calendar with event"],
       results: [
-        "1,400+ Google Search impressions ([date range], Google Search Console)",
+        "1,400+ Google Search impressions (Nov 2025, Google Search Console)",
         "Google Business Profile rating close to 5 stars",
       ],
       quote: {
-        text: "[A real quote from a post officer, with permission.]",
-        by: "[Name], [Title]",
+        text: "I think we really got something here.",
+        by: "Jay, Post Commander",
       },
       href: "#", // TODO
       image: {
@@ -318,7 +318,7 @@ export const moreWork = {
     {
       name: "OptimalDTG",
       oneLine:
-        "[Confirm scope] A landing page for a veteran-owned federal contractor.",
+        "An optimization platform for a veteran-owned federal contractor.",
       badge: "Government services",
       image: {
         // Pexels 17507798
@@ -329,8 +329,8 @@ export const moreWork = {
     {
       name: "High Tyde Sushi",
       oneLine:
-        "A homepage rebuild and online ordering plan for a coastal sushi pop-up.",
-      badge: "In progress",
+        "A homepage and online ordering plan for a coastal sushi pop-up.",
+      badge: "Resturant",
       image: {
         // Pexels 248444
         src: pexels(248444, 900),

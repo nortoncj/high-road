@@ -2,7 +2,14 @@
 // without touching components (and move it into Sanity later).
 // Anything in [brackets] is a placeholder you still need to fill.
 
-import {CDP , ButcherBlockGroup, JohnRClark, VFW, AboutHeadshot, Hero} from "@img/thumbnails";
+import {
+  CDP,
+  ButcherBlockGroup,
+  JohnRClark,
+  VFW,
+  AboutHeadshot,
+  Hero,
+} from "@img/thumbnails";
 
 export type NavLink = { label: string; href: string };
 
@@ -193,7 +200,7 @@ export const recentWork = {
     summary:
       "Website for a bilingual assisted living and senior housing community in Sarasota, Florida. Built to attract families and caregivers, with a careers page and online application.",
     quote: {
-      text: "[A real quote from Casa de la Paz, with written permission.]",
+      text: "Finding good people is so much easier.",
       name: "Petra",
       title: "Owner, Casa de la Paz",
     },
@@ -226,7 +233,6 @@ export const recentWork = {
         src: JohnRClark.src,
         alt: "A man with a painted mural on a wall behind him",
       },
-      
     },
     {
       name: "VFW Post 6827",
