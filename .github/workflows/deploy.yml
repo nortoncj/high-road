@@ -18,4 +18,16 @@ jobs:
           script: |
             export NVM_DIR="$HOME/.nvm"
             . "$NVM_DIR/nvm.sh"
-            ~/deploy.sh
+            ~/deploy.sh || exit 1
+
+            # Warm the image cache so the first visitor (and PageSpeed) doesn't wait on resizes
+            sleep 10
+            SITE="https://www.webtechninjas.com"
+            curl -s -A "Mozilla/5.0 (Linux; Android 11)" "$SITE/" \
+              | grep -o '/_next/image?url=[^" ,]*' \
+              | sed 's/&amp;/\&/g' \
+              | sort -u \
+              | while read -r u; do
+                  curl -s -o /dev/null -H "Accept: image/avif,image/webp,*/*" "$SITE$u"
+                done
+            echo "Image cache warmed"
