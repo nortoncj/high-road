@@ -21,8 +21,8 @@ export default function PrivacyPage() {
       summary={{ title: privacy.shortVersionTitle, items: privacy.shortVersion }}
       tocLabel={privacy.tocLabel}
       sections={privacy.sections}
-      draftNotice={privacy.draftNotice}
-      draftReminder={privacy.draftReminder}
+      // draftNotice={privacy.draftNotice}
+      // draftReminder={privacy.draftReminder}
       contact={
         <LegalContact
           email={site.email}
