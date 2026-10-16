@@ -207,12 +207,15 @@ export const caseStudies = {
         "Tour Request Form",
         "Responsive and Bilingual",
       ],
-      results: [ "Qualify for Government contracts", "Spend less time searching for employees."], // TODO: only numbers you can show, with source and dates
+      results: [
+        "Qualify for Government contracts",
+        "Spend less time searching for employees.",
+      ], // TODO: only numbers you can show, with source and dates
       quote: {
         text: "This is so much easier!",
         by: "Petra, Owner",
       },
-      href: "#", // TODO
+      href: "https://www.cdpliving.com", // TODO
       image: {
         // Pexels 18429308
         // src: pexels(18429308, 1400),
@@ -243,7 +246,7 @@ export const caseStudies = {
         text: "I'm so glad I met you man.I love your work and I want to stay on with you.",
         by: "Troy, Owner",
       },
-      href: null, // site is offline for a couple of months; set the URL when it's back
+      href: "https://nortoncj.github.io/ButcherBlockGuy/", // site is offline for a couple of months; set the URL when it's back
       image: {
         // Pexels 5710840
         // src: pexels(5710840, 1200),
@@ -266,7 +269,7 @@ export const caseStudies = {
         "A Google Business Profile, set up and filled out, with review requests sent to past customers",
         "A regular Facebook posting schedule",
       ],
-      results: ["Grew my social media presence","More online leads"], // TODO: add his best current numbers with dates
+      results: ["Grew my social media presence", "More online leads"], // TODO: add his best current numbers with dates
       quote: {
         text: "This is game changing!",
         by: "John Clark, Owner",
@@ -283,10 +286,13 @@ export const caseStudies = {
       id: "vfw-6827",
       name: "VFW Post 6827",
       badges: ["Veterans post", "Website and hosting"],
-      oneLine:
-        "A website for a local veterans post. They hold events weekly.",
+      oneLine: "A website for a local veterans post. They hold events weekly.",
       needed: "An official website and a place to display their events.",
-      built: ["A dynamic slider for announcements", "An online form for hall rentals with notifications.", "calendar with event"],
+      built: [
+        "A dynamic slider for announcements",
+        "An online form for hall rentals with notifications.",
+        "calendar with event",
+      ],
       results: [
         "1,400+ Google Search impressions (Nov 2025, Google Search Console)",
         "Google Business Profile rating close to 5 stars",
@@ -295,11 +301,11 @@ export const caseStudies = {
         text: "I think we really got something here.",
         by: "Jay, Post Commander",
       },
-      href: "#", // TODO
+      href: "https://www.vfw6827.org", // TODO
       image: {
         // Pexels 935499
         // src: pexels(935499, 1200),
-        src:VFW.src,
+        src: VFW.src,
         alt: "Screenshot suggestion: the VFW Post 6827 homepage on a desktop",
       },
     },
@@ -314,6 +320,7 @@ export const moreWork = {
       oneLine:
         "A WordPress site and a search growth plan for a travel agency, which grew its Facebook page from zero to over 100 followers.",
       badge: "Travel",
+      href: "https://lachelletravels.com", // TODO
       image: {
         // Pexels 12858513
         // src: pexels(12858513, 900),
@@ -326,6 +333,7 @@ export const moreWork = {
       oneLine:
         "An optimization platform for a veteran-owned federal contractor.",
       badge: "Government services",
+      href: "https://optimaldtg.com", // TODO
       image: {
         // Pexels 17507798
         // src: pexels(17507798, 900),
@@ -338,6 +346,7 @@ export const moreWork = {
       oneLine:
         "A homepage and online ordering plan for a coastal sushi pop-up.",
       badge: "Resturant",
+      href: "https://nortoncj.github.io/highTyde/", // TODO
       image: {
         // Pexels 248444
         // src: pexels(248444, 900),

@@ -196,7 +196,7 @@ export const recentWork = {
     name: "Casa de la Paz",
     industry: "Assisted living and senior housing",
     badge: "Senior care",
-    href: "cdpliving.com", // TODO: case study or live site
+    href: "https://www.cdpliving.com", // TODO: case study or live site
     summary:
       "Website for a bilingual assisted living and senior housing community in Sarasota, Florida. Built to attract families and caregivers, with a careers page and online application.",
     quote: {
@@ -215,7 +215,7 @@ export const recentWork = {
     {
       name: "Butcher Block Guy",
       industry: "Woodworking",
-      href: "#",
+      href: "https://nortoncj.github.io/ButcherBlockGuy/",
       // Pexels 5710840. TODO: real screenshot.
       image: {
         // src: pexels(5710840, 900),
@@ -226,7 +226,7 @@ export const recentWork = {
     {
       name: "John R Clark & Co",
       industry: "Property Maintenance",
-      href: "#",
+      href: "https://johnclarkco.com",
       // Pexels 7792772. TODO: real screenshot.
       image: {
         // src: pexels(7792772, 900),
@@ -237,7 +237,7 @@ export const recentWork = {
     {
       name: "VFW Post 6827",
       industry: "Veterans post",
-      href: "#",
+      href: "https://www.vfw6827.org",
       // Pexels 935499. TODO: real screenshot.
       image: {
         // src: pexels(935499, 900),

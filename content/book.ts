@@ -15,15 +15,17 @@ export const book = {
     "I pull up your current site and show you what's getting in the way of applicants and families.",
     "You leave with the first thing I'd fix, whether you hire me or not.",
   ],
-  smallLine: "On the phone or video, your choice. No pressure, no tech talk. Se habla español.",
+  smallLine:
+    "On the phone or video, your choice. No pressure, no tech talk. Se habla español.",
   trustLine: "You'll talk to me, Chris, not a sales rep.",
   underCalendar: "Times are shown in your time zone. Don't see one that works?",
   underCalendarCta: "Call or text me",
   calendar: {
     // TODO (Step 4): paste your scheduling link, e.g. "https://calendly.com/your-handle/free-call"
-    src: "" as string,
+    src: "https://calendly.com/webtechninjas/30min" as string,
     title: "Pick a time for your free 15 minute call",
     placeholderHeading: "Calendar goes here",
-    placeholderBody: "Paste your scheduling link into content/book.ts and it appears in this spot.",
+    placeholderBody:
+      "Paste your scheduling link into content/book.ts and it appears in this spot.",
   },
 };
