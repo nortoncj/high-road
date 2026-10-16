@@ -4,6 +4,7 @@
 // Swap in real screenshots and rewrite the alt to describe them before launch.
 
 import { pexels } from "./pexels";
+import { CDP, ButcherBlockGroup, JohnRClark, VFW, Lachelle, OptimalDTG, HighTydeSushi  } from "@img/thumbnails";
 
 export type Img = { src: string; alt: string };
 
@@ -214,7 +215,8 @@ export const caseStudies = {
       href: "#", // TODO
       image: {
         // Pexels 18429308
-        src: pexels(18429308, 1400),
+        // src: pexels(18429308, 1400),
+        src: CDP.src,
         alt: "Screenshot suggestion: the Casa de la Paz homepage on a desktop, in a clean browser frame",
       },
     },
@@ -244,7 +246,8 @@ export const caseStudies = {
       href: null, // site is offline for a couple of months; set the URL when it's back
       image: {
         // Pexels 5710840
-        src: pexels(5710840, 1200),
+        // src: pexels(5710840, 1200),
+        src: ButcherBlockGroup.src,
         alt: "Screenshot suggestion: the Butcher Block Group gallery page, filtered by product and wood species",
       },
     },
@@ -271,7 +274,8 @@ export const caseStudies = {
       href: "https://johnclarkco.com",
       image: {
         // Pexels 5691471
-        src: pexels(5691471, 1200),
+        // src: pexels(5691471, 1200),
+        src: JohnRClark.src,
         alt: "Screenshot suggestion: the John R Clark & Co homepage on a desktop, showing a finished wallpaper project",
       },
     },
@@ -294,7 +298,8 @@ export const caseStudies = {
       href: "#", // TODO
       image: {
         // Pexels 935499
-        src: pexels(935499, 1200),
+        // src: pexels(935499, 1200),
+        src:VFW.src,
         alt: "Screenshot suggestion: the VFW Post 6827 homepage on a desktop",
       },
     },
@@ -311,7 +316,8 @@ export const moreWork = {
       badge: "Travel",
       image: {
         // Pexels 12858513
-        src: pexels(12858513, 900),
+        // src: pexels(12858513, 900),
+        src: Lachelle.src,
         alt: "Screenshot suggestion: the Lachelle Travels homepage on a desktop",
       },
     },
@@ -322,7 +328,8 @@ export const moreWork = {
       badge: "Government services",
       image: {
         // Pexels 17507798
-        src: pexels(17507798, 900),
+        // src: pexels(17507798, 900),
+        src: OptimalDTG.src,
         alt: "Screenshot suggestion: the OptimalDTG landing page on a desktop",
       },
     },
@@ -333,7 +340,8 @@ export const moreWork = {
       badge: "Resturant",
       image: {
         // Pexels 248444
-        src: pexels(248444, 900),
+        // src: pexels(248444, 900),
+        src: HighTydeSushi.src,
         alt: "Screenshot suggestion: the High Tyde Sushi homepage hero on a phone",
       },
     },

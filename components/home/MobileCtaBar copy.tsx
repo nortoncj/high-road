@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/Button";
 import styles from "./MobileCtaBar.module.css";
 
 // Pages where the bar would just repeat what's already on screen.
-const HIDDEN_ON = ["/book"];
+const HIDDEN_ON = ["/book", "/thanks/booked"];
 
 /** Sticky Call and Book bar for phones and small tablets. Hidden at 960px and up, and on /book. */
 export function MobileCtaBar() {

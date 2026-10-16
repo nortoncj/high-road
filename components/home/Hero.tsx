@@ -51,7 +51,7 @@ export function Hero() {
               alt={hero.image.alt}
               fill
               priority
-              sizes="(min-width: 960px) 640px, 100vw"
+              sizes="(max-width: 768px) 100vw, 50vw"
               className={styles.photoImg}
             />
           </div>
