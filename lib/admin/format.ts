@@ -74,3 +74,17 @@ export function initials(name: string): string {
 export function firstName(name: string): string {
   return name.trim().split(/\s+/)[0] || name;
 }
+
+/** Handles both full timestamps and date-only strings ("2026-11-01" would otherwise land on Oct 31 in Orlando). */
+export function toDate(v: string): Date {
+  return new Date(/^\d{4}-\d{2}-\d{2}$/.test(v) ? `${v}T12:00:00Z` : v);
+}
+
+/** "in 3 days", "today", "2 days ago". For renewals, where the direction matters. */
+export function daysFrom(v: string, now: Date = new Date()): string {
+  const d = Math.round((toDate(v).getTime() - now.getTime()) / 86_400_000);
+  if (d === 0) return "today";
+  if (d === 1) return "tomorrow";
+  if (d === -1) return "yesterday";
+  return d > 0 ? `in ${d} days` : `${-d} days ago`;
+}

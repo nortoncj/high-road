@@ -89,17 +89,7 @@ export async function confirmLink(formData: FormData): Promise<void> {
 
   const supabase = await createSupabase();
   const { error } = await supabase.auth.verifyOtp({ type, token_hash: tokenHash });
-  if (error) {
-    // The code and the link share one token, so typing the code first "uses up" the link.
-    // Already signed in? Carry on instead of showing an error.
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-    if (!user) {
-      console.error("[admin] verifyOtp (link) failed", error.status, error.code, error.message);
-      redirect("/admin/login?error=link");
-    }
-  }
+  if (error) redirect("/admin/login?error=link");
 
   const cookieStore = await cookies();
   const next = safeNext(cookieStore.get(NEXT_COOKIE)?.value);

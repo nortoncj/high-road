@@ -31,18 +31,74 @@ export const tables = {
   },
   clients: {
     table: "clients",
-    columns: { id: "id", name: "name", status: "status", createdAt: "created_at" },
+    columns: {
+      id: "id",
+      name: "name",
+      contactName: "contact_name",
+      email: "email",
+      phone: "phone",
+      website: "website",
+      notes: "notes",
+      status: "status",
+      leadId: "lead_id",
+      stripeCustomerId: "stripe_customer_id",
+      onboardedOn: "onboarded_on",
+      manualPlan: "care_plan",
+      manualMonthlyCents: "manual_monthly_cents",
+      manualRenewsOn: "manual_renews_on",
+      createdAt: "created_at",
+    },
     activeStatus: "active",
+  },
+  subscriptions: {
+    table: "client_subscriptions",
+    columns: {
+      id: "id",
+      clientId: "client_id",
+      stripeCustomerId: "stripe_customer_id",
+      status: "status",
+      planName: "plan_name",
+      kind: "kind",
+      amountCents: "amount_cents",
+      monthlyCents: "monthly_cents",
+      interval: "billing_interval",
+      currentPeriodEnd: "current_period_end",
+      cancelAtPeriodEnd: "cancel_at_period_end",
+      endsAt: "ends_at",
+      startedAt: "started_at",
+      canceledAt: "canceled_at",
+    },
   },
   projects: {
     table: "projects",
-    columns: { id: "id", name: "name", status: "status", dueDate: "due_date", completedAt: "completed_at", createdAt: "created_at" },
+    columns: {
+      id: "id",
+      clientId: "client_id",
+      name: "name",
+      service: "service",
+      status: "status",
+      dueDate: "due_date",
+      completedAt: "completed_at",
+      createdAt: "created_at",
+    },
     closedStatuses: ["done", "cancelled"],
   },
   invoices: {
     table: "invoices",
     // Activity pulls the client's name through the client_id foreign key: `client:clients(name)`.
-    columns: { id: "id", amountCents: "amount_cents", status: "status", paidAt: "paid_at", clientId: "client_id" },
+    columns: {
+      id: "id",
+      amountCents: "amount_cents",
+      status: "status",
+      paidAt: "paid_at",
+      clientId: "client_id",
+      projectId: "project_id",
+      stripeInvoiceId: "stripe_invoice_id",
+      number: "number",
+      description: "description",
+      hostedUrl: "hosted_invoice_url",
+      issuedAt: "issued_at",
+    },
     paidStatus: "paid",
   },
   admins: {
@@ -101,3 +157,41 @@ export const leadSourceLabel: Record<LeadSource, string> = {
   contact_form: "Message",
   other: "Other",
 };
+
+/* Clients */
+
+export const clientStatuses = ["active", "paused", "churned"] as const;
+export type ClientStatus = (typeof clientStatuses)[number];
+
+export const clientStatusMeta: Record<ClientStatus, { label: string; className: string }> = {
+  active: { label: "Active", className: "bg-positive-soft text-positive" },
+  paused: { label: "Paused", className: "bg-secondary text-secondary-foreground" },
+  churned: { label: "Churned", className: "bg-muted text-muted-foreground" },
+};
+
+export function toClientStatus(v: unknown): ClientStatus {
+  return typeof v === "string" && (clientStatuses as readonly string[]).includes(v) ? (v as ClientStatus) : "active";
+}
+
+/** Care plans are month to month. Build plans are the 12 month "pay monthly" packages. */
+export type PlanKind = "care" | "build" | "other";
+export const planKindLabel: Record<PlanKind, string> = { care: "Care plan", build: "Payment plan", other: "Plan" };
+
+/** Stripe statuses that still mean "this client is on a plan". */
+export const liveSubscriptionStatuses = ["active", "trialing", "past_due", "unpaid", "paused"] as const;
+/** Statuses that still bring money in (or are owed). Feeds monthly value. */
+export const billingSubscriptionStatuses = ["active", "trialing", "past_due"] as const;
+
+export const projectStatuses = ["planning", "in_progress", "review", "done", "on_hold", "cancelled"] as const;
+export type ProjectStatus = (typeof projectStatuses)[number];
+export const projectStatusMeta: Record<ProjectStatus, { label: string; className: string }> = {
+  planning: { label: "Planning", className: "bg-secondary text-secondary-foreground" },
+  in_progress: { label: "In progress", className: "bg-primary text-primary-foreground" },
+  review: { label: "In review", className: "bg-brass-soft text-brass-ink" },
+  done: { label: "Launched", className: "bg-positive-soft text-positive" },
+  on_hold: { label: "On hold", className: "bg-warning-soft text-warning" },
+  cancelled: { label: "Cancelled", className: "bg-muted text-muted-foreground" },
+};
+export function toProjectStatus(v: unknown): ProjectStatus {
+  return typeof v === "string" && (projectStatuses as readonly string[]).includes(v) ? (v as ProjectStatus) : "planning";
+}

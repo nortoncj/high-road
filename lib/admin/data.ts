@@ -1,5 +1,6 @@
 import "server-only";
 import { createSupabase } from "./supabase";
+import { clientForLead } from "./clients";
 import { dayKey, zonedDay, type DateRange } from "./range";
 import { overview } from "@/content/admin";
 import {
@@ -33,6 +34,8 @@ export type Lead = {
   message: string | null;
   /** ISO string: Dates don't love crossing the server/client line. */
   createdAt: string;
+  /** Set when this lead has been turned into a client (detail drawer only). */
+  client?: { id: string; name: string } | null;
 };
 
 export type Kpi = {
@@ -169,7 +172,7 @@ export async function getOverview(range: DateRange): Promise<Overview> {
 
   const recentLeads: Overview["recentLeads"] = recent.error
     ? { ok: false, issue: toIssue(L.table, recent.error) }
-    : { ok: true, data: { rows: ((recent.data ?? []) as unknown as Row[]).map(toLead), total: leadsNow.count ?? 0 } };
+    : { ok: true, data: { rows: ((recent.data ?? []) as Row[]).map(toLead), total: leadsNow.count ?? 0 } };
 
   let services: Overview["services"];
   if (serviceRows.error) services = { ok: false, issue: toIssue(L.table, serviceRows.error) };
@@ -216,7 +219,7 @@ async function getActivity(db: Awaited<ReturnType<typeof createSupabase>>, range
   const usd = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 });
 
   if (!leads.error)
-    for (const r of (leads.data ?? []) as unknown as Row[]) {
+    for (const r of (leads.data ?? []) as Row[]) {
       const lead = toLead(r);
       items.push({
         id: `lead-${lead.id}`,
@@ -235,7 +238,7 @@ async function getActivity(db: Awaited<ReturnType<typeof createSupabase>>, range
     const eventRows = events.data as Row[];
     const ids = [...new Set(eventRows.map((r) => String(r.leadId)))];
     const { data: named } = await db.from(L.table).select(selectAs(L.columns, ["id", "name", "email"])).in(L.columns.id, ids);
-    const names = new Map(((named ?? []) as unknown as Row[]).map((r) => [String(r.id), toLead(r).name]));
+    const names = new Map(((named ?? []) as Row[]).map((r) => [String(r.id), toLead(r).name]));
     for (const r of eventRows) {
       const status = toLeadStatus(r.toStatus);
       items.push({
@@ -314,15 +317,18 @@ export async function listLeads({ q, status, page }: LeadsQuery): Promise<Loaded
 
   return {
     ok: true,
-    data: { rows: ((res.data ?? []) as unknown as Row[]).map(toLead), total, pages: Math.max(1, Math.ceil(total / LEADS_PER_PAGE)), counts },
+    data: { rows: ((res.data ?? []) as Row[]).map(toLead), total, pages: Math.max(1, Math.ceil(total / LEADS_PER_PAGE)), counts },
   };
 }
 
 export async function getLead(id: string): Promise<Lead | null> {
   const db = await createSupabase();
-  const { data, error } = await db.from(L.table).select(leadSelect).eq(L.columns.id, id).maybeSingle();
+  const [{ data, error }, client] = await Promise.all([
+    db.from(L.table).select(leadSelect).eq(L.columns.id, id).maybeSingle(),
+    clientForLead(id).catch(() => null),
+  ]);
   if (error || !data) return null;
-  return toLead(data as unknown as Row);
+  return { ...toLead(data as Row), client };
 }
 
 /** For the badge on "Leads" in the sidebar. */
