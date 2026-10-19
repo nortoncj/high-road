@@ -1,9 +1,0 @@
-export { DemoHero } from "./DemoHero";
-export { DemoHeading } from "./DemoHeading";
-export { BrowserFrame } from "./BrowserFrame";
-export { FeaturedSite } from "./FeaturedSite";
-export { ApplyDemo } from "./ApplyDemo";
-export { SampleProjects } from "./SampleProjects";
-export { CaseStudies } from "./CaseStudies";
-export { MoreWork } from "./MoreWork";
-export { DemoCta } from "./DemoCta";
