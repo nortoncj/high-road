@@ -8,8 +8,8 @@ import { handleStripeEvent, stripe } from "@/lib/admin/stripe-sync";
  * Already have a Stripe webhook route for checkout? Don't run two. Call
  * handleStripeEvent(createServiceSupabase(), event) from inside yours after you verify the signature.
  */
-export const runtime = "nodejs";
-export const dynamic = "force-dynamic";
+// No runtime/dynamic exports: cacheComponents rejects them. Node is the default runtime, and a
+// POST handler that reads the request is always dynamic.
 
 export async function POST(request: Request) {
   const signature = request.headers.get("stripe-signature");
