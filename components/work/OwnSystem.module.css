@@ -1,0 +1,315 @@
+/* Dark band: re-point text tokens so Eyebrow reads on it */
+.section {
+  --ink: #e9f0ed;
+  --ink-muted: #a7bab7;
+  --brand-text: #8fd3d1;
+  /* Eyebrow takes the band's sea-glass teal; brass reads as olive on dark green */
+  --accent: #8fd3d1;
+  --accent-text: #e9f0ed;
+  --border: rgba(143, 211, 209, 0.16);
+
+  position: relative;
+  overflow: hidden;
+  padding-block: var(--section-y);
+  background:
+    radial-gradient(80% 60% at 90% 10%, rgba(48, 146, 157, 0.22), transparent 60%),
+    #0f1d20;
+  color: var(--ink);
+  scroll-margin-top: var(--nav-height);
+}
+
+.grid {
+  display: grid;
+  gap: 40px;
+  align-items: center;
+}
+
+.copy {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  min-width: 0;
+}
+
+.name {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(30px, 5vw, 42px);
+  line-height: 1.1;
+  color: var(--ink);
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 12px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.meta li {
+  padding: 3px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--ink-muted);
+}
+
+.intro {
+  margin: 0;
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+.built {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.built li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.built svg {
+  flex: none;
+  margin-top: 3px;
+  font-size: 18px;
+  color: var(--brand-text);
+}
+
+.try {
+  margin: 6px 0 0;
+  font-size: 16px;
+  color: var(--ink-muted);
+}
+
+.tryLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  align-self: flex-start;
+  min-height: 44px;
+  font-weight: 700;
+  color: var(--brand-text);
+  text-decoration: none;
+}
+
+.tryLink:hover {
+  text-decoration: underline;
+}
+
+.tryLink svg {
+  transition: transform var(--dur-base) var(--ease-settle);
+}
+
+.tryLink:hover svg {
+  transform: translateX(3px);
+}
+
+/* The pipeline board: one of the few frosted surfaces on the site */
+.board {
+  margin: 0;
+  min-width: 0;
+  padding: 16px;
+  border-radius: 16px;
+  border: 1px solid rgba(143, 211, 209, 0.18);
+  background: rgba(27, 47, 52, 0.7);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4);
+}
+
+.boardTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 2px 4px 14px;
+}
+
+.boardLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* Breathing "live" dot */
+.live {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #63bcc2;
+  box-shadow: 0 0 0 0 rgba(99, 188, 194, 0.6);
+  animation: breathe 2.4s ease-out infinite;
+}
+
+.note {
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: #3a321c;
+  color: #e2c062;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.columns {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(170px, 1fr);
+  gap: 12px;
+  overflow-x: auto;
+}
+
+.column {
+  min-width: 0;
+  padding: 12px;
+  border-radius: 12px;
+  background: rgba(15, 29, 32, 0.6);
+}
+
+.colTitle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 0 10px;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.count {
+  min-width: 22px;
+  padding: 1px 6px;
+  border-radius: 999px;
+  background: rgba(143, 211, 209, 0.14);
+  color: var(--brand-text);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  text-align: center;
+}
+
+.column[data-col="won"] .count {
+  background: #3a321c;
+  color: #e2c062;
+}
+
+.column ul {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.card {
+  display: grid;
+  gap: 2px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: #1b2f34;
+  border: 1px solid rgba(143, 211, 209, 0.12);
+  font-size: 13px;
+  line-height: 18px;
+}
+
+.cardName {
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--ink);
+}
+
+.cardMeta {
+  color: var(--ink-muted);
+}
+
+.cardTime {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--brand-text);
+}
+
+.column[data-col="won"] .cardTime {
+  color: #e2c062;
+}
+
+/* The newest lead drops in once, then gets a soft highlight */
+.card[data-fresh="true"] {
+  border-color: rgba(143, 211, 209, 0.5);
+  animation: drop 700ms var(--ease-settle) 600ms both, glow 2.4s ease-out 1.3s 1;
+}
+
+@keyframes drop {
+  from {
+    opacity: 0;
+    transform: translateY(-14px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes glow {
+  0% {
+    box-shadow: 0 0 0 0 rgba(99, 188, 194, 0.55);
+  }
+  100% {
+    box-shadow: 0 0 0 12px rgba(99, 188, 194, 0);
+  }
+}
+
+@keyframes breathe {
+  0% {
+    box-shadow: 0 0 0 0 rgba(99, 188, 194, 0.6);
+  }
+  80%,
+  100% {
+    box-shadow: 0 0 0 8px rgba(99, 188, 194, 0);
+  }
+}
+
+@media (min-width: 640px) {
+  .board {
+    padding: 20px;
+  }
+}
+
+@media (min-width: 1080px) {
+  .grid {
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    gap: 64px;
+  }
+
+  .columns {
+    grid-auto-flow: row;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    overflow: visible;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .live,
+  .card[data-fresh="true"] {
+    animation: none;
+  }
+
+  .tryLink svg {
+    transition: none;
+  }
+}

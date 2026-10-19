@@ -1,6 +1,4 @@
-import { TbPhone } from "react-icons/tb";
 import { aboutCta } from "@/content/about";
-import { site } from "@/content/home";
 import { Button } from "@/components/ui/Button";
 import styles from "./AboutCta.module.css";
 
@@ -9,26 +7,20 @@ export function AboutCta() {
     <section className={styles.section} aria-labelledby="about-cta-heading">
       <div className="container">
         <div className={styles.band}>
-          <h2 id="about-cta-heading" className={styles.heading}>
-            {aboutCta.heading}
-          </h2>
-          <p className={styles.body}>{aboutCta.body}</p>
+          <div className={styles.copy}>
+            <h2 id="about-cta-heading" className={styles.heading}>
+              {aboutCta.heading}
+            </h2>
+            <p className={styles.body}>{aboutCta.body}</p>
+          </div>
           <div className={styles.actions}>
-            <Button href={site.bookHref} arrow>
-              {aboutCta.primaryCta}
+            <Button href={aboutCta.primaryCta.href} arrow block className={styles.solid}>
+              {aboutCta.primaryCta.label}
             </Button>
-            <Button href={aboutCta.secondaryHref} variant="secondary">
-              {aboutCta.secondaryCta}
+            <Button href={aboutCta.secondaryCta.href} variant="secondary" block className={styles.ghost}>
+              {aboutCta.secondaryCta.label}
             </Button>
           </div>
-          <p className={styles.fine}>
-            Or call me at{" "}
-            <a href={site.phoneHref} className={styles.phone}>
-              <TbPhone aria-hidden="true" />
-              {site.phone}
-            </a>
-            . Se habla español.
-          </p>
         </div>
       </div>
     </section>

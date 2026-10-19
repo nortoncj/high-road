@@ -1,0 +1,43 @@
+.details {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 4px;
+  padding: 14px 20px;
+  border-radius: var(--radius-md);
+  background: var(--brand-tint);
+  border: 1px solid var(--brand-tint-border);
+  text-align: left;
+  animation: rise 500ms var(--ease-settle) 600ms both;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  font-size: 17px;
+  color: var(--on-brand-tint);
+}
+
+.row svg {
+  flex: none;
+  font-size: 20px;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .details {
+    animation: none;
+  }
+}

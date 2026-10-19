@@ -1,0 +1,10 @@
+export const ctaBg = "./cta-bg.jpg";
+export const heroCleaning = "./hero-cleaning.jpg";
+export const heroHomecare = "./hero-homecare.jpg";
+export const heroHVAC = "./hero-hvac.jpg";
+export const heroPlumbing = "./hero-plumbing.jpg";
+export const heroRoofing = "./hero-roofing.jpg";
+export const pillarHiring = "./pillar-hiring.jpg";
+export const pillarLeads = "./pillar-leads.jpg";
+export const pillarNight = "./pillar-nightmare.jpg";
+export const reportBg = "./report-bg.jpg";

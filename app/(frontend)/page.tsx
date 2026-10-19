@@ -1,28 +1,38 @@
 import {
   About,
-  DemoBand,
+  BookCta,
+  Faq,
   Hero,
+  LeadMath,
+  Packages,
+  Pillars,
   Process,
   RecentWork,
-  TrustStrip,
+  ReportPreview,
+  TradeMarquee,
 } from "@/components/home";
+import { site } from "@/content/home";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata = buildMetadata({
-  title: "Websites for Florida home care agencies | WebTech Ninjas",
-  description:
-    "Bilingual, phone-first websites that help home care agencies in Sarasota and Orlando hire caregivers and win families.",
+  title: `Websites for service businesses | ${site.name}`,
+  description: site.oneLiner,
 });
 
 export default function Home() {
   return (
     <>
       <Hero />
-      <TrustStrip />
+      <TradeMarquee />
+      <Pillars />
+      <LeadMath />
       <Process />
-      <DemoBand />
+      <ReportPreview />
       <RecentWork />
       <About />
+      <Packages />
+      <Faq />
+      <BookCta />
     </>
   );
 }

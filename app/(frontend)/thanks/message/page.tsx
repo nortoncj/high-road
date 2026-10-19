@@ -1,21 +1,14 @@
 import type { Metadata } from "next";
-import { ThankYou, TrackEvent } from "@/components/thanks";
-import { thanksMeta } from "@/content/thanks";
+import { ThanksPage } from "@/components/thanks";
+import { thanks } from "@/content/thanks";
+import { buildMetadata } from "@/lib/seo";
 
-const meta = thanksMeta.message;
-
+// Thank-you pages stay out of search results: landing here from Google would fake a conversion.
 export const metadata: Metadata = {
-  title: { absolute: meta.title },
-  description: meta.description,
-  // Nobody should land here from Google.
+  ...(buildMetadata({ title: thanks.message.meta.title, description: thanks.message.meta.description }) as Metadata),
   robots: { index: false, follow: false },
 };
 
-export default function MessagePage() {
-  return (
-    <>
-      <TrackEvent name="contact_form" params={{ method: "form" }} />
-      <ThankYou variant="message" />
-    </>
-  );
+export default function ThanksMessagePage() {
+  return <ThanksPage kind="message" />;
 }

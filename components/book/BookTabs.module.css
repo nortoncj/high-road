@@ -1,0 +1,150 @@
+.card {
+  min-width: 0;
+  overflow: hidden;
+  background: var(--surface-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-float);
+}
+
+/* Segmented tabs with a sliding thumb */
+.tablist {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin: 12px;
+  padding: 4px;
+  border-radius: 999px;
+  background: var(--surface-sunken);
+  border: 1px solid var(--border);
+}
+
+.tab {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 14px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ink-muted);
+  font: inherit;
+  font-weight: 700;
+  font-size: 15px;
+  cursor: pointer;
+  transition: color var(--dur-base) var(--ease-settle);
+}
+
+.tab svg {
+  font-size: 18px;
+}
+
+.tab[aria-selected="true"] {
+  color: var(--on-brand);
+}
+
+.tab:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 2px;
+}
+
+.thumb {
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  left: 4px;
+  width: calc(50% - 4px);
+  border-radius: 999px;
+  background: var(--brand);
+  transition: transform var(--dur-base) var(--ease-settle);
+}
+
+.thumb[data-pos="message"] {
+  transform: translateX(100%);
+}
+
+.panel {
+  border-top: 1px solid var(--border);
+}
+
+/* The hidden attribute must win over any display rule */
+.panel[hidden] {
+  display: none;
+}
+
+.under {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 16px 20px 20px;
+  border-top: 1px solid var(--border);
+  background: var(--surface-page);
+  font-size: 15px;
+  color: var(--ink-muted);
+}
+
+.under p {
+  margin: 0;
+}
+
+.contactLinks {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 16px;
+}
+
+.ctaLabel {
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.contactLink,
+.switchLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  font-weight: 700;
+  color: var(--brand-text);
+  text-decoration: none;
+}
+
+.contactLink:hover,
+.switchLink:hover {
+  text-decoration: underline;
+}
+
+.switchLink {
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.mono {
+  font-family: var(--font-mono);
+}
+
+@media (min-width: 640px) {
+  .tablist {
+    margin: 16px;
+    max-width: 420px;
+  }
+
+  .under {
+    padding: 18px 28px 22px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .thumb {
+    transition: none;
+  }
+}

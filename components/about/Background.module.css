@@ -2,56 +2,139 @@
   padding-block: var(--section-y);
 }
 
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  max-width: 720px;
+  margin-bottom: 40px;
+}
+
+.heading {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(30px, 5.5vw, 46px);
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+
 .grid {
   display: grid;
-  gap: 32px;
+  gap: 40px;
   align-items: start;
 }
 
-.copy {
-  min-width: 0;
-}
-
-.body {
+/* Timeline: a rail with icon nodes. The rail fills with brand color as you scroll. */
+.timeline {
+  position: relative;
   display: flex;
   flex-direction: column;
-  gap: 18px;
-  max-width: 640px;
-  font-size: 18px;
-  line-height: 1.7;
-  color: var(--ink);
-}
-
-.body p {
+  gap: 32px;
   margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
-.media {
-  min-width: 0;
+.timeline::before,
+.timeline::after {
+  content: "";
+  position: absolute;
+  left: 21px;
+  top: 22px;
+  bottom: 22px;
+  width: 2px;
+  border-radius: 2px;
+}
+
+.timeline::before {
+  background: var(--border);
+}
+
+.timeline::after {
+  background: linear-gradient(180deg, var(--brand), var(--accent));
+  transform-origin: top;
+  transform: scaleY(1);
+}
+
+.step {
+  position: relative;
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr);
+  gap: 18px;
+}
+
+.node {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--surface-card);
+  border: 2px solid var(--brand);
+  color: var(--brand-text);
+  font-size: 20px;
+}
+
+.stepBody {
+  padding-top: 8px;
+}
+
+.stepLabel {
+  margin: 0 0 8px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--brand-text);
+}
+
+.stepBody p {
+  margin: 0;
+  max-width: 600px;
+  font-size: 17px;
+  line-height: 1.65;
+}
+
+.photoWrap {
+  margin: 0;
 }
 
 .photo {
   position: relative;
-  aspect-ratio: 4 / 3;
-  border-radius: var(--radius-lg);
+  aspect-ratio: 4 / 5;
+  max-width: 420px;
   overflow: hidden;
+  border-radius: var(--radius-lg);
   background: var(--surface-photo);
   box-shadow: var(--shadow-float);
+  clip-path: polygon(0 0, 100% 0, 100% 90%, 88% 100%, 0 100%);
 }
 
-.photoImg {
+.img {
   object-fit: cover;
 }
 
+/* What it means for you */
+.means {
+  margin-top: 56px;
+  padding-top: 40px;
+  border-top: 1px solid var(--border);
+}
+
 .meansHeading {
-  margin: 48px 0 20px;
+  margin: 0 0 24px;
   font-family: var(--font-display);
   font-weight: 500;
-  font-size: 26px;
+  font-size: clamp(24px, 4vw, 30px);
   line-height: 1.2;
 }
 
-.means {
+.meansGrid {
   display: grid;
   gap: 16px;
   margin: 0;
@@ -61,19 +144,25 @@
 
 .mean {
   display: flex;
-  gap: 16px;
+  flex-direction: column;
+  gap: 10px;
   padding: 22px;
   background: var(--surface-card);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
+  transition: transform var(--dur-base) var(--ease-settle), box-shadow var(--dur-base) var(--ease-settle);
 }
 
-.iconTile {
+.mean:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lift);
+}
+
+.meanIcon {
   display: grid;
   place-items: center;
-  flex: none;
-  width: 44px;
-  height: 44px;
+  width: 46px;
+  height: 46px;
   border-radius: var(--radius-md);
   background: var(--brand-tint);
   color: var(--brand-text);
@@ -84,37 +173,89 @@
   margin: 0;
   font-family: var(--font-display);
   font-weight: 500;
-  font-size: 21px;
-  line-height: 1.25;
+  font-size: 24px;
+  line-height: 1.2;
 }
 
 .meanBody {
-  margin: 4px 0 0;
+  margin: 0;
   font-size: 16px;
   line-height: 1.55;
   color: var(--ink-muted);
 }
 
-@media (min-width: 900px) {
-  .means {
+/* Scroll-linked: the rail draws itself and each step fades up. Progressive enhancement. */
+@supports (animation-timeline: view()) {
+  .timeline::after {
+    animation: draw linear both;
+    animation-timeline: view();
+    animation-range: entry 20% cover 70%;
+  }
+
+  .step {
+    animation: rise linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 70%;
+  }
+
+  @keyframes draw {
+    from {
+      transform: scaleY(0);
+    }
+    to {
+      transform: scaleY(1);
+    }
+  }
+
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(18px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+}
+
+@media (min-width: 720px) {
+  .meansGrid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 20px;
   }
 }
 
 @media (min-width: 1080px) {
+  .header {
+    margin-bottom: 56px;
+  }
+
   .grid {
-    grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.7fr);
     gap: 64px;
   }
 
-  .media {
-    align-self: stretch;
-  }
-
-  .photo {
+  .photoWrap {
     position: sticky;
     top: calc(var(--nav-height) + 32px);
-    aspect-ratio: 4 / 5;
+  }
+
+  .means {
+    margin-top: 72px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .timeline::after,
+  .step {
+    animation: none !important;
+  }
+
+  .timeline::after {
+    transform: scaleY(1);
+  }
+
+  .mean:hover {
+    transform: none;
   }
 }

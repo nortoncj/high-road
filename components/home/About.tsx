@@ -30,8 +30,7 @@ export function About() {
           </div>
           <p className={styles.fine}>
             Website packages start at{" "}
-            <span className={styles.price}>{site.priceFloor}</span>. Se habla
-            español.
+            <span className={styles.price}>{site.priceFloor}</span>.
           </p>
         </div>
 

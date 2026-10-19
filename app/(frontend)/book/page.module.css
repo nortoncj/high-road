@@ -1,0 +1,24 @@
+.section {
+  padding-block: 40px 72px;
+  background:
+    linear-gradient(135deg, rgba(31, 92, 99, 0.1), rgba(48, 146, 157, 0.06) 45%, transparent 75%),
+    var(--surface-page);
+  min-height: calc(100vh - var(--nav-height));
+}
+
+.grid {
+  display: grid;
+  gap: 32px;
+  align-items: start;
+}
+
+@media (min-width: 1080px) {
+  .section {
+    padding-block: 64px 96px;
+  }
+
+  .grid {
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+    gap: 56px;
+  }
+}

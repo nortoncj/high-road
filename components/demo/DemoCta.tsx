@@ -1,4 +1,4 @@
-import { demoCta } from "@/content/demo";
+import { demoCta } from "@/content/work";
 import { site } from "@/content/home";
 import { Button } from "@/components/ui/Button";
 import styles from "./DemoCta.module.css";

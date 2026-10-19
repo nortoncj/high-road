@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { cacheLife } from "next/cache";
 import { footer, navLinks, site } from "@/content/home";
@@ -13,12 +14,13 @@ export function Footer() {
   return (
     <footer className={styles.footer}>
       <div className={`container ${styles.inner}`}>
+        {/* The Luxury Coastal gradient, demoted to a thin rule */}
+        <div className={styles.rule} aria-hidden="true" />
+
         <div className={styles.columns}>
           <div className={styles.brandCol}>
             <Link href="/" className={styles.brand}>
-              {/* <span className={styles.mark} aria-hidden="true">
-                {site.monogram}
-              </span> */}
+              <Image src={site.logo.onDark} alt="" width={30} height={38} className={styles.mark} />
               <span className={styles.wordmark}>{site.name}</span>
             </Link>
             <p className={styles.oneLiner}>{site.oneLiner}</p>
@@ -50,11 +52,11 @@ export function Footer() {
           <div className={styles.col}>
             <p className={styles.colTitle}>Contact</p>
             <ul>
-              <li>
+              {/* <li>
                 <a href={site.phoneHref} className={styles.mono}>
                   {site.phone}
                 </a>
-              </li>
+              </li> */}
               <li>
                 <a href={site.emailHref}>{site.email}</a>
               </li>
@@ -76,7 +78,7 @@ export function Footer() {
 
         <div className={styles.bottom}>
           <p>
-            © <CurrentYear /> {site.name}. Se habla español.
+            © <CurrentYear /> {site.name}
           </p>
           <p className={styles.tagline}>{site.tagline}</p>
         </div>

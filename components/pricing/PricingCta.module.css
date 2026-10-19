@@ -1,0 +1,77 @@
+.section {
+  padding-block: 0 var(--section-y);
+  background: var(--surface-card);
+}
+
+/* Coastal glow band. Ends at #2a7f89 so white text holds 4.6:1 edge to edge. */
+.band {
+  --ink: #ffffff;
+  --ink-muted: #e3ecea;
+  --brand-text: #cfe1d9;
+  /* Eyebrow goes mint/white here; brass reads as olive on teal */
+  --accent: #cfe1d9;
+  --accent-text: #ffffff;
+
+  display: grid;
+  gap: 28px;
+  justify-items: start;
+  padding: 32px 20px;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(135deg, #1f5c63 0%, #1f5c63 35%, #2a7f89 100%);
+  color: var(--ink);
+  box-shadow: var(--shadow-float);
+}
+
+.copy {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 0;
+}
+
+.heading {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(30px, 6vw, 46px);
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  text-wrap: balance;
+}
+
+.body {
+  margin: 0;
+  max-width: 600px;
+  font-size: 18px;
+  line-height: 1.6;
+  color: var(--ink-muted);
+}
+
+/* Primary flips to light on the teal band, or it disappears into it */
+.band .solid {
+  background: #ffffff;
+  border-color: #ffffff;
+  color: #1f5c63;
+}
+
+.band .solid:hover {
+  background: #cfe1d9;
+  border-color: #cfe1d9;
+  color: #174950;
+}
+
+@media (min-width: 640px) {
+  .band {
+    padding: 40px;
+  }
+}
+
+@media (min-width: 1080px) {
+  .band {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 48px;
+    padding: 56px;
+  }
+}

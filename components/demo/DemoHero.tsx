@@ -1,6 +1,6 @@
 import type { CSSProperties } from "react";
 import { TbArrowDown } from "react-icons/tb";
-import { demoHero } from "@/content/demo";
+import { demoHero } from "@/content/work";
 import { Button } from "@/components/ui/Button";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import styles from "./DemoHero.module.css";
@@ -14,7 +14,11 @@ export function DemoHero() {
         <div className="settle" style={stagger(0)}>
           <Eyebrow>{demoHero.eyebrow}</Eyebrow>
         </div>
-        <h1 id="demo-hero-heading" className={`settle ${styles.headline}`} style={stagger(1)}>
+        <h1
+          id="demo-hero-heading"
+          className={`settle ${styles.headline}`}
+          style={stagger(1)}
+        >
           {demoHero.headline}
         </h1>
         <p className={`settle ${styles.intro}`} style={stagger(2)}>

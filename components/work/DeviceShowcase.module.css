@@ -1,0 +1,251 @@
+/* The tinted stage the devices sit on */
+.stage {
+  --tint: var(--brand-tint);
+  position: relative;
+  padding: 24px 56px 40px 20px;
+  border-radius: var(--radius-lg);
+  background:
+    radial-gradient(120% 90% at 85% 100%, rgba(255, 255, 255, 0.55), transparent 60%),
+    var(--tint);
+  border: 1px solid var(--border);
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.stage[data-tint="foam"] { --tint: #cfe1d9; }
+.stage[data-tint="brass"] { --tint: #efe3c2; }
+.stage[data-tint="mist"] { --tint: #eae3d5; }
+.stage[data-tint="glass"] { --tint: #cfe6e8; }
+
+/* Faceted shard in the corner, a nod to the mask */
+.stage::before {
+  content: "";
+  position: absolute;
+  right: -40px;
+  top: -40px;
+  width: 220px;
+  height: 220px;
+  background: rgba(31, 92, 99, 0.08);
+  clip-path: polygon(0 0, 100% 0, 100% 100%);
+  z-index: -1;
+}
+
+/* Browser window */
+.browser {
+  margin: 0;
+  overflow: hidden;
+  border-radius: 10px;
+  background: var(--surface-card);
+  border: 1px solid rgba(34, 52, 56, 0.12);
+  box-shadow: 0 2px 0 rgba(1, 39, 43, 0.04), 0 28px 56px -28px rgba(1, 39, 43, 0.45);
+}
+
+.bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 30px;
+  padding: 0 12px;
+  background: var(--surface-sunken);
+  border-bottom: 1px solid var(--border);
+}
+
+.dots {
+  display: flex;
+  gap: 6px;
+}
+
+.dots i {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--border-control);
+  opacity: 0.55;
+}
+
+.url {
+  flex: 1;
+  max-width: 280px;
+  overflow: hidden;
+  padding: 2px 10px;
+  border-radius: 999px;
+  background: var(--surface-card);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 16px;
+  color: var(--ink-muted);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* Screens: a fixed window onto a tall screenshot */
+.screen,
+.phoneScreen {
+  position: relative;
+  overflow: hidden;
+  background: var(--surface-photo);
+  outline: none;
+  cursor: ns-resize;
+}
+
+.screen {
+  aspect-ratio: 16 / 10;
+}
+
+/* Nothing to scroll on a one-screen thumbnail */
+.screen:not([data-scrolls]) {
+  cursor: default;
+}
+
+.screen:not([data-scrolls]) .shot {
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  transform: none;
+}
+
+/* No phone: drop the right-hand room the phone overlaps into */
+.stage[data-phone="none"] {
+  padding-right: 20px;
+}
+
+.shot {
+  display: block;
+  width: 100%;
+  height: auto;
+  /* Scroll distance: the image height minus the window height, as a percentage of the image */
+  transform: translateY(0);
+  transition: transform 1.2s var(--ease-settle);
+}
+
+/* Hover or keyboard focus scrolls the whole page past, slowly */
+.screen:hover .shot,
+.screen:focus-visible .shot {
+  transform: translateY(calc(-100% + 100cqh));
+  transition-duration: 7s;
+  transition-timing-function: cubic-bezier(0.45, 0, 0.55, 1);
+}
+
+.phoneScreen:hover .shot,
+.phoneScreen:focus-visible .shot {
+  transform: translateY(calc(-100% + 100cqh));
+  transition-duration: 6s;
+  transition-timing-function: cubic-bezier(0.45, 0, 0.55, 1);
+}
+
+/* cqh needs the screens to be size containers */
+.screen,
+.phoneScreen {
+  container-type: size;
+}
+
+.screen:focus-visible,
+.phoneScreen:focus-visible {
+  box-shadow: inset 0 0 0 3px var(--brand);
+}
+
+/* Phone */
+.phone {
+  position: absolute;
+  right: 18px;
+  bottom: 18px;
+  width: 23%;
+  min-width: 104px;
+  max-width: 168px;
+  margin: 0;
+  padding: 6px;
+  border-radius: 22px;
+  background: #1a2427;
+  box-shadow: 0 2px 0 rgba(1, 39, 43, 0.08), 0 30px 60px -24px rgba(1, 39, 43, 0.6);
+}
+
+.phoneScreen {
+  aspect-ratio: 9 / 19.5;
+  border-radius: 16px;
+}
+
+.hint {
+  position: absolute;
+  left: 20px;
+  bottom: 10px;
+  display: none;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  color: var(--ink-muted);
+}
+
+.hint svg {
+  font-size: 14px;
+}
+
+/* Scroll-linked float on the phone: drifts up a little as the stage passes. Progressive enhancement. */
+@supports (animation-timeline: view()) {
+  .phone {
+    animation: float linear both;
+    animation-timeline: view();
+    animation-range: entry 0% exit 100%;
+  }
+
+  @keyframes float {
+    from {
+      transform: translateY(24px);
+    }
+    to {
+      transform: translateY(-24px);
+    }
+  }
+}
+
+@media (hover: hover) {
+  .hint {
+    display: inline-flex;
+  }
+}
+
+@media (min-width: 640px) {
+  .stage {
+    padding: 32px 88px 48px 32px;
+  }
+
+  .stage[data-phone="none"] {
+    padding-right: 32px;
+  }
+
+  .phone {
+    right: 28px;
+    bottom: 24px;
+    padding: 7px;
+    border-radius: 26px;
+  }
+
+  .phoneScreen {
+    border-radius: 19px;
+  }
+
+  .hint {
+    left: 32px;
+    bottom: 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shot,
+  .screen:hover .shot,
+  .screen:focus-visible .shot,
+  .phoneScreen:hover .shot,
+  .phoneScreen:focus-visible .shot {
+    transform: none;
+    transition: none;
+  }
+
+  .phone {
+    animation: none;
+  }
+
+  .hint {
+    display: none;
+  }
+}

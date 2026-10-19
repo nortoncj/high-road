@@ -1,6 +1,8 @@
+"use client";
+
 import Image from "next/image";
-import type { CSSProperties } from "react";
-import { TbArrowRight, TbBell, TbCheck, TbMessage } from "react-icons/tb";
+import { useEffect, useState, type CSSProperties } from "react";
+import { TbCheck } from "react-icons/tb";
 import { hero, site } from "@/content/home";
 import { Button } from "@/components/ui/Button";
 import { Eyebrow } from "@/components/ui/Eyebrow";
@@ -8,10 +10,50 @@ import styles from "./Hero.module.css";
 
 const stagger = (i: number) => ({ "--i": i }) as CSSProperties;
 
+/** Full-bleed photo hero. The trade picker swaps the photo and the line under the headline. */
 export function Hero() {
+  const { trades } = hero;
+  const [active, setActive] = useState(0);
+  const [auto, setAuto] = useState(true);
+
+  // Rotate trades until someone picks one. Reduced motion: never rotate.
+  useEffect(() => {
+    if (!auto) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setAuto(false);
+      return;
+    }
+    const id = window.setInterval(
+      () => setActive((i) => (i + 1) % trades.length),
+      hero.rotateMs,
+    );
+    return () => window.clearInterval(id);
+  }, [auto, trades.length]);
+
+  const pick = (i: number) => {
+    setActive(i);
+    setAuto(false);
+  };
+
   return (
     <section className={styles.hero} aria-labelledby="hero-heading">
-      <div className={`container ${styles.grid}`}>
+      <div className={styles.media} aria-hidden="true">
+        {trades.map((t, i) => (
+          <Image
+            key={t.id}
+            src={t.image.src}
+            alt=""
+            fill
+            priority={i === 0}
+            sizes="100vw"
+            className={styles.bg}
+            data-active={i === active}
+          />
+        ))}
+        <div className={styles.shade} />
+      </div>
+
+      <div className={`container ${styles.inner}`}>
         <div className={styles.copy}>
           <div className="settle" style={stagger(0)}>
             <Eyebrow>{hero.eyebrow}</Eyebrow>
@@ -30,8 +72,12 @@ export function Hero() {
             <Button href={site.bookHref} arrow>
               {hero.primaryCta}
             </Button>
-            <Button href={site.demoHref} variant="secondary">
-              {hero.secondaryCta}
+            <Button
+              href={hero.secondaryCta.href}
+              variant="secondary"
+              className={styles.ghost}
+            >
+              {hero.secondaryCta.label}
             </Button>
           </div>
           <ul className={styles.reassurances}>
@@ -44,92 +90,38 @@ export function Hero() {
           </ul>
         </div>
 
-        <figure className={styles.visual}>
-          <div className={styles.photo}>
-            <Image
-              src={hero.image.src}
-              alt={hero.image.alt}
-              fill
-              priority
-              sizes="(max-width: 768px) 100vw, 50vw"
-              className={styles.photoImg}
-            />
-          </div>
-
-          <PhoneMock />
-
-          <div className={styles.alerts} aria-hidden="true">
-            {hero.alerts.map((alert, i) => (
-              <div key={alert.title} className={styles.alert}>
-                <span
-                  className={
-                    i === 0 ? styles.alertIconTint : styles.alertIconSunken
-                  }
-                >
-                  {i === 0 ? <TbBell /> : <TbMessage />}
-                </span>
-                <div className={styles.alertText}>
-                  <div className={styles.alertRow}>
-                    <strong>{alert.title}</strong>
-                    <span className={styles.time}>{alert.time}</span>
-                  </div>
-                  <span>{alert.meta}</span>
-                </div>
-              </div>
+        <div className={`settle ${styles.picker}`} style={stagger(4)}>
+          <div
+            className={styles.chips}
+            role="group"
+            aria-label={`${hero.pickerLabel} your trade`}
+          >
+            <span className={styles.pickerLabel} aria-hidden="true">
+              {hero.pickerLabel}
+            </span>
+            {trades.map((t, i) => (
+              <button
+                key={t.id}
+                type="button"
+                className={styles.chip}
+                aria-pressed={i === active}
+                onClick={() => pick(i)}
+              >
+                {t.label}
+              </button>
             ))}
           </div>
-
-          <div className={styles.summary}>
-            <span className={styles.summaryIcon} aria-hidden="true">
-              <TbCheck />
-            </span>
-            <div>
-              <p className={styles.summaryTitle}>{hero.summary.title}</p>
-              <p className={styles.summaryBody}>{hero.summary.body}</p>
-            </div>
-          </div>
-
-          <figcaption className="visually-hidden">
-            Example of the caregiver application on a phone, with a new
-            application alert sent to the agency owner.
-          </figcaption>
-        </figure>
+          <p className={styles.line} aria-live="polite">
+            <span key={trades[active].id}>{trades[active].line}</span>
+          </p>
+          <span className={styles.timer} data-paused={!auto} aria-hidden="true">
+            <i
+              key={active}
+              style={{ "--rotate": `${hero.rotateMs}ms` } as CSSProperties}
+            />
+          </span>
+        </div>
       </div>
     </section>
-  );
-}
-
-/** Decorative phone showing step one of the caregiver application. */
-function PhoneMock() {
-  return (
-    <div className={styles.phone} aria-hidden="true">
-      <div className={styles.phoneTop}>
-        <span className={styles.phoneBrand}>[Agency name]</span>
-        <span className={styles.lang}>EN | ES</span>
-      </div>
-      <p className={styles.phoneTitle}>Apply to be a caregiver</p>
-      <p className={styles.phoneSub}>
-        Join our team and make a difference close to home.
-      </p>
-      <div className={styles.steps}>
-        <span className={styles.stepOn}>1</span>
-        <span className={styles.stepLine} />
-        <span className={styles.stepOff}>2</span>
-        <span className={styles.stepLine} />
-        <span className={styles.stepOff}>3</span>
-      </div>
-      <div className={styles.field}>
-        <span>Full name</span>
-        <span className={styles.input}>Maria Lopez</span>
-      </div>
-      <div className={styles.field}>
-        <span>Phone number</span>
-        <span className={styles.input}>(941) 000-0000</span>
-      </div>
-      <span className={styles.phoneButton}>
-        Next <TbArrowRight />
-      </span>
-      <span className={styles.phoneNote}>Takes about 3 minutes</span>
-    </div>
   );
 }

@@ -1,0 +1,126 @@
+.section {
+  padding-bottom: var(--section-y);
+}
+
+.band {
+  display: grid;
+  gap: 28px;
+  padding: 28px 20px;
+  border-radius: var(--radius-lg);
+  background: var(--brand-tint);
+  border: 1px solid var(--brand-tint-border);
+}
+
+.intro {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.iconTile {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 52px;
+  height: 52px;
+  border-radius: var(--radius-lg);
+  background: var(--surface-card);
+  border: 1px solid var(--brand-tint-border);
+  color: var(--brand-text);
+  font-size: 28px;
+}
+
+.introText {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.heading {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(28px, 5vw, 38px);
+  line-height: 1.15;
+  color: var(--on-brand-tint);
+}
+
+.body {
+  margin: 0;
+  max-width: 520px;
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--ink);
+}
+
+.tableWrap {
+  overflow-x: auto;
+  border-radius: var(--radius-lg);
+  background: var(--surface-card);
+  border: 1px solid var(--brand-tint-border);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 16px;
+}
+
+.table th,
+.table td {
+  padding: 14px 18px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+
+.table thead th {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--brand-text);
+}
+
+.table tbody th {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 19px;
+}
+
+.table tbody tr:last-child th,
+.table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.num {
+  text-align: right !important;
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.per {
+  color: var(--ink-muted);
+}
+
+@media (min-width: 640px) {
+  .band {
+    padding: 32px;
+  }
+
+  .intro {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 20px;
+  }
+}
+
+@media (min-width: 1080px) {
+  .band {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: center;
+    gap: 48px;
+    padding: 40px;
+  }
+}

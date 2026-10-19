@@ -1,9 +1,19 @@
+/* The one glass bar on the site. Dark tint keeps it readable over light pages too. */
 .header {
   position: sticky;
   top: 0;
   z-index: 50;
-  background: var(--surface-nav);
-  border-bottom: 1px solid var(--border-nav);
+  background: rgba(15, 29, 32, 0.78);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  backdrop-filter: blur(16px) saturate(140%);
+  border-bottom: 1px solid rgba(143, 211, 209, 0.14);
+}
+
+/* No blur support: fall back to the solid nav color */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .header {
+    background: var(--surface-nav);
+  }
 }
 
 .nav {
@@ -23,18 +33,9 @@
 }
 
 .mark {
-  display: grid;
-  place-items: center;
-  width: 34px;
-  height: 34px;
-  border-radius: var(--radius-md);
-  background: #1f5c63;
-  border: 1px solid #30929d;
-  font-family: var(--font-display);
-  font-weight: 600;
-  font-size: 15px;
-  letter-spacing: 0.02em;
-  color: #f6f2ea;
+  width: 26px;
+  height: auto;
+  display: block;
 }
 
 .wordmark {
@@ -194,9 +195,7 @@
   }
 
   .mark {
-    width: 38px;
-    height: 38px;
-    font-size: 17px;
+    width: 30px;
   }
 
   .links {

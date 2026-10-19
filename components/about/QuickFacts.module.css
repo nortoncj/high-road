@@ -1,5 +1,7 @@
 .section {
   padding-block: var(--section-y);
+  background: var(--surface-sunken);
+  border-block: 1px solid var(--border);
 }
 
 .grid {
@@ -12,31 +14,50 @@
   min-width: 0;
 }
 
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 24px;
+}
+
+.heading {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(30px, 5.5vw, 44px);
+  line-height: 1.12;
+  letter-spacing: -0.015em;
+}
+
 .facts {
-  display: grid;
   margin: 0;
   border-top: 1px solid var(--border);
 }
 
 .fact {
   display: grid;
-  gap: 4px;
-  padding-block: 14px;
+  grid-template-columns: 28px minmax(0, 1fr);
+  column-gap: 14px;
+  row-gap: 2px;
+  padding: 16px 0;
   border-bottom: 1px solid var(--border);
 }
 
-.fact dt {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-weight: 700;
-  font-size: 15px;
-  color: var(--ink-muted);
+.icon {
+  grid-row: span 2;
+  margin-top: 2px;
+  font-size: 24px;
+  color: var(--brand-text);
 }
 
-.fact dt svg {
-  font-size: 18px;
-  color: var(--brand-text);
+.fact dt {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
 }
 
 .fact dd {
@@ -46,72 +67,111 @@
   color: var(--ink);
 }
 
+/* Portfolio card: the one dark, techy surface on this page */
 .portfolio {
+  --ink: #e9f0ed;
+  --ink-muted: #a7bab7;
+
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 14px;
   padding: 28px 24px;
+  overflow: hidden;
   border-radius: var(--radius-lg);
-  background: var(--surface-nav);
-  color: var(--on-nav);
+  background:
+    radial-gradient(90% 70% at 100% 0%, rgba(48, 146, 157, 0.3), transparent 60%),
+    #0f1d20;
+  color: var(--ink);
+  box-shadow: var(--shadow-float);
 }
 
-.portfolioHeading {
+/* Faint dot grid, like graph paper */
+.portfolio::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(143, 211, 209, 0.16) 1px, transparent 1px);
+  background-size: 18px 18px;
+  -webkit-mask-image: linear-gradient(200deg, #000, transparent 70%);
+  mask-image: linear-gradient(200deg, #000, transparent 70%);
+  pointer-events: none;
+}
+
+.code {
+  position: relative;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: 28px;
+  color: #8fd3d1;
+}
+
+.pHeading {
+  position: relative;
   margin: 0;
   font-family: var(--font-display);
   font-weight: 500;
   font-size: 26px;
   line-height: 1.2;
+  color: var(--ink);
 }
 
-.portfolioBody {
+.pBody {
+  position: relative;
   margin: 0;
   font-size: 16px;
   line-height: 1.6;
-  color: var(--on-nav-muted);
+  color: var(--ink-muted);
 }
 
-.portfolioLink {
+.pLink {
+  position: relative;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   align-self: flex-start;
-  min-height: 48px;
-  padding: 0 18px;
-  border: 1px solid var(--on-nav-muted);
-  border-radius: var(--radius-md);
-  color: var(--on-nav);
+  min-height: 44px;
   font-weight: 700;
-  font-size: 16px;
+  color: #8fd3d1;
   text-decoration: none;
-  transition: background var(--dur-base) var(--ease-tide), border-color var(--dur-base) var(--ease-tide);
 }
 
-.portfolioLink:hover {
-  background: rgba(246, 242, 234, 0.08);
-  border-color: var(--on-nav);
+.pLink:hover {
+  text-decoration: underline;
 }
 
-.portfolioLink:focus-visible {
-  outline-color: #7ec9d2;
+.pLink svg {
+  transition: transform var(--dur-base) var(--ease-settle);
+}
+
+.pLink:hover svg {
+  transform: translate(2px, -2px);
+}
+
+.pLink:focus-visible {
+  outline: 2px solid #8fd3d1;
+  outline-offset: 3px;
 }
 
 @media (min-width: 640px) {
-  .fact {
-    grid-template-columns: 180px minmax(0, 1fr);
-    align-items: baseline;
-    gap: 16px;
+  .portfolio {
+    padding: 36px 32px;
   }
 }
 
 @media (min-width: 1080px) {
   .grid {
-    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
     gap: 64px;
   }
 
   .portfolio {
     margin-top: 96px;
-    padding: 36px 32px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pLink svg {
+    transition: none;
   }
 }

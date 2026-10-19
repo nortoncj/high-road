@@ -1,24 +1,36 @@
 .eyebrow {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
+  width: fit-content;
+  max-width: 100%;
   margin: 0;
+  padding: 6px 14px 6px 12px;
+  border: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+  /* Keeps the pill legible when it sits on a photo */
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
   font-family: var(--font-text);
   font-weight: 700;
-  font-size: 15px;
-  line-height: 20px;
-  letter-spacing: 0.02em;
+  font-size: 14px;
+  line-height: 18px;
+  letter-spacing: 0.03em;
   color: var(--accent-text);
 }
 
-.rule {
+/* Brass diamond with a soft halo */
+.mark {
   flex: none;
-  width: 32px;
-  height: 2px;
+  width: 7px;
+  height: 7px;
+  border-radius: 1px;
   background: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 22%, transparent);
+  transform: rotate(45deg);
 }
 
 .center {
-  justify-content: center;
-  text-align: center;
+  margin-inline: auto;
 }

@@ -1,41 +1,15 @@
 .hero {
-  padding-block: 32px 56px;
+  padding-block: 40px 64px;
+  background:
+    linear-gradient(135deg, rgba(31, 92, 99, 0.1), rgba(48, 146, 157, 0.06) 45%, transparent 75%),
+    var(--surface-page);
+  overflow: hidden;
 }
 
 .grid {
   display: grid;
-  gap: 32px;
+  gap: 48px;
   align-items: center;
-}
-
-.figure {
-  margin: 0;
-  min-width: 0;
-}
-
-.photo {
-  position: relative;
-  width: 100%;
-  max-width: 420px;
-  aspect-ratio: 4 / 5;
-  margin-inline: auto;
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  background: var(--surface-photo);
-  box-shadow: var(--shadow-float);
-}
-
-.photoImg {
-  object-fit: cover;
-}
-
-.caption {
-  max-width: 420px;
-  margin: 14px auto 0;
-  font-size: 14px;
-  line-height: 1.4;
-  color: var(--ink-muted);
-  text-align: center;
 }
 
 .copy {
@@ -49,46 +23,205 @@
   margin: 0;
   font-family: var(--font-display);
   font-weight: 500;
-  font-size: clamp(36px, 7.5vw, 58px);
-  line-height: 1.06;
+  font-size: clamp(38px, 8vw, 62px);
+  line-height: 1.05;
   letter-spacing: -0.02em;
+  color: var(--ink);
   text-wrap: balance;
 }
 
 .intro {
   margin: 0;
-  max-width: 560px;
-  font-size: 19px;
+  max-width: 580px;
+  font-size: 18px;
   line-height: 1.65;
-  color: var(--ink);
+  color: var(--ink-muted);
 }
 
+/* The promise line, set apart */
 .second {
   margin: 0;
   max-width: 560px;
+  padding-left: 16px;
+  border-left: 3px solid var(--accent);
   font-family: var(--font-display);
-  font-style: italic;
-  font-size: 21px;
-  line-height: 1.45;
+  font-size: 22px;
+  line-height: 1.4;
+  color: var(--ink);
+}
+
+/* Portrait */
+.portrait {
+  position: relative;
+  isolation: isolate;
+  justify-self: center;
+  width: min(100%, 440px);
+  margin: 0 0 40px;
+}
+
+.frame {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background: var(--surface-photo);
+  /* Two cut corners, like the mask's facets */
+  clip-path: polygon(14% 0, 100% 0, 100% 86%, 86% 100%, 0 100%, 0 14%);
+  box-shadow: var(--shadow-float);
+  animation: unveil 900ms var(--ease-settle) 120ms both;
+}
+
+.photo {
+  object-fit: cover;
+  transform: scale(1.04);
+  animation: settlePhoto 1.6s var(--ease-settle) 120ms both;
+}
+
+/* Decorative shards behind the portrait */
+.shard,
+.shardSmall {
+  position: absolute;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.shard {
+  right: -28px;
+  top: -24px;
+  width: 58%;
+  aspect-ratio: 1;
+  background: var(--brand-tint);
+  clip-path: polygon(0 0, 100% 0, 100% 100%);
+}
+
+.shardSmall {
+  left: -20px;
+  bottom: 18%;
+  width: 22%;
+  aspect-ratio: 1;
+  background: var(--accent);
+  opacity: 0.85;
+  clip-path: polygon(0 0, 100% 100%, 0 100%);
+}
+
+.caption {
+  position: absolute;
+  left: -12px;
+  bottom: -32px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 14px 18px;
+  border-radius: var(--radius-lg);
+  background: var(--surface-card);
+  box-shadow: var(--shadow-float);
+  animation: rise 700ms var(--ease-settle) 700ms both;
+}
+
+.captionName {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 19px;
+  line-height: 1.25;
+  color: var(--ink);
+}
+
+.captionRole {
+  font-size: 14px;
   color: var(--ink-muted);
+}
+
+.badge {
+  position: absolute;
+  right: -10px;
+  top: 18%;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: var(--brand);
+  color: var(--on-brand);
+  font-size: 14px;
+  font-weight: 700;
+  box-shadow: var(--shadow-float);
+  animation: rise 700ms var(--ease-settle) 900ms both;
+}
+
+.badge svg {
+  font-size: 16px;
+  animation: ring 1.2s ease-in-out 1.8s 2;
+}
+
+@keyframes unveil {
+  from {
+    opacity: 0;
+    clip-path: polygon(14% 0, 100% 0, 100% 86%, 86% 100%, 0 100%, 0 14%);
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes settlePhoto {
+  to {
+    transform: none;
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* A tiny phone wiggle, twice, then still */
+@keyframes ring {
+  0%,
+  100% {
+    transform: rotate(0);
+  }
+  15%,
+  45% {
+    transform: rotate(-14deg);
+  }
+  30%,
+  60% {
+    transform: rotate(14deg);
+  }
+  75% {
+    transform: rotate(0);
+  }
 }
 
 @media (min-width: 1080px) {
   .hero {
-    padding-block: 72px 96px;
+    padding-block: 72px 104px;
   }
 
   .grid {
-    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
     gap: 72px;
   }
 
-  .photo,
-  .caption {
-    margin-inline: 0;
+  .badge {
+    right: -28px;
   }
+}
 
-  .caption {
-    text-align: left;
+@media (prefers-reduced-motion: reduce) {
+  .frame,
+  .photo,
+  .caption,
+  .badge,
+  .badge svg {
+    animation: none;
+    transform: none;
   }
 }

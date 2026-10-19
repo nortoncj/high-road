@@ -1,0 +1,132 @@
+.section {
+  padding-block: var(--section-y);
+}
+
+.grid {
+  display: grid;
+  gap: 32px;
+  align-items: start;
+}
+
+.listCol {
+  min-width: 0;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 24px;
+}
+
+.heading {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(30px, 5.5vw, 44px);
+  line-height: 1.12;
+  letter-spacing: -0.015em;
+}
+
+.lead {
+  margin: 0;
+  font-size: 18px;
+  line-height: 1.6;
+  color: var(--ink-muted);
+}
+
+/* Menu-style price list: name ... price */
+.list {
+  margin: 0;
+  border-top: 1px solid var(--border);
+}
+
+.row {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.row dt {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 10px;
+  flex: 1;
+  min-width: 0;
+  font-size: 17px;
+  line-height: 1.4;
+}
+
+.row dd {
+  margin: 0;
+  flex: none;
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 17px;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+}
+
+.note {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+
+.budget {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 28px 24px;
+  background: var(--surface-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-float);
+}
+
+.iconTile {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-md);
+  background: var(--brand-tint);
+  color: var(--brand-text);
+  font-size: 26px;
+}
+
+.budgetHeading {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 26px;
+  line-height: 1.2;
+}
+
+.budgetBody {
+  margin: 0;
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--ink-muted);
+}
+
+@media (min-width: 1080px) {
+  .grid {
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+    gap: 64px;
+  }
+
+  .budget {
+    position: sticky;
+    top: calc(var(--nav-height) + 32px);
+    margin-top: 96px;
+    padding: 36px 32px;
+  }
+}

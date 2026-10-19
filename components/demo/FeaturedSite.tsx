@@ -1,6 +1,13 @@
 import type { IconType } from "react-icons";
-import { TbBell, TbChartBar, TbClipboardCheck, TbDeviceMobile, TbEye, TbPencil } from "react-icons/tb";
-import { applySection, featuredSite } from "@/content/demo";
+import {
+  TbBell,
+  TbChartBar,
+  TbClipboardCheck,
+  TbDeviceMobile,
+  TbEye,
+  TbPencil,
+} from "react-icons/tb";
+import { applySection, featuredSite } from "@/content/work";
 import { site } from "@/content/home";
 import { Button } from "@/components/ui/Button";
 import { Eyebrow } from "@/components/ui/Eyebrow";
@@ -23,7 +30,11 @@ const icons: Record<FeatureIcon, IconType> = {
 export function FeaturedSite() {
   return (
     <>
-      <section id="this-site" className={styles.section} aria-labelledby="this-site-heading">
+      <section
+        id="this-site"
+        className={styles.section}
+        aria-labelledby="this-site-heading"
+      >
         <div className={`container ${styles.grid}`}>
           <div className={styles.media}>
             <BrowserFrame url="webtechninjas.com">
@@ -62,7 +73,11 @@ export function FeaturedSite() {
         </div>
       </section>
 
-      <section id="apply" className={styles.applySection} aria-labelledby="apply-heading">
+      <section
+        id="apply"
+        className={styles.applySection}
+        aria-labelledby="apply-heading"
+      >
         <div className={`container ${styles.applyGrid}`}>
           <div className={styles.applyCopy}>
             <Eyebrow>{applySection.eyebrow}</Eyebrow>
@@ -100,14 +115,18 @@ function HomepageMock() {
       <div className={styles.mockHero}>
         <div className={styles.mockCopy}>
           <span className={styles.mockRule} />
-          <span className={styles.mockTitle}>Short on caregivers? Let your website do the hiring.</span>
+          <span className={styles.mockTitle}>
+            Short on caregivers? Let your website do the hiring.
+          </span>
           <span className={styles.mockLine} />
           <span className={styles.mockLine} style={{ width: "70%" }} />
           <span className={styles.mockButton} />
         </div>
         <div className={styles.mockVisual}>
           <div className={styles.mockPhone}>
-            <span className={styles.mockPhoneTitle}>Apply to be a caregiver</span>
+            <span className={styles.mockPhoneTitle}>
+              Apply to be a caregiver
+            </span>
             <span className={styles.mockField} />
             <span className={`${styles.mockField} ${styles.mockFieldOn}`} />
             <span className={styles.mockField} />

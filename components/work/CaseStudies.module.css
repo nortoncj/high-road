@@ -1,0 +1,246 @@
+.section {
+  padding-block: 24px var(--section-y);
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 72px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.item {
+  scroll-margin-top: calc(var(--nav-height) + 24px);
+}
+
+.study {
+  display: grid;
+  gap: 32px;
+  align-items: center;
+}
+
+.media,
+.copy {
+  min-width: 0;
+}
+
+.copy {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.index {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 14px;
+  letter-spacing: 0.08em;
+  color: var(--brand-text);
+}
+
+/* Short faceted rule after the number */
+.index::after {
+  content: "";
+  display: inline-block;
+  width: 28px;
+  height: 2px;
+  margin-left: 10px;
+  vertical-align: middle;
+  background: var(--accent);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+  background: var(--brand-tint);
+  color: var(--on-brand-tint);
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 18px;
+}
+
+.name {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(30px, 5vw, 42px);
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 12px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.meta li {
+  padding: 3px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--surface-card);
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--ink-muted);
+}
+
+.block {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.label {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+
+.problem {
+  margin: 0;
+  font-size: 17px;
+  line-height: 1.65;
+}
+
+.built {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.built li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.built svg {
+  flex: none;
+  margin-top: 3px;
+  font-size: 18px;
+  color: var(--brand-text);
+}
+
+.result {
+  display: flex;
+  gap: 14px;
+  padding: 16px 18px;
+  border-radius: var(--radius-md);
+  background: var(--surface-card);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+}
+
+.resultIcon {
+  flex: none;
+  margin-top: 2px;
+  font-size: 24px;
+  color: var(--accent);
+}
+
+.resultText {
+  margin: 4px 0 0;
+  font-family: var(--font-display);
+  font-size: 20px;
+  line-height: 1.35;
+  color: var(--ink);
+}
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  align-self: flex-start;
+  min-height: 44px;
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--brand-text);
+  text-decoration: none;
+}
+
+.link svg {
+  transition: transform var(--dur-base) var(--ease-settle);
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+.link:hover svg {
+  transform: translate(2px, -2px);
+}
+
+/* Fade and rise as each study scrolls into view. Progressive enhancement:
+   browsers without scroll timelines just show everything. */
+@supports (animation-timeline: view()) {
+  .reveal {
+    animation: reveal linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 60%;
+  }
+
+  .copy.reveal {
+    animation-range: entry 10% entry 70%;
+  }
+
+  @keyframes reveal {
+    from {
+      opacity: 0;
+      transform: translateY(28px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+}
+
+@media (min-width: 1080px) {
+  .list {
+    gap: 112px;
+  }
+
+  .study {
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    gap: 64px;
+  }
+
+  /* Every other study puts the devices on the right */
+  .item[data-flip="true"] .media {
+    order: 2;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    animation: none !important;
+  }
+
+  .link svg {
+    transition: none;
+  }
+}

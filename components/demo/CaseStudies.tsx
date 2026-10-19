@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { TbArrowRight, TbCheck, TbQuote } from "react-icons/tb";
-import { caseStudies, type CaseStudy } from "@/content/demo";
+import { caseStudies, type CaseStudy } from "@/content/work";
 import { BrowserFrame } from "./BrowserFrame";
 import { DemoHeading } from "./DemoHeading";
 import styles from "./CaseStudies.module.css";
@@ -8,9 +8,17 @@ import styles from "./CaseStudies.module.css";
 /** Client work. Order in content/demo.ts: home care first, then senior care, then everything else. */
 export function CaseStudies() {
   return (
-    <section id="work" className={styles.section} aria-labelledby="work-heading">
+    <section
+      id="work"
+      className={styles.section}
+      aria-labelledby="work-heading"
+    >
       <div className="container">
-        <DemoHeading id="work-heading" eyebrow={caseStudies.eyebrow} heading={caseStudies.heading}>
+        <DemoHeading
+          id="work-heading"
+          eyebrow={caseStudies.eyebrow}
+          heading={caseStudies.heading}
+        >
           {caseStudies.intro}
         </DemoHeading>
         <div className={styles.list}>
@@ -23,7 +31,13 @@ export function CaseStudies() {
   );
 }
 
-function CaseStudyCard({ study, reverse }: { study: CaseStudy; reverse: boolean }) {
+function CaseStudyCard({
+  study,
+  reverse,
+}: {
+  study: CaseStudy;
+  reverse: boolean;
+}) {
   const headingId = `${study.id}-heading`;
 
   return (
@@ -46,7 +60,9 @@ function CaseStudyCard({ study, reverse }: { study: CaseStudy; reverse: boolean 
 
       <div className={styles.body}>
         <ul className={styles.badges}>
-          {study.featured ? <li className={styles.badgeFeatured}>Featured</li> : null}
+          {study.featured ? (
+            <li className={styles.badgeFeatured}>Featured</li>
+          ) : null}
           {study.badges.map((b, i) => (
             <li key={b} className={i === 0 ? styles.badgeMain : styles.badge}>
               {b}
@@ -95,10 +111,17 @@ function CaseStudyCard({ study, reverse }: { study: CaseStudy; reverse: boolean 
         ) : null}
 
         {study.href ? (
-          <a href={study.href} target="_blank" rel="noopener noreferrer" className={styles.visit}>
+          <a
+            href={study.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.visit}
+          >
             Visit the site
             <TbArrowRight aria-hidden="true" />
-            <span className="visually-hidden">: {study.name} (opens in a new tab)</span>
+            <span className="visually-hidden">
+              : {study.name} (opens in a new tab)
+            </span>
           </a>
         ) : null}
       </div>

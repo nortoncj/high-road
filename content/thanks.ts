@@ -1,67 +1,70 @@
-// Thank-you pages. One after a booking, one after the contact form.
-// Edit words here, not in the components.
+// Copy for /thanks/message and /thanks/booked.
 
-export type ThanksVariant = "booked" | "message";
+import { site } from "@/content/home";
 
-export const thanksMeta: Record<ThanksVariant, { title: string; description: string; path: string }> = {
-  booked: {
-    title: "You're Booked, WebTech Ninjas",
-    description: "Your free 15 minute call is booked. Here's what to have ready.",
-    path: "/thanks/booked",
-  },
-  message: {
-    title: "Message Received, WebTech Ninjas",
-    description: "Thanks for reaching out. Here's what happens next.",
-    path: "/thanks/message",
-  },
-};
+export type ThanksKind = "message" | "booked";
 
-/** The one link on both pages. Casa de la Paz is the closest match to a home care owner. */
-export const thanksLink = {
-  lead: "While you wait, here's a site I built for a senior living business:",
-  label: "See the Casa de la Paz project",
-  href: "/demo#casa-de-la-paz", // TODO: swap for [YOUR BEST CASE STUDY OR PAGE] if a better one comes along
-};
+export type Step = { title: string; body: string };
+export type LinkCard = { label: string; body: string; href: string };
 
-type ReadyItem = { strong: string; rest: string };
-
-type ThanksCopy = {
+export type ThanksPage = {
+  meta: { title: string; description: string };
+  eyebrow: string;
   headline: string;
-  intro: string;
-  /** Booking page only. The phone number from content/home.ts is added after it as a link. */
-  help?: string;
-  readyLead: string;
-  ready: ReadyItem[];
-  signoff: string;
+  body: string;
+  icon: "mail" | "calendar";
+  stepsHeading: string;
+  steps: Step[];
+  /** The one next move this page pushes. */
+  nudge?: { heading: string; body: string; cta: string; href: string };
+  aside?: { heading: string; body: string };
 };
 
-const biggestProblem: ReadyItem = {
-  strong: "Your biggest problem right now,",
-  rest: "like not enough caregiver applicants or families not calling",
+const whileYouWait: { heading: string; links: LinkCard[] } = {
+  heading: "While you wait",
+  links: [
+    { label: "See my work", body: "Real sites for real local businesses.", href: "/work" },
+    { label: "See pricing", body: "Three fixed prices, no surprise invoices.", href: "/pricing" },
+    { label: "About me", body: "The person who'll answer when you call.", href: "/about" },
+  ],
 };
 
-export const thanks: Record<ThanksVariant, ThanksCopy> = {
-  booked: {
-    headline: "You're booked. Talk soon.",
-    intro: "Thanks for grabbing a time. A confirmation email with your call details is on its way.",
-    help: "Didn't get it? Check spam, or call or text me at",
-    readyLead: "Before the call, have two things ready:",
-    ready: [
-      { strong: "Your website address,", rest: "so I can pull it up while we talk" },
-      biggestProblem,
-    ],
-    signoff: "That's it. No slides, no tech talk, just a real conversation with me, Chris. Se habla español.",
-  },
+export const thanks: Record<ThanksKind, ThanksPage> & { whileYouWait: typeof whileYouWait } = {
   message: {
-    headline: "Got it. I'll be in touch soon.",
-    // This is a promise. If you can't keep it on side-hustle hours, change it to "within two business days".
-    intro:
-      "Thanks for reaching out. I read every message myself, and I'll get back to you by the next business day, by phone or email, whichever you picked.",
-    readyLead: "To make our first conversation quick and useful, have two things ready:",
-    ready: [
-      { strong: "Your website address,", rest: "or just tell me if you don't have one yet" },
-      biggestProblem,
+    meta: { title: "Message received", description: "Thanks for reaching out to WebTech Ninjas." },
+    eyebrow: "Message sent",
+    headline: "Got it. I'll reply within 24 hours.",
+    body: "A copy of your message is on its way to your inbox now, so you have it for your records. I read every one myself.",
+    icon: "mail",
+    stepsHeading: "What happens next",
+    steps: [
+      { title: "Check your inbox", body: "The confirmation should land in a minute. Not there? Check spam or Promotions and mark it safe so my reply gets through." },
+      { title: "I read it and reply", body: "You'll hear back from me, Chris, by email within 24 hours. Usually sooner." },
+      { title: "We talk, if it's a fit", body: "If it sounds like I can help, I'll suggest a free 15 minute call. If not, I'll tell you who can." },
     ],
-    signoff: "No sales script, no tech talk. Se habla español.",
+    nudge: {
+      heading: "Want to skip the back-and-forth?",
+      body: "Grab a free 15 minute call now and we'll go over your site together.",
+      cta: "Pick a time",
+      href: site.bookHref,
+    },
   },
+  booked: {
+    meta: { title: "Call booked", description: "Your free 15 minute call with WebTech Ninjas is booked." },
+    eyebrow: "You're booked",
+    headline: "You're on my calendar.",
+    body: "The invite and call details are in your email from Calendly. Add it to your calendar so it doesn't sneak up on you.",
+    icon: "calendar",
+    stepsHeading: "Get the most out of 15 minutes",
+    steps: [
+      { title: "Have your website handy", body: "If you don't have one yet, that's fine. Bring the name of a competitor's site you like or hate." },
+      { title: "Know where leads come from", body: "Google, referrals, Facebook, lead sites. A rough guess is plenty." },
+      { title: "Bring your biggest headache", body: "The one thing about your website or leads that bugs you most. We'll start there." },
+    ],
+    aside: {
+      heading: "Need to change the time?",
+      body: `Use the reschedule link in your Calendly email, or call or text me at ${site.phone}.`,
+    },
+  },
+  whileYouWait,
 };

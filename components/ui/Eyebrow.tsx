@@ -3,19 +3,17 @@ import styles from "./Eyebrow.module.css";
 
 type EyebrowProps = {
   children: ReactNode;
-  /** Centered eyebrows drop the shoreline rule. */
   align?: "start" | "center";
 };
 
-/** Small section label with the brass shoreline rule. Sentence case, never all caps. */
+/**
+ * Small section label: a brass-tinted pill with a diamond marker. Sentence case, never all caps.
+ * Reads --accent / --accent-text, so dark sections re-point those tokens to a lighter gold.
+ */
 export function Eyebrow({ children, align = "start" }: EyebrowProps) {
   return (
-    <p
-      className={`${styles.eyebrow} ${align === "center" ? styles.center : ""}`}
-    >
-      {align === "start" ? (
-        <span className={styles.rule} aria-hidden="true" />
-      ) : null}
+    <p className={`${styles.eyebrow} ${align === "center" ? styles.center : ""}`}>
+      <span className={styles.mark} aria-hidden="true" />
       {children}
     </p>
   );

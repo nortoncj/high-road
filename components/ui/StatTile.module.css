@@ -1,0 +1,113 @@
+/* Chart colors fall back to the light-theme Monokai Adapted values.
+   A dark section can re-point --chart-1..5 to the true Monokai colors. */
+.tile {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+  padding: 22px 24px;
+  background: var(--surface-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-float);
+}
+
+.label {
+  margin: 0;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 700;
+  color: var(--ink-muted);
+}
+
+.value {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 40px;
+  line-height: 44px;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+}
+
+.featured .value {
+  color: var(--accent);
+}
+
+.unit {
+  margin-left: 4px;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 0;
+  color: var(--ink-muted);
+}
+
+.foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.delta {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 20px;
+  font-variant-numeric: tabular-nums;
+}
+
+.delta[data-state="good"] {
+  color: var(--positive, var(--brand-text));
+}
+
+.delta[data-state="bad"] {
+  color: var(--coral-ink, #c2185b);
+}
+
+.delta[data-state="flat"] {
+  color: var(--ink-muted);
+}
+
+.context {
+  font-family: var(--font-body, inherit);
+  color: var(--ink-muted);
+}
+
+.spark {
+  flex: none;
+  width: 96px;
+  height: 32px;
+  overflow: visible;
+  --c: var(--chart-1, #1f5c63);
+}
+
+.spark[data-series="2"] { --c: var(--chart-2, #1d84a6); }
+.spark[data-series="3"] { --c: var(--chart-3, #8f7000); }
+.spark[data-series="4"] { --c: var(--chart-4, #7a4cd0); }
+.spark[data-series="5"] { --c: var(--chart-5, #f92672); }
+
+.area {
+  fill: var(--c);
+  fill-opacity: 0.12;
+}
+
+.line {
+  fill: none;
+  stroke: var(--c);
+  stroke-width: 2.25;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+.end {
+  fill: var(--c);
+  stroke: var(--surface-card);
+  stroke-width: 2;
+}

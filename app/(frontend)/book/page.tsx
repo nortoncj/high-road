@@ -1,22 +1,21 @@
-import type { Metadata } from "next";
-import { BookSection } from "@/components/book";
-import { QuickMessage } from "@/components/contact";
+import { BookHeader, BookTabs } from "@/components/book";
 import { bookMeta } from "@/content/book";
+import { buildMetadata } from "@/lib/seo";
+import styles from "./page.module.css";
 
-export const metadata: Metadata = {
-  title: { absolute: bookMeta.title },
+export const metadata = buildMetadata({
+  title: bookMeta.title,
   description: bookMeta.description,
-  alternates: { canonical: bookMeta.path },
-  // People land here from your buttons, not from Google. Keep cold searches off the calendar.
-  robots: { index: false, follow: true },
-};
+  // If buildMetadata takes a canonical path, pass bookMeta.path here.
+});
 
-// TopNav and Footer come from app/layout.tsx. MobileCtaBar hides itself on /book.
 export default function BookPage() {
   return (
-    <>
-      <BookSection />
-      <QuickMessage />
-    </>
+    <section className={styles.section} aria-labelledby="book-heading">
+      <div className={`container ${styles.grid}`}>
+        <BookHeader />
+        <BookTabs />
+      </div>
+    </section>
   );
 }

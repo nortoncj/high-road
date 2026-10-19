@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useId, useState } from "react";
@@ -8,6 +9,7 @@ import { navLinks, site } from "@/content/home";
 import { Button } from "@/components/ui/Button";
 import styles from "./TopNav.module.css";
 
+/** Glass nav. Sits over the hero photo on the homepage, stays readable on every other page. */
 export function TopNav() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
@@ -31,9 +33,14 @@ export function TopNav() {
     <header className={styles.header}>
       <nav className={`container ${styles.nav}`} aria-label="Main">
         <Link href="/" className={styles.brand}>
-          {/* <span className={styles.mark} aria-hidden="true">
-            {site.monogram}
-          </span> */}
+          <Image
+            src={site.logo.onDark}
+            alt=""
+            width={30}
+            height={38}
+            className={styles.mark}
+            priority
+          />
           <span className={styles.wordmark}>{site.name}</span>
         </Link>
 
@@ -52,10 +59,10 @@ export function TopNav() {
         </ul>
 
         <div className={styles.actions}>
-          <a href={site.phoneHref} className={styles.phone}>
+          {/* <a href={site.phoneHref} className={styles.phone}>
             <TbPhone aria-hidden="true" />
             <span className={styles.phoneText}>{site.phone}</span>
-          </a>
+          </a> */}
           <span className={styles.cta}>
             <Button href={site.bookHref} size="sm" arrow>
               Book a free call

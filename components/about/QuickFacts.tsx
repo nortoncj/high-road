@@ -1,15 +1,12 @@
 import type { IconType } from "react-icons";
-import { TbCertificate, TbCode, TbExternalLink, TbLanguage, TbMapPin, TbSchool, TbWorld } from "react-icons/tb";
+import { TbArrowUpRight, TbCertificate, TbCode, TbMapPin, TbSchool, TbWorld } from "react-icons/tb";
 import { quickFacts } from "@/content/about";
-import { AboutHeading } from "./AboutHeading";
+import { Eyebrow } from "@/components/ui/Eyebrow";
 import styles from "./QuickFacts.module.css";
 
-type FactIcon = (typeof quickFacts.facts)[number]["icon"];
-
-const icons: Record<FactIcon, IconType> = {
+const icons: Record<(typeof quickFacts.facts)[number]["icon"], IconType> = {
   pin: TbMapPin,
   world: TbWorld,
-  language: TbLanguage,
   school: TbSchool,
   cert: TbCertificate,
   code: TbCode,
@@ -17,21 +14,23 @@ const icons: Record<FactIcon, IconType> = {
 
 export function QuickFacts() {
   const { portfolio } = quickFacts;
-
   return (
     <section className={styles.section} aria-labelledby="facts-heading">
       <div className={`container ${styles.grid}`}>
         <div className={styles.factsCol}>
-          <AboutHeading id="facts-heading" eyebrow={quickFacts.eyebrow} heading={quickFacts.heading} />
+          <header className={styles.header}>
+            <Eyebrow>{quickFacts.eyebrow}</Eyebrow>
+            <h2 id="facts-heading" className={styles.heading}>
+              {quickFacts.heading}
+            </h2>
+          </header>
           <dl className={styles.facts}>
             {quickFacts.facts.map((f) => {
               const Icon = icons[f.icon];
               return (
                 <div key={f.label} className={styles.fact}>
-                  <dt>
-                    <Icon aria-hidden="true" />
-                    {f.label}
-                  </dt>
+                  <Icon className={styles.icon} aria-hidden="true" />
+                  <dt>{f.label}</dt>
                   <dd>{f.value}</dd>
                 </div>
               );
@@ -40,14 +39,16 @@ export function QuickFacts() {
         </div>
 
         <aside className={styles.portfolio} aria-labelledby="portfolio-heading">
-          <h3 id="portfolio-heading" className={styles.portfolioHeading}>
+          <span className={styles.code} aria-hidden="true">
+            {"</>"}
+          </span>
+          <h3 id="portfolio-heading" className={styles.pHeading}>
             {portfolio.heading}
           </h3>
-          <p className={styles.portfolioBody}>{portfolio.body}</p>
-          {/* Opens in a new tab so owners don't lose your site */}
-          <a href={portfolio.href} target="_blank" rel="noopener noreferrer" className={styles.portfolioLink}>
+          <p className={styles.pBody}>{portfolio.body}</p>
+          <a href={portfolio.href} className={styles.pLink} target="_blank" rel="noopener noreferrer">
             {portfolio.linkText}
-            <TbExternalLink aria-hidden="true" />
+            <TbArrowUpRight aria-hidden="true" />
             <span className="visually-hidden"> (opens in a new tab)</span>
           </a>
         </aside>

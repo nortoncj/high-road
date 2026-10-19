@@ -1,0 +1,119 @@
+.hero {
+  padding-block: 48px 40px;
+  background:
+    linear-gradient(135deg, rgba(31, 92, 99, 0.1), rgba(48, 146, 157, 0.06) 45%, transparent 75%),
+    var(--surface-page);
+}
+
+.inner {
+  display: grid;
+  gap: 40px;
+  align-items: end;
+}
+
+.copy {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-width: 0;
+}
+
+.headline {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(40px, 8vw, 68px);
+  line-height: 1.03;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  text-wrap: balance;
+}
+
+.body {
+  margin: 0;
+  max-width: 540px;
+  font-size: 18px;
+  line-height: 1.65;
+  color: var(--ink-muted);
+}
+
+/* Project index: a numbered table of contents */
+.jump {
+  min-width: 0;
+}
+
+.jumpLabel {
+  margin: 0 0 10px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+
+.jump ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--border);
+}
+
+.jump a {
+  display: grid;
+  grid-template-columns: 36px minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 12px;
+  min-height: 48px;
+  padding: 12px 4px;
+  border-bottom: 1px solid var(--border);
+  color: var(--ink);
+  text-decoration: none;
+  transition: background-color var(--dur-quick) ease, padding var(--dur-base) var(--ease-settle);
+}
+
+.jump a:hover {
+  background: var(--brand-tint);
+  padding-inline: 12px;
+}
+
+.jump a:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 2px;
+}
+
+.num {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--brand-text);
+}
+
+.jumpName {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 19px;
+  line-height: 1.3;
+}
+
+.jumpMeta {
+  font-size: 14px;
+  color: var(--ink-muted);
+  text-align: right;
+}
+
+@media (min-width: 1080px) {
+  .hero {
+    padding-block: 80px 64px;
+  }
+
+  .inner {
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    gap: 72px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .jump a {
+    transition: none;
+  }
+}

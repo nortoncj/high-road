@@ -1,0 +1,93 @@
+.chart {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+  margin: 0;
+  padding: 22px 24px;
+  background: var(--surface-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-float);
+}
+
+.caption {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.title {
+  font-size: 20px;
+  line-height: 28px;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.subtitle {
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--ink-muted);
+}
+
+.svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.grid {
+  stroke: var(--chart-grid, #e6dfd2);
+  stroke-width: 1;
+}
+
+.axis {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  fill: var(--ink-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.label {
+  font-size: 12px;
+  font-weight: 700;
+  fill: var(--ink);
+}
+
+.series {
+  --c: var(--chart-1, #1f5c63);
+}
+
+.series[data-series="2"] { --c: var(--chart-2, #1d84a6); }
+.series[data-series="3"] { --c: var(--chart-3, #8f7000); }
+.series[data-series="4"] { --c: var(--chart-4, #7a4cd0); }
+.series[data-series="5"] { --c: var(--chart-5, #f92672); }
+
+.line {
+  fill: none;
+  stroke: var(--c);
+  stroke-width: 2.25;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+.end {
+  fill: var(--c);
+  stroke: var(--surface-card);
+  stroke-width: 2;
+}
+
+.dot {
+  fill: var(--c);
+}
+
+.stopA {
+  stop-color: var(--sea-glass, #30929d);
+  stop-opacity: 0.28;
+}
+
+.stopB {
+  stop-color: var(--sea-glass, #30929d);
+  stop-opacity: 0;
+}

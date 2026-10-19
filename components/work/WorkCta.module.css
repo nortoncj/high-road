@@ -1,0 +1,91 @@
+.section {
+  padding-block: 0 var(--section-y);
+}
+
+/* Coastal glow band. Ends at #2a7f89 so white text holds 4.6:1 edge to edge. */
+.band {
+  --ink: #ffffff;
+  --ink-muted: #e3ecea;
+  --brand-text: #cfe1d9;
+  /* Eyebrow goes mint/white here; brass reads as olive on teal */
+  --accent: #cfe1d9;
+  --accent-text: #ffffff;
+
+  display: grid;
+  gap: 28px;
+  padding: 32px 20px;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(135deg, #1f5c63 0%, #1f5c63 35%, #2a7f89 100%);
+  color: var(--ink);
+  box-shadow: var(--shadow-float);
+}
+
+.copy {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 0;
+}
+
+.heading {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(30px, 6vw, 46px);
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+}
+
+.body {
+  margin: 0;
+  max-width: 600px;
+  font-size: 18px;
+  line-height: 1.6;
+  color: var(--ink-muted);
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.actions .solid {
+  background: #ffffff;
+  border-color: #ffffff;
+  color: #1f5c63;
+}
+
+.actions .solid:hover {
+  background: #cfe1d9;
+  border-color: #cfe1d9;
+  color: #174950;
+}
+
+.actions .ghost {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.55);
+  color: #ffffff;
+}
+
+.actions .ghost:hover {
+  background: rgba(255, 255, 255, 0.16);
+  border-color: #ffffff;
+  color: #ffffff;
+}
+
+@media (min-width: 640px) {
+  .band {
+    padding: 40px;
+  }
+}
+
+@media (min-width: 1080px) {
+  .band {
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 0.6fr);
+    align-items: center;
+    gap: 48px;
+    padding: 56px;
+  }
+}

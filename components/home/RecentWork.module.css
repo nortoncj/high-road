@@ -1,48 +1,158 @@
 .section {
-  padding-bottom: var(--section-y);
+  padding-block: var(--section-y);
 }
 
 .inner {
   display: flex;
   flex-direction: column;
-  gap: 28px;
+  gap: 24px;
 }
 
 .header {
   display: flex;
   flex-direction: column;
   gap: 12px;
+  margin-bottom: 12px;
 }
 
 .headerText {
   display: flex;
   flex-direction: column;
   gap: 14px;
+  max-width: 720px;
 }
 
 .heading {
   margin: 0;
   font-family: var(--font-display);
   font-weight: 500;
-  font-size: clamp(30px, 5vw, 38px);
-  line-height: 1.15;
-  letter-spacing: -0.01em;
+  font-size: clamp(32px, 6vw, 48px);
+  line-height: 1.1;
+  letter-spacing: -0.015em;
   text-wrap: balance;
 }
 
 .aside {
   margin: 0;
-  font-size: 16px;
+  font-size: 18px;
+  line-height: 1.6;
   color: var(--ink-muted);
 }
 
-.cover {
-  object-fit: cover;
+/* ---------- Scroll entrance ----------
+   Reveal sets data-reveal="pending" below the fold, then "done" in view. The card rises in and
+   its screenshot wipes down like a page loading. --d staggers cards that share a row. */
+.reveal {
+  --d: 0ms;
+  height: 100%;
+  transition:
+    opacity 600ms ease var(--d),
+    transform 800ms var(--ease-settle) var(--d);
 }
 
-/* Featured project */
+.reveal[data-reveal="pending"] {
+  opacity: 0;
+  transform: translateY(28px);
+}
+
+.shot {
+  object-fit: cover;
+  object-position: top;
+  /* Explicit resting value so clip-path can interpolate from the pending inset */
+  clip-path: inset(0 0 0 0);
+  transition:
+    clip-path 1100ms var(--ease-tide) calc(var(--d) + 180ms),
+    transform 700ms var(--ease-settle);
+}
+
+.reveal[data-reveal="pending"] .shot {
+  clip-path: inset(0 0 100% 0);
+}
+
+/* ---------- Browser frame ---------- */
+.browser {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface-card);
+  box-shadow: var(--shadow-lift);
+  transition:
+    transform var(--dur-settle) var(--ease-settle),
+    box-shadow var(--dur-settle) var(--ease-settle);
+}
+
+.browserBar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 30px;
+  padding: 0 10px;
+  background: var(--surface-sunken);
+  border-bottom: 1px solid var(--border);
+}
+
+.dots {
+  display: flex;
+  flex: none;
+  gap: 5px;
+}
+
+.dots span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--border-control);
+  opacity: 0.55;
+  transition: background-color var(--dur-base) ease, opacity var(--dur-base) ease;
+}
+
+.address {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  min-width: 0;
+  max-width: 260px;
+  flex: 1;
+  height: 20px;
+  padding: 0 8px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--surface-card);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: var(--ink-subtle);
+}
+
+.address svg {
+  flex: none;
+  font-size: 11px;
+}
+
+.browserView {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: var(--surface-photo);
+}
+
+/* ---------- Shared text bits ---------- */
+.type {
+  order: -1;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--brand-text);
+}
+
+/* ---------- Featured project ---------- */
 .featured {
   display: grid;
+  height: 100%;
   overflow: hidden;
   background: var(--surface-card);
   border: 1px solid var(--border);
@@ -51,40 +161,11 @@
 
 .featuredMedia {
   position: relative;
-  padding: 20px 20px 0;
-  background: var(--surface-sunken);
-}
-
-.browser {
-  overflow: hidden;
-  border: 1px solid var(--border);
-  border-bottom: 0;
-  border-radius: 10px 10px 0 0;
-  background: var(--surface-card);
-  box-shadow: var(--shadow-float);
-}
-
-.browserBar {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  height: 28px;
-  padding: 0 12px;
-  background: var(--surface-sunken);
-  border-bottom: 1px solid var(--border);
-}
-
-.browserBar span {
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-  background: var(--border-control);
-  opacity: 0.6;
-}
-
-.browserView {
-  position: relative;
-  aspect-ratio: 16 / 10;
+  padding: 20px;
+  background:
+    radial-gradient(circle at 1px 1px, color-mix(in srgb, var(--ink) 9%, transparent) 1px, transparent 0)
+      0 0 / 14px 14px,
+    var(--surface-sunken);
 }
 
 .featuredBody {
@@ -122,6 +203,12 @@
   color: var(--accent-text);
 }
 
+.titleBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
 .featuredName {
   margin: 0;
   font-family: var(--font-display);
@@ -130,16 +217,42 @@
   line-height: 1.15;
 }
 
-.industry {
-  margin: 4px 0 0;
+.highlightStrip {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 0;
+  padding: 12px 14px;
+  border-left: 3px solid var(--accent);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  background: var(--surface-page);
   font-size: 16px;
-  color: var(--ink-muted);
+  line-height: 1.45;
+}
+
+.highlightStrip > svg {
+  flex: none;
+  margin-top: 2px;
+  font-size: 18px;
+  color: var(--accent);
+}
+
+.highlightLabel {
+  display: block;
+  margin-bottom: 2px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent-text);
 }
 
 .summary {
   margin: 0;
   font-size: 17px;
   line-height: 1.6;
+  color: var(--ink-muted);
 }
 
 .quote {
@@ -180,11 +293,7 @@
   transition: transform var(--dur-base) var(--ease-settle);
 }
 
-.more:hover svg {
-  transform: translateX(3px);
-}
-
-/* Smaller project cards */
+/* ---------- Project cards ---------- */
 .grid {
   display: grid;
   gap: 20px;
@@ -203,46 +312,147 @@
   border-radius: var(--radius-lg);
   color: var(--ink);
   text-decoration: none;
-  transition: transform var(--dur-base) var(--ease-settle), box-shadow var(--dur-base) var(--ease-settle);
+  transition:
+    transform var(--dur-settle) var(--ease-settle),
+    box-shadow var(--dur-settle) var(--ease-settle),
+    border-color var(--dur-base) ease;
 }
 
-.card:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-lift);
+.card:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 3px;
 }
 
-.thumb {
-  position: relative;
-  aspect-ratio: 16 / 10;
-  background: var(--surface-photo);
+.cardMedia {
+  padding: 14px 14px 0;
+  background:
+    radial-gradient(circle at 1px 1px, color-mix(in srgb, var(--ink) 9%, transparent) 1px, transparent 0)
+      0 0 / 14px 14px,
+    var(--surface-sunken);
+}
+
+.cardMedia .browser {
+  border-bottom: 0;
+  border-radius: 10px 10px 0 0;
+  box-shadow: var(--shadow-rest);
+}
+
+.visit {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: var(--surface-nav);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  opacity: 0;
+  transform: translateY(8px);
+  transition:
+    opacity var(--dur-base) ease,
+    transform var(--dur-settle) var(--ease-settle);
 }
 
 .cardBody {
   display: flex;
   flex-direction: column;
-  gap: 2px;
-  padding: 16px 18px;
+  gap: 6px;
+  flex: 1;
+  padding: 18px 18px 20px;
+  border-top: 1px solid var(--border);
 }
 
 .cardName {
   font-family: var(--font-display);
   font-weight: 500;
-  font-size: 20px;
-  line-height: 1.3;
+  font-size: 22px;
+  line-height: 1.25;
 }
 
-.cardIndustry {
+.highlight {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin-top: 4px;
   font-size: 15px;
+  line-height: 1.45;
   color: var(--ink-muted);
 }
 
+.highlight svg {
+  flex: none;
+  margin-top: 2px;
+  font-size: 16px;
+  color: var(--accent);
+}
+
+/* ---------- Hover (mouse and trackpad only) ---------- */
+@media (hover: hover) {
+  .card:hover,
+  .featured:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lift);
+  }
+
+  .card:hover {
+    border-color: var(--border-control);
+  }
+
+  .card:hover .shot,
+  .featured:hover .shot {
+    transform: scale(1.05);
+  }
+
+  .card:hover .browser,
+  .featured:hover .browser {
+    transform: translateY(-3px);
+  }
+
+  .card:hover .dots span:nth-child(1),
+  .featured:hover .dots span:nth-child(1) {
+    background: #e5604f;
+    opacity: 1;
+  }
+
+  .card:hover .dots span:nth-child(2),
+  .featured:hover .dots span:nth-child(2) {
+    background: #e2b33c;
+    opacity: 1;
+  }
+
+  .card:hover .dots span:nth-child(3),
+  .featured:hover .dots span:nth-child(3) {
+    background: #4fb06a;
+    opacity: 1;
+  }
+
+  .card:hover .visit,
+  .card:focus-visible .visit {
+    opacity: 1;
+    transform: none;
+  }
+
+  .featured:hover .more svg,
+  .more:hover svg {
+    transform: translateX(3px);
+  }
+}
+
 @media (min-width: 640px) {
+  .reveal {
+    --d: calc(var(--i, 0) * 120ms);
+  }
+
   .grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .featuredMedia {
-    padding: 32px 32px 0;
+    padding: 32px;
   }
 
   .featuredBody {
@@ -251,29 +461,38 @@
 }
 
 @media (min-width: 1080px) {
+  .inner {
+    gap: 28px;
+  }
+
   .header {
     flex-direction: row;
     align-items: flex-end;
     justify-content: space-between;
+    gap: 32px;
+    margin-bottom: 16px;
+  }
+
+  .aside {
+    flex: none;
   }
 
   .featured {
     grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
-    transition: transform var(--dur-base) var(--ease-settle), box-shadow var(--dur-base) var(--ease-settle);
-  }
-
-  .featured:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-lift);
+    transition:
+      transform var(--dur-settle) var(--ease-settle),
+      box-shadow var(--dur-settle) var(--ease-settle);
   }
 
   .featuredMedia {
     display: flex;
-    align-items: flex-end;
+    align-items: center;
+    padding: 40px;
   }
 
-  .browser {
+  .featuredMedia .browser {
     width: 100%;
+    box-shadow: var(--shadow-float);
   }
 
   .featuredBody {
@@ -286,8 +505,30 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .reveal[data-reveal="pending"] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .reveal[data-reveal="pending"] .shot {
+    clip-path: none;
+  }
+
+  .shot,
+  .browser,
+  .card,
+  .featured {
+    transition: none;
+  }
+
   .card:hover,
-  .featured:hover {
+  .featured:hover,
+  .card:hover .shot,
+  .featured:hover .shot,
+  .card:hover .browser,
+  .featured:hover .browser {
     transform: none;
   }
 }

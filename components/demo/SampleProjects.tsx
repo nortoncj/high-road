@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { TbCheck, TbHammer } from "react-icons/tb";
-import { samples } from "@/content/demo";
+import { samples } from "@/content/work";
 import { site } from "@/content/home";
 import { Button } from "@/components/ui/Button";
 import { BrowserFrame } from "./BrowserFrame";
@@ -11,9 +11,17 @@ import styles from "./SampleProjects.module.css";
 /** Shows sample agency sites, or an "in progress" card until the first one is live. */
 export function SampleProjects() {
   return (
-    <section id="samples" className={styles.section} aria-labelledby="samples-heading">
+    <section
+      id="samples"
+      className={styles.section}
+      aria-labelledby="samples-heading"
+    >
       <div className="container">
-        <DemoHeading id="samples-heading" eyebrow={samples.eyebrow} heading={samples.heading}>
+        <DemoHeading
+          id="samples-heading"
+          eyebrow={samples.eyebrow}
+          heading={samples.heading}
+        >
           {samples.intro}
         </DemoHeading>
 
@@ -35,7 +43,13 @@ export function SampleProjects() {
             {samples.items.map((s) => (
               <li key={s.name} className={styles.card}>
                 <BrowserFrame>
-                  <Image src={s.image.src} alt={s.image.alt} fill sizes="(min-width: 1080px) 560px, 100vw" style={{ objectFit: "cover" }} />
+                  <Image
+                    src={s.image.src}
+                    alt={s.image.alt}
+                    fill
+                    sizes="(min-width: 1080px) 560px, 100vw"
+                    style={{ objectFit: "cover" }}
+                  />
                 </BrowserFrame>
                 <p className={styles.label}>{samples.label}</p>
                 <h3 className={styles.name}>{s.name}</h3>

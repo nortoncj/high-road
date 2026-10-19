@@ -1,11 +1,28 @@
 "use client";
 
-import { useEffect, useRef, useState, type ChangeEvent, type FormEvent } from "react";
-import { TbAlertTriangle, TbArrowLeft, TbArrowRight, TbCheck } from "react-icons/tb";
-import { applyCopy, type ApplyLang } from "@/content/demo";
+import {
+  useEffect,
+  useRef,
+  useState,
+  type ChangeEvent,
+  type FormEvent,
+} from "react";
+import {
+  TbAlertTriangle,
+  TbArrowLeft,
+  TbArrowRight,
+  TbCheck,
+} from "react-icons/tb";
+import { applyCopy, type ApplyLang } from "@/content/work";
 import styles from "./ApplyDemo.module.css";
 
-type Application = { role: string; times: string[]; name: string; phone: string; lang: ApplyLang };
+type Application = {
+  role: string;
+  times: string[];
+  name: string;
+  phone: string;
+  lang: ApplyLang;
+};
 
 type Props = {
   initialLang?: ApplyLang;
@@ -45,7 +62,9 @@ export function ApplyDemo({ initialLang = "en", onSubmit }: Props) {
 
   const toggleTime = (i: number) => {
     clearError();
-    setTimes((prev) => (prev.includes(i) ? prev.filter((t) => t !== i) : [...prev, i]));
+    setTimes((prev) =>
+      prev.includes(i) ? prev.filter((t) => t !== i) : [...prev, i],
+    );
   };
 
   const handleNext = async (e: FormEvent) => {
@@ -56,7 +75,13 @@ export function ApplyDemo({ initialLang = "en", onSubmit }: Props) {
       if (!name.trim()) return setError(c.needName);
       if (phone.replace(/\D/g, "").length !== 10) return setError(c.needPhone);
       if (onSubmit && role !== null) {
-        await onSubmit({ role: c.roles[role], times: times.map((t) => c.times[t]), name: name.trim(), phone, lang });
+        await onSubmit({
+          role: c.roles[role],
+          times: times.map((t) => c.times[t]),
+          name: name.trim(),
+          phone,
+          lang,
+        });
       }
     }
     clearError();
@@ -120,18 +145,34 @@ export function ApplyDemo({ initialLang = "en", onSubmit }: Props) {
         {langToggle}
       </div>
       <div className={styles.track} aria-hidden="true">
-        <div className={styles.fill} style={{ transform: `scaleX(${(step + 1) / TOTAL})` }} />
+        <div
+          className={styles.fill}
+          style={{ transform: `scaleX(${(step + 1) / TOTAL})` }}
+        />
       </div>
 
       <div className={styles.body} key={`${step}-${lang}`}>
-        <h3 ref={headingRef} tabIndex={-1} className={styles.question} id="apply-question">
+        <h3
+          ref={headingRef}
+          tabIndex={-1}
+          className={styles.question}
+          id="apply-question"
+        >
           {questions[step]}
         </h3>
 
         {step === 0 ? (
-          <fieldset className={styles.options} aria-labelledby="apply-question" aria-describedby={error ? errorId : undefined}>
+          <fieldset
+            className={styles.options}
+            aria-labelledby="apply-question"
+            aria-describedby={error ? errorId : undefined}
+          >
             {c.roles.map((r, i) => (
-              <label key={r} className={styles.option} data-checked={role === i}>
+              <label
+                key={r}
+                className={styles.option}
+                data-checked={role === i}
+              >
                 <input
                   type="radio"
                   name="role"
@@ -149,11 +190,23 @@ export function ApplyDemo({ initialLang = "en", onSubmit }: Props) {
         ) : null}
 
         {step === 1 ? (
-          <fieldset className={styles.options} aria-labelledby="apply-question" aria-describedby={error ? errorId : undefined}>
+          <fieldset
+            className={styles.options}
+            aria-labelledby="apply-question"
+            aria-describedby={error ? errorId : undefined}
+          >
             <p className={styles.hint}>{c.q2Hint}</p>
             {c.times.map((t, i) => (
-              <label key={t} className={styles.option} data-checked={times.includes(i)}>
-                <input type="checkbox" checked={times.includes(i)} onChange={() => toggleTime(i)} />
+              <label
+                key={t}
+                className={styles.option}
+                data-checked={times.includes(i)}
+              >
+                <input
+                  type="checkbox"
+                  checked={times.includes(i)}
+                  onChange={() => toggleTime(i)}
+                />
                 <span className={styles.box} aria-hidden="true">
                   {times.includes(i) ? <TbCheck /> : null}
                 </span>
