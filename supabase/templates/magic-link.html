@@ -1,0 +1,63 @@
+<!--
+  Paste into Supabase: Authentication > Emails > Templates > Magic Link (the "Message body").
+  Subject:  Your WebTech Ninjas sign-in code
+  Supabase fills in {{ .Token }} (the 6 digit code), {{ .TokenHash }} and {{ .RedirectTo }}.
+  Brevo only delivers it (custom SMTP), so this is the template that counts, not one in Brevo.
+  Tables and inline styles on purpose: email clients are stuck in 2009.
+-->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light only" />
+    <title>Your sign-in code</title>
+  </head>
+  <body style="margin:0;padding:0;background:#F6F2EA;">
+    <div style="display:none;max-height:0;overflow:hidden;opacity:0;">Your code is {{ .Token }}. It works once and expires soon.</div>
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#F6F2EA;">
+      <tr>
+        <td align="center" style="padding:32px 16px;">
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:460px;">
+            <tr>
+              <td style="padding:0 0 20px 0;font-family:Arial,Helvetica,sans-serif;">
+                <img src="https://webtechninjas.com/brand/mask-dark.png" width="26" height="32" alt="" style="vertical-align:middle;border:0;" />
+                <span style="font-size:16px;font-weight:700;color:#223438;vertical-align:middle;padding-left:8px;">WebTech Ninjas</span>
+                <span style="font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#44585B;vertical-align:middle;padding-left:6px;">Admin</span>
+              </td>
+            </tr>
+            <tr>
+              <td style="background:#FBFAF7;border:1px solid #DCD4C6;border-radius:16px;padding:32px 28px;font-family:Arial,Helvetica,sans-serif;color:#223438;">
+                <p style="margin:0 0 8px 0;font-size:22px;line-height:1.25;font-weight:700;">Here's your sign-in code</p>
+                <p style="margin:0 0 24px 0;font-size:15px;line-height:1.55;color:#44585B;">Type it on the sign-in screen, or tap the button if you're on the device you want to use.</p>
+
+                <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+                  <tr>
+                    <td align="center" style="background:#CFE1D9;border-radius:12px;padding:18px 8px;">
+                      <span style="font-family:'Courier New',Courier,monospace;font-size:34px;line-height:1;font-weight:700;letter-spacing:10px;color:#1F5C63;">{{ .Token }}</span>
+                    </td>
+                  </tr>
+                </table>
+
+                <table role="presentation" cellpadding="0" cellspacing="0" style="margin:24px 0 0 0;">
+                  <tr>
+                    <td style="background:#1F5C63;border-radius:10px;">
+                      <a href="{{ .RedirectTo }}?token_hash={{ .TokenHash }}&type=email" style="display:inline-block;padding:13px 22px;font-size:15px;font-weight:700;color:#FFFFFF;text-decoration:none;">Sign in on this device</a>
+                    </td>
+                  </tr>
+                </table>
+
+                <p style="margin:24px 0 0 0;font-size:13px;line-height:1.55;color:#44585B;">The code and the link work once and expire in 15 minutes. Didn't ask for this? Ignore it. Nobody gets in without this email.</p>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding:16px 4px 0 4px;font-family:Arial,Helvetica,sans-serif;font-size:12px;line-height:1.5;color:#44585B;">
+                WebTech Ninjas · Orlando, FL
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>

@@ -1,19 +1,36 @@
 import type { Metadata } from "next";
+import { redirect } from "next/navigation";
+import { login } from "@/content/admin";
+import { getSession } from "@/lib/admin/auth";
+import { safeNext } from "@/lib/admin/session";
+import type { SearchParams } from "@/lib/admin/range";
+import { AuthShell } from "@/components/admin/AuthShell";
 import { LoginForm } from "@/components/admin/LoginForm";
-import styles from "@/components/admin/Admin.module.css";
 
-export const metadata: Metadata = {
-  title: { absolute: "Admin login, WebTech Ninjas" },
-  robots: { index: false, follow: false },
-};
+export const metadata: Metadata = { title: login.meta.title };
 
-export default function AdminLoginPage() {
+const one = (v: string | string[] | undefined) => (Array.isArray(v) ? v[0] : v);
+
+export default async function AdminLoginPage({ searchParams }: { searchParams: Promise<SearchParams> }) {
+  const params = await searchParams;
+  const next = safeNext(one(params.next));
+  const session = await getSession();
+
+  // Already in? Skip the form. (A signed-in non-admin stays here, which is why
+  // the middleware never redirects away from this page: that would loop.)
+  if (session.state === "admin") redirect(next);
+
+  const error = one(params.error);
+  const notice =
+    error === "link"
+      ? login.errors.link
+      : error === "not-admin" || session.state === "not-admin"
+        ? login.errors.notAdmin
+        : undefined;
+
   return (
-    <section className={styles.loginPage}>
-      <div className={styles.loginCard}>
-        <h1 className={styles.loginTitle}>Admin</h1>
-        <LoginForm />
-      </div>
-    </section>
+    <AuthShell>
+      <LoginForm next={next} notice={notice} />
+    </AuthShell>
   );
 }

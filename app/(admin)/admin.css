@@ -1,0 +1,231 @@
+/*
+ * Admin styles: Tailwind v4 + shadcn, themed with the Tidewater tokens.
+ * Only the admin root layout imports this, so the marketing site never sees Tailwind's reset.
+ *
+ * source(none) + @source keeps Tailwind from scanning the marketing code for class names.
+ * If you add admin code somewhere else, add an @source line for it.
+ */
+@import "tailwindcss" source(none);
+@import "tw-animate-css";
+
+@source "./";
+@source "../../components/admin";
+@source "../../lib/admin";
+@source "../../content/admin.ts";
+
+@custom-variant dark (&:is(.dark *));
+
+/* Tidewater Day */
+:root {
+  --radius: 0.75rem;
+
+  --background: #f6f2ea; /* sand */
+  --foreground: #223438; /* ink */
+  --card: #fbfaf7; /* warm white */
+  --card-foreground: #223438;
+  --popover: #fbfaf7;
+  --popover-foreground: #223438;
+  --primary: #1f5c63; /* ocean teal */
+  --primary-foreground: #ffffff;
+  --primary-strong: #174950;
+  --secondary: #eae3d5; /* coastal mist */
+  --secondary-foreground: #223438;
+  --muted: #efe9de;
+  --muted-foreground: #44585b;
+  --accent: #dfece6; /* shadcn "accent" is the hover surface, not the brand accent */
+  --accent-foreground: #1f5c63;
+  --destructive: #c2185b; /* coral ink: coral itself is too light for white text */
+  --border: #dcd4c6;
+  --input: #737e7b; /* control edges need 3:1, hairlines don't */
+  --ring: #30929d; /* sea glass */
+
+  --chart-1: #1f5c63;
+  --chart-2: #1d84a6;
+  --chart-3: #8f7000;
+  --chart-4: #7a4cd0;
+  --chart-5: #f92672;
+
+  --sidebar: #eae3d5;
+  --sidebar-foreground: #223438;
+  --sidebar-primary: #1f5c63;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #cfe1d9;
+  --sidebar-accent-foreground: #1f5c63;
+  --sidebar-border: #dcd4c6;
+  --sidebar-ring: #30929d;
+
+  /* Brand extras shadcn doesn't have names for */
+  --sea-glass: #30929d;
+  --sea-foam: #cfe1d9;
+  --brass: #9d7b0f;
+  --brass-ink: #7a5a12;
+  --brass-soft: #f3e8cc;
+  --coral: #f92672;
+  --positive: #1f5c63;
+  --positive-soft: #cfe1d9;
+  --negative: #c2185b;
+  --negative-soft: #f9e1e8;
+  --warning: #94570a;
+  --warning-soft: #f8e8ce;
+}
+
+/* Tidewater Night */
+.dark {
+  --background: #142428;
+  --foreground: #e9f0ed;
+  --card: #1b2f34;
+  --card-foreground: #e9f0ed;
+  --popover: #1b2f34;
+  --popover-foreground: #e9f0ed;
+  --primary: #63bcc2;
+  --primary-foreground: #0f1d20;
+  --primary-strong: #86cfd3;
+  --secondary: #1d3c40;
+  --secondary-foreground: #e9f0ed;
+  --muted: #0f1d20;
+  --muted-foreground: #a7bab7;
+  --accent: #1d3c40;
+  --accent-foreground: #e9f0ed;
+  --destructive: #ff5c93;
+  --border: #2b4247;
+  --input: #6a8388;
+  --ring: #8fd3d1;
+
+  --chart-1: #63bcc2;
+  --chart-2: #66d9ef;
+  --chart-3: #e6c229;
+  --chart-4: #ae81ff;
+  --chart-5: #f92672;
+
+  --sidebar: #0f1d20;
+  --sidebar-foreground: #e9f0ed;
+  --sidebar-primary: #63bcc2;
+  --sidebar-primary-foreground: #0f1d20;
+  --sidebar-accent: #1d3c40;
+  --sidebar-accent-foreground: #e9f0ed;
+  --sidebar-border: #2b4247;
+  --sidebar-ring: #8fd3d1;
+
+  --sea-glass: #8fd3d1;
+  --sea-foam: #1d3c40;
+  --brass: #e2c062;
+  --brass-ink: #e2c062;
+  --brass-soft: #3a321c;
+  --coral: #f92672;
+  --positive: #63bcc2;
+  --positive-soft: #1d3c40;
+  --negative: #ff5c93;
+  --negative-soft: #3d1a28;
+  --warning: #f2b65a;
+  --warning-soft: #3a2c14;
+}
+
+@theme inline {
+  --font-sans: var(--font-instrument), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-bricolage), var(--font-instrument), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary-strong: var(--primary-strong);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  --color-sea-glass: var(--sea-glass);
+  --color-sea-foam: var(--sea-foam);
+  --color-brass: var(--brass);
+  --color-brass-ink: var(--brass-ink);
+  --color-brass-soft: var(--brass-soft);
+  --color-coral: var(--coral);
+  --color-positive: var(--positive);
+  --color-positive-soft: var(--positive-soft);
+  --color-negative: var(--negative);
+  --color-negative-soft: var(--negative-soft);
+  --color-warning: var(--warning);
+  --color-warning-soft: var(--warning-soft);
+}
+
+/* The tide: same gradient as the marketing CTA band. Ends at #2A7F89, not sea glass, so white text stays 4.5:1. */
+@utility bg-tide {
+  background:
+    radial-gradient(120% 80% at 100% 0%, rgb(48 146 157 / 0.35), transparent 60%),
+    linear-gradient(160deg, #0f1d20 0%, #1f5c63 55%, #2a7f89 100%);
+}
+
+/* Soft sea-foam wash at the top of the dashboard. */
+@utility bg-shore {
+  background: linear-gradient(180deg, color-mix(in oklab, var(--sea-foam) 55%, transparent) 0, transparent 280px),
+    var(--background);
+}
+
+/* Bars grow in from the left once, on load. */
+@keyframes grow-x {
+  from {
+    transform: scaleX(0);
+  }
+}
+
+@utility animate-grow {
+  transform-origin: left center;
+  animation: grow-x 700ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    -webkit-tap-highlight-color: transparent;
+  }
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-feature-settings: "ss01";
+  }
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
