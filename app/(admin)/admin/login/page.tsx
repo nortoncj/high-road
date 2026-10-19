@@ -21,11 +21,12 @@ export default async function AdminLoginPage({ searchParams }: { searchParams: P
   if (session.state === "admin") redirect(next);
 
   const error = one(params.error);
+  // Signed in but not in admin_users beats any link error: that's the real reason you're here.
   const notice =
-    error === "link"
-      ? login.errors.link
-      : error === "not-admin" || session.state === "not-admin"
-        ? login.errors.notAdmin
+    error === "not-admin" || session.state === "not-admin"
+      ? login.errors.notAdmin
+      : error === "link"
+        ? login.errors.link
         : undefined;
 
   return (

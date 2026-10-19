@@ -4,6 +4,8 @@ const nextConfig: NextConfig = {
   /* config options here */
   experimental: {
     agentFeedback: true,
+    // Two root layouts ((frontend) and (admin)) need app/global-not-found.tsx for unmatched URLs.
+    globalNotFound: true,
   },
   cacheComponents: true,
   partialPrefetching: true,

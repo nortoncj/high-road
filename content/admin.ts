@@ -39,7 +39,7 @@ export const login = {
     heading: "Sign in",
     body: "Enter your email. You'll get a sign-in link and a 6 digit code. Use whichever is handy.",
     label: "Email",
-    placeholder: "you@webtechninjas.com",
+    placeholder: "admin@youremail.com",
     submit: "Email me a code",
     sending: "Sending...",
   },
