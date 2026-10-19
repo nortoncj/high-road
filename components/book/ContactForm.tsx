@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useId, useRef, useState, type FormEvent } from "react";
+import { useEffect, useId, useRef, useState, type FormEvent } from "react";
 import { TbArrowRight, TbLoader2, TbLock } from "react-icons/tb";
 import { book } from "@/content/book";
 import styles from "./ContactForm.module.css";
@@ -18,8 +18,13 @@ export function ContactForm() {
   const f = m.fields;
   const id = useId();
   const router = useRouter();
-  const startedAt = useRef(Date.now());
+  // Stamped on mount, not during render: Date.now() in render breaks prerendering with cacheComponents.
+  const startedAt = useRef(0);
   const [status, setStatus] = useState<Status>("idle");
+
+  useEffect(() => {
+    startedAt.current = Date.now();
+  }, []);
 
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
