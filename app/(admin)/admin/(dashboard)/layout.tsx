@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import { cookies } from "next/headers";
 import { requireAdmin } from "@/lib/admin/auth";
 import { countNewLeads } from "@/lib/admin/data";
+import { countDueTodos } from "@/lib/admin/tasks";
 import { AppSidebar } from "@/components/admin/AppSidebar";
 import { TopBar } from "@/components/admin/TopBar";
 import { SidebarInset, SidebarProvider } from "@/components/admin/ui/sidebar";
@@ -9,7 +10,7 @@ import { SidebarInset, SidebarProvider } from "@/components/admin/ui/sidebar";
 /** The signed-in shell: sidebar, glass top bar, content. Login and confirm sit outside this group. */
 export default async function DashboardLayout({ children }: { children: ReactNode }) {
   const admin = await requireAdmin();
-  const [newLeads, cookieStore] = await Promise.all([countNewLeads(), cookies()]);
+  const [newLeads, dueTodos, cookieStore] = await Promise.all([countNewLeads(), countDueTodos(), cookies()]);
   // shadcn's sidebar remembers collapsed/expanded in this cookie. Reading it here avoids a flash.
   const defaultOpen = cookieStore.get("sidebar_state")?.value !== "false";
 
@@ -21,7 +22,7 @@ export default async function DashboardLayout({ children }: { children: ReactNod
       >
         Skip to content
       </a>
-      <AppSidebar admin={{ name: admin.name, email: admin.email, role: admin.role }} newLeads={newLeads} />
+      <AppSidebar admin={{ name: admin.name, email: admin.email, role: admin.role }} newLeads={newLeads} dueTodos={dueTodos} />
       <SidebarInset className="bg-shore min-w-0">
         <TopBar />
         {/* SidebarInset already renders <main>, so this is a div. */}

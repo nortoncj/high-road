@@ -8,6 +8,7 @@ import { addProject, createStripeCustomer, linkStripe, syncClientStripe } from "
 import { getClient } from "@/lib/admin/clients";
 import { createPaymentPlan } from "@/lib/admin/payment-plan-actions";
 import { today } from "@/lib/admin/projects";
+import { taskRefs, todosForClient } from "@/lib/admin/tasks";
 import { initials, shortDate, toDate } from "@/lib/admin/format";
 import { leadSourceLabel } from "@/lib/admin/schema";
 import { stripeConfigured, stripeDashboardUrl } from "@/lib/admin/stripe-sync";
@@ -19,6 +20,7 @@ import { ClientStatusBadge, HealthNote } from "@/components/admin/clients/Client
 import { PaymentPlansCard } from "@/components/admin/clients/PaymentPlansCard";
 import { PaymentsCard } from "@/components/admin/clients/PaymentsCard";
 import { ProjectsCard } from "@/components/admin/clients/ProjectsCard";
+import { ClientTasksCard } from "@/components/admin/tasks/ClientTasksCard";
 
 type Props = { params: Promise<{ id: string }> };
 
@@ -30,7 +32,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function ClientDetailPage({ params }: Props) {
   await requireAdmin();
   const { id } = await params;
-  const detail = await getClient(id);
+  const [detail, todos, refs] = await Promise.all([getClient(id), todosForClient(id), taskRefs()]);
   if (!detail) notFound();
   const { client: c, origin } = detail;
   const now = new Date();
@@ -110,6 +112,8 @@ export default async function ClientDetailPage({ params }: Props) {
         </div>
 
         <div className="flex min-w-0 flex-col gap-4 sm:gap-6">
+          <ClientTasksCard client={{ id: c.id, name: c.name }} todos={todos} refs={refs} today={today()} />
+
           <Card className="gap-4">
             <CardHeader>
               <CardTitle className="font-display text-lg">{cp.contact}</CardTitle>

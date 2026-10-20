@@ -25,7 +25,7 @@ export const adminNav: NavItem[] = [
   { label: "Leads", href: "/admin/leads", icon: "leads" },
   { label: "Clients", href: "/admin/clients", icon: "clients" },
   { label: "Projects", href: "/admin/projects", icon: "projects" },
-  { label: "Tasks", href: "/admin/tasks", icon: "tasks", soon: true },
+  { label: "Tasks", href: "/admin/tasks", icon: "tasks" },
   { label: "Reports", href: "/admin/reports", icon: "reports", soon: true },
   { label: "Settings", href: "/admin/settings", icon: "settings", soon: true },
 ];
@@ -364,15 +364,6 @@ export const comingSoon: Record<
   string,
   { title: string; body: string; planned: string[] }
 > = {
-  tasks: {
-    title: "Tasks",
-    body: "The small stuff that keeps falling through the cracks.",
-    planned: [
-      "Tasks tied to a client or project",
-      "Due today and overdue views",
-      "Quick add from your phone",
-    ],
-  },
   reports: {
     title: "Reports",
     body: "The monthly reports Growth care plan clients get.",
@@ -547,6 +538,61 @@ export const projectPage = {
     saved: "Folder saved",
   },
   notes: { title: "Notes", empty: "No notes. Add them from Edit." },
+} as const;
+
+/* Tasks */
+
+export const tasksPage = {
+  meta: { title: "Tasks" },
+  title: "Tasks",
+  description: "The small stuff that keeps falling through the cracks.",
+  tabs: { today: "Today", upcoming: "Upcoming", someday: "Someday", done: "Done" },
+  sections: { overdue: "Overdue", today: "Today", later: "Later" },
+  empty: {
+    today: "Nothing due today. Nice.",
+    upcoming: "Nothing scheduled ahead.",
+    someday: "No undated tasks.",
+    done: "Nothing checked off lately.",
+  },
+  quickAdd: {
+    label: "Add a task",
+    placeholder: "Send Ruiz the invoice fri #ruiz",
+    hint: "Add a day (tomorrow, fri, Nov 3) and #client or #project to link it.",
+    shortcut: "N",
+    add: "Add",
+    added: "Task added",
+  },
+  done: (title: string) => `Done: ${title}`,
+  undo: "Undo",
+  checklistTag: "Checklist",
+  reschedule: {
+    label: "Reschedule",
+    today: "Today",
+    tomorrow: "Tomorrow",
+    nextWeek: "Next week",
+    pick: "Pick a date",
+    none: "No date",
+    moved: (when: string) => `Moved to ${when}`,
+  },
+  edit: {
+    title: "Edit task",
+    titleLabel: "Task",
+    due: "Due date",
+    client: "Client",
+    project: "Project",
+    none: "None",
+    notes: "Notes",
+    notesPlaceholder: "Links, phone numbers, whatever you'll need",
+    save: "Save",
+    saving: "Saving...",
+    delete: "Delete",
+    deleted: "Task deleted",
+  },
+  clientCard: {
+    title: "Tasks",
+    all: "All tasks",
+    empty: "Nothing open for this client.",
+  },
 } as const;
 
 export const projectForm = {

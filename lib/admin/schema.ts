@@ -147,6 +147,20 @@ export const tables = {
       position: "position",
     },
   },
+  tasks: {
+    table: "tasks",
+    columns: {
+      id: "id",
+      title: "title",
+      notes: "notes",
+      dueDate: "due_date",
+      done: "done",
+      doneAt: "done_at",
+      clientId: "client_id",
+      projectId: "project_id",
+      createdAt: "created_at",
+    },
+  },
   admins: {
     table: "admin_users",
     columns: { userId: "user_id", fullName: "full_name", role: "role" },

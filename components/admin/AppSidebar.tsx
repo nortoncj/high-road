@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { adminBrand, adminNav } from "@/content/admin";
+import { cn } from "@/lib/admin/utils";
 import { navIcons } from "./nav-icons";
 import { UserMenu, type AdminSummary } from "./UserMenu";
 import {
@@ -31,7 +32,18 @@ function isActive(pathname: string, href: string) {
  * Phone: the same nav slides in as a sheet from the menu button in the top bar.
  * Both come from shadcn's Sidebar, so this file is just what goes in it.
  */
-export function AppSidebar({ admin, newLeads, lateProjects = 0 }: { admin: AdminSummary; newLeads: number; lateProjects?: number }) {
+export function AppSidebar({
+  admin,
+  newLeads,
+  lateProjects = 0,
+  dueTodos = { due: 0, overdue: 0 },
+}: {
+  admin: AdminSummary;
+  newLeads: number;
+  lateProjects?: number;
+  /** Due today or late. Red when any are late. */
+  dueTodos?: { due: number; overdue: number };
+}) {
   const pathname = usePathname();
   const { isMobile, setOpenMobile } = useSidebar();
   const closeOnPhone = () => {
@@ -87,6 +99,16 @@ export function AppSidebar({ admin, newLeads, lateProjects = 0 }: { admin: Admin
                       <SidebarMenuBadge className="bg-negative-soft text-negative rounded-full px-1.5 tabular-nums">
                         {lateProjects}
                         <span className="sr-only"> late</span>
+                      </SidebarMenuBadge>
+                    ) : item.icon === "tasks" && dueTodos.due > 0 ? (
+                      <SidebarMenuBadge
+                        className={cn(
+                          "rounded-full px-1.5 tabular-nums",
+                          dueTodos.overdue > 0 ? "bg-negative-soft text-negative" : "bg-brass-soft text-brass-ink",
+                        )}
+                      >
+                        {dueTodos.due > 99 ? "99+" : dueTodos.due}
+                        <span className="sr-only">{dueTodos.overdue > 0 ? `, ${dueTodos.overdue} late` : " due today"}</span>
                       </SidebarMenuBadge>
                     ) : showCount ? (
                       <SidebarMenuBadge className="bg-brass-soft text-brass-ink rounded-full px-1.5 tabular-nums">
