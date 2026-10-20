@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { clientPage } from "@/content/admin";
 import type { Loaded } from "@/lib/admin/data";
 import type { ClientProject } from "@/lib/admin/clients";
@@ -8,10 +9,7 @@ import { IssueNote } from "../States";
 import { AddProjectForm } from "./AddProjectForm";
 import { ProjectStatusBadge } from "./ClientBits";
 
-/**
- * Their projects, newest first. Rows don't link anywhere yet because the Projects section is
- * still a placeholder; when it's built, wrap the name in a Link to /admin/projects/[id].
- */
+/** Their projects, newest first. Each row opens the project; quick add gets the standard checklist. */
 export function ProjectsCard({
   projects,
   addAction,
@@ -39,7 +37,9 @@ export function ProjectsCard({
             {projects.data.map((pr) => (
               <li key={pr.id} className="flex items-start justify-between gap-3 py-2.5 first:pt-0">
                 <div className="min-w-0">
-                  <p className="truncate text-sm font-medium">{pr.name}</p>
+                  <Link href={`/admin/projects/${pr.id}`} className="block truncate text-sm font-medium hover:underline">
+                    {pr.name}
+                  </Link>
                   <p className="text-muted-foreground text-xs">
                     {[
                       pr.service,

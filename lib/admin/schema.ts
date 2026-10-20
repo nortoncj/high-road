@@ -78,6 +78,9 @@ export const tables = {
       service: "service",
       status: "status",
       dueDate: "due_date",
+      startDate: "start_date",
+      driveUrl: "drive_url",
+      notes: "notes",
       completedAt: "completed_at",
       createdAt: "created_at",
     },
@@ -100,6 +103,19 @@ export const tables = {
       issuedAt: "issued_at",
     },
     paidStatus: "paid",
+  },
+  projectTasks: {
+    table: "project_tasks",
+    columns: {
+      id: "id",
+      projectId: "project_id",
+      phase: "phase",
+      title: "title",
+      done: "done",
+      doneAt: "done_at",
+      dueDate: "due_date",
+      position: "position",
+    },
   },
   admins: {
     table: "admin_users",
@@ -195,3 +211,7 @@ export const projectStatusMeta: Record<ProjectStatus, { label: string; className
 export function toProjectStatus(v: unknown): ProjectStatus {
   return typeof v === "string" && (projectStatuses as readonly string[]).includes(v) ? (v as ProjectStatus) : "planning";
 }
+
+/** The four board columns, in order. on_hold gets its own lane only when something's in it; cancelled stays off the board. */
+export const boardStatuses = ["planning", "in_progress", "review", "done"] as const;
+export type BoardStatus = (typeof boardStatuses)[number];

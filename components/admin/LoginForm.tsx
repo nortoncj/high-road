@@ -20,32 +20,20 @@ export function LoginForm({ next, notice }: { next: string; notice?: string }) {
   const [wait, setWait] = useState(0);
   const codeForm = useRef<HTMLFormElement>(null);
 
-  // Reset when a server result comes back. Done during render, not in an effect, per React's
-  // "adjusting state when a prop changes" pattern.
-  const [seenSentAt, setSeenSentAt] = useState(sent.sentAt);
-  const [seenChecked, setSeenChecked] = useState(checked);
-
   // A fresh send: back to the code screen, clear the old code, restart the countdown.
-  if (sent.sentAt !== seenSentAt) {
-    setSeenSentAt(sent.sentAt);
-    if (sent.sentAt) {
-      setChangingEmail(false);
-      setCode("");
-      setWait(RESEND_SECONDS);
-    }
-  }
-
-  // A wrong code: clear the boxes so retyping is quick.
-  if (checked !== seenChecked) {
-    setSeenChecked(checked);
-    if (checked.error) setCode("");
-  }
-
   useEffect(() => {
     if (!sent.sentAt) return;
+    setChangingEmail(false);
+    setCode("");
+    setWait(RESEND_SECONDS);
     const id = window.setInterval(() => setWait((s) => (s <= 1 ? (window.clearInterval(id), 0) : s - 1)), 1000);
     return () => window.clearInterval(id);
   }, [sent.sentAt]);
+
+  // A wrong code: clear the boxes so retyping is quick.
+  useEffect(() => {
+    if (checked.error) setCode("");
+  }, [checked]);
 
   const onCodeStep = sent.step === "code" && !changingEmail;
 

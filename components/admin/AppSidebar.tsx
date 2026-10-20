@@ -31,7 +31,7 @@ function isActive(pathname: string, href: string) {
  * Phone: the same nav slides in as a sheet from the menu button in the top bar.
  * Both come from shadcn's Sidebar, so this file is just what goes in it.
  */
-export function AppSidebar({ admin, newLeads }: { admin: AdminSummary; newLeads: number }) {
+export function AppSidebar({ admin, newLeads, lateProjects = 0 }: { admin: AdminSummary; newLeads: number; lateProjects?: number }) {
   const pathname = usePathname();
   const { isMobile, setOpenMobile } = useSidebar();
   const closeOnPhone = () => {
@@ -83,7 +83,12 @@ export function AppSidebar({ admin, newLeads }: { admin: AdminSummary; newLeads:
                         <span>{item.label}</span>
                       </Link>
                     </SidebarMenuButton>
-                    {showCount ? (
+                    {item.icon === "projects" && lateProjects > 0 ? (
+                      <SidebarMenuBadge className="bg-negative-soft text-negative rounded-full px-1.5 tabular-nums">
+                        {lateProjects}
+                        <span className="sr-only"> late</span>
+                      </SidebarMenuBadge>
+                    ) : showCount ? (
                       <SidebarMenuBadge className="bg-brass-soft text-brass-ink rounded-full px-1.5 tabular-nums">
                         {newLeads > 99 ? "99+" : newLeads}
                         <span className="sr-only"> new</span>

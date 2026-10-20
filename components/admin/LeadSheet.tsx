@@ -1,9 +1,10 @@
 "use client";
 
-import { useState, useTransition, type ReactNode } from "react";
+import { useEffect, useRef, useState, useTransition, type ReactNode } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { TbMail, TbPhone } from "react-icons/tb";
+import Link from "next/link";
+import { TbBuildingStore, TbMail, TbPhone, TbUserCheck } from "react-icons/tb";
 import { leadsPage } from "@/content/admin";
 import type { Lead } from "@/lib/admin/data";
 import { fullDateTime, initials } from "@/lib/admin/format";
@@ -27,10 +28,13 @@ export function LeadSheet({ lead, closeHref }: { lead: Lead | null; closeHref: s
   const [dismissed, setDismissed] = useState<string | null>(null);
 
   // Keep the last lead around so the sheet can animate out after the URL drops it.
-  // Adjusting state during render (not in an effect) is React's pattern for "reset when a prop changes".
-  const [shown, setShown] = useState<Lead | null>(lead);
-  if (lead && lead !== shown) setShown(lead);
-  if (!lead && dismissed !== null) setDismissed(null);
+  const last = useRef<Lead | null>(lead);
+  if (lead) last.current = lead;
+  const shown = last.current;
+
+  useEffect(() => {
+    if (!lead) setDismissed(null);
+  }, [lead]);
 
   if (!shown) return null;
   const open = Boolean(lead) && dismissed !== lead?.id;
@@ -80,6 +84,25 @@ export function LeadSheet({ lead, closeHref }: { lead: Lead | null; closeHref: s
               </Button>
             ) : null}
           </div>
+
+          {shown.client ? (
+            <Button asChild variant="secondary" className="justify-start">
+              <Link href={`/admin/clients/${shown.client.id}`}>
+                <TbBuildingStore aria-hidden="true" />
+                <span className="truncate">{leadsPage.viewClient(shown.client.name)}</span>
+              </Link>
+            </Button>
+          ) : (
+            <div className="bg-sea-foam/60 flex flex-col gap-2 rounded-lg p-3">
+              <Button asChild variant="outline" className="bg-card">
+                <Link href={`/admin/clients/new?lead=${encodeURIComponent(shown.id)}`}>
+                  <TbUserCheck aria-hidden="true" />
+                  {leadsPage.convert}
+                </Link>
+              </Button>
+              <p className="text-muted-foreground text-xs leading-relaxed">{leadsPage.convertHint}</p>
+            </div>
+          )}
 
           <div className="flex flex-col gap-2">
             <Label htmlFor="lead-status">{s.statusLabel}</Label>

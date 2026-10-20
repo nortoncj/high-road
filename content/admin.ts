@@ -24,7 +24,7 @@ export const adminNav: NavItem[] = [
   { label: "Overview", href: "/admin", icon: "overview" },
   { label: "Leads", href: "/admin/leads", icon: "leads" },
   { label: "Clients", href: "/admin/clients", icon: "clients" },
-  { label: "Projects", href: "/admin/projects", icon: "projects", soon: true },
+  { label: "Projects", href: "/admin/projects", icon: "projects" },
   { label: "Tasks", href: "/admin/tasks", icon: "tasks", soon: true },
   { label: "Reports", href: "/admin/reports", icon: "reports", soon: true },
   { label: "Settings", href: "/admin/settings", icon: "settings", soon: true },
@@ -250,7 +250,7 @@ export const clientPage = {
     namePlaceholder: "New website",
     service: "Service",
     servicePlaceholder: "Website design",
-    due: "Due",
+    due: "Launch date",
     save: "Add",
     due_label: (d: string) => `Due ${d}`,
   },
@@ -301,15 +301,6 @@ export const comingSoon: Record<
   string,
   { title: string; body: string; planned: string[] }
 > = {
-  projects: {
-    title: "Projects",
-    body: "Every build from kickoff to launch.",
-    planned: [
-      "Status board: planning, in progress, review, done",
-      "Due dates with a heads up when one slips",
-      "Launch checklist per site",
-    ],
-  },
   tasks: {
     title: "Tasks",
     body: "The small stuff that keeps falling through the cracks.",
@@ -343,4 +334,183 @@ export const comingSoonCopy = {
   badge: "Not built yet",
   plannedHeading: "What goes here",
   back: "Back to overview",
+} as const;
+
+/* Projects */
+
+export type TemplatePhase = {
+  phase: string;
+  /** Where this phase's items land between start and due date (0 = kickoff day, 1 = launch day). */
+  at: number;
+  items: string[];
+  /** The phase that counts as "the launch checklist": moving to Done with these open gets a warning. */
+  launch?: boolean;
+};
+
+/**
+ * Every new project starts with this checklist. Your order: sitemap, branding, logo, copy, then
+ * pages. Assets come first on purpose: waiting on client files is what slips most builds, so
+ * that item gets a due date 3 days in and goes red fast.
+ * Edit freely. Changes only affect projects created after.
+ */
+export const projectTemplate: TemplatePhase[] = [
+  {
+    phase: "Kickoff",
+    at: 0.05,
+    items: [
+      "Kickoff call",
+      "Client drops assets in the Drive folder",
+      "Domain, hosting and Google Business Profile access",
+    ],
+  },
+  { phase: "Sitemap", at: 0.15, items: ["Sitemap and page list approved"] },
+  {
+    phase: "Brand",
+    at: 0.3,
+    items: ["Branding: colors, fonts, photo style", "Logo final (SVG + PNG)"],
+  },
+  {
+    phase: "Copy",
+    at: 0.5,
+    items: ["Homepage copy", "Service pages copy", "Client approves copy"],
+  },
+  {
+    phase: "Build",
+    at: 0.8,
+    items: [
+      "Landing page / homepage",
+      "Service and inner pages",
+      "Contact and booking forms wired to leads",
+      "Mobile pass",
+    ],
+  },
+  {
+    phase: "Launch checklist",
+    at: 0.95,
+    launch: true,
+    items: [
+      "Every form tested end to end (lead lands, email sends)",
+      "Click-to-call and click-to-text work on a real phone",
+      "Titles, meta descriptions and social images",
+      "LocalBusiness schema, NAP matches Google Business Profile",
+      "Analytics + lead conversion events firing",
+      "Lighthouse: performance and accessibility 90+",
+      "301 redirects from the old site",
+      "DNS, SSL and www redirect",
+      "Sitemap submitted to Search Console",
+      "Client sign-off",
+    ],
+  },
+  {
+    phase: "After launch",
+    at: 1,
+    items: [
+      "Launch announcement to client",
+      "Handoff: logins and how-to",
+      "2 week check-in",
+    ],
+  },
+];
+
+export const projectsPage = {
+  meta: { title: "Projects" },
+  title: "Projects",
+  description: "Every build from kickoff to launch.",
+  add: "New project",
+  searchLabel: "Search projects",
+  searchPlaceholder: "Project or client",
+  columns: {
+    planning: "Planning",
+    in_progress: "In progress",
+    review: "Review",
+    done: "Done",
+    on_hold: "On hold",
+  },
+  emptyColumn: "Nothing here",
+  dropHere: "Drop here",
+  doneOlder: (n: number) => `+${n} launched earlier`,
+  move: "Move to",
+  dragHint:
+    "Drag cards between columns, or use the ⋯ menu. On a phone, press and hold to drag.",
+  slipping: {
+    late: (n: number) =>
+      n === 1 ? "1 project is past due" : `${n} projects are past due`,
+    behind: (n: number) =>
+      n === 1
+        ? "1 has checklist items behind schedule"
+        : `${n} have checklist items behind schedule`,
+    soon: (n: number) =>
+      n === 1 ? "1 is due this week" : `${n} are due this week`,
+  },
+  next: (t: string) => `Next: ${t}`,
+  allDone: "Checklist done",
+  movedTo: (label: string) => `Moved to ${label}`,
+  openLaunch: (n: number) =>
+    `Moved to Done with ${n} launch item${n === 1 ? "" : "s"} still open. Worth a look.`,
+  moveFailed: "Couldn't move that project",
+  empty: "No projects yet. Start one here or from a client's page.",
+} as const;
+
+export const projectPage = {
+  back: "Projects",
+  edit: "Edit",
+  status: "Status",
+  late: (days: number) =>
+    `${days} day${days === 1 ? "" : "s"} past due. Push the date or chase whatever's blocking it.`,
+  behind: (n: number) =>
+    `${n} checklist item${n === 1 ? " is" : "s are"} behind schedule.`,
+  checklist: "Checklist",
+  progress: (done: number, total: number) => `${done} of ${total} done`,
+  addItem: "Add item",
+  addPlaceholder: "New item",
+  setDate: "Set date",
+  details: {
+    title: "Details",
+    client: "Client",
+    service: "Service",
+    start: "Started",
+    due: "Launch date",
+    launched: "Launched",
+    none: "No client",
+  },
+  drive: {
+    title: "Asset folder",
+    open: "Open in Google Drive",
+    empty: "No folder yet. Paste the Drive link you share with the client.",
+    placeholder: "https://drive.google.com/drive/folders/...",
+    save: "Save link",
+    change: "Change",
+    notDrive: "That's not a Google Drive link, but it's saved.",
+    saved: "Folder saved",
+  },
+  notes: { title: "Notes", empty: "No notes. Add them from Edit." },
+} as const;
+
+export const projectForm = {
+  newTitle: "New project",
+  editTitle: (name: string) => `Edit ${name}`,
+  fields: {
+    name: { label: "Project name", placeholder: "New website" },
+    client_id: { label: "Client", none: "No client yet" },
+    service: { label: "Service", placeholder: "Website design" },
+    status: { label: "Status" },
+    start_date: { label: "Start date" },
+    due_date: { label: "Launch date" },
+    drive_url: {
+      label: "Google Drive folder",
+      placeholder: "https://drive.google.com/drive/folders/...",
+    },
+    notes: {
+      label: "Notes",
+      placeholder:
+        "Scope, the client's must-haves, anything you'll forget by week 3",
+    },
+  },
+  template: "Start with the launch checklist",
+  templateHint:
+    "Adds your standard steps. With a start and launch date, each step gets a due date spread across the timeline.",
+  shift: "Shift unfinished checklist dates along with the launch date",
+  save: "Save project",
+  saving: "Saving...",
+  cancel: "Cancel",
 } as const;

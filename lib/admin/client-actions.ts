@@ -6,6 +6,7 @@ import { requireAdmin } from "./auth";
 import { createSupabase } from "./supabase";
 import { createStripeCustomer as createInStripe, findCustomer, stripeConfigured, syncCustomer } from "./stripe-sync";
 import { clientStatuses, tables } from "./schema";
+import { insertTemplateTasks, today } from "./projects";
 
 export type FormState = {
   ok?: boolean;
@@ -101,23 +102,36 @@ export async function saveClient(_prev: FormState, fd: FormData): Promise<FormSt
   redirect(`/admin/clients/${savedId}`);
 }
 
+/** Quick add from the client page. Gets the standard launch checklist, same as the board's New project. */
 export async function addProject(clientId: string, _prev: FormState, fd: FormData): Promise<FormState> {
   await requireAdmin();
   const name = text(fd, "name");
   if (!name) return { error: "Give the project a name.", fields: { name: "Required." } };
   const due = text(fd, "due_date");
   if (due && !DATE_RE.test(due)) return { error: "Use a full date.", fields: { due_date: "Use a full date." } };
+  const start = today();
 
   const db = await createSupabase();
-  const { error } = await db.from(P.table).insert({
-    [P.columns.clientId]: clientId,
-    [P.columns.name]: name,
-    [P.columns.service]: text(fd, "service"),
-    [P.columns.dueDate]: due,
-  });
+  const { data, error } = await db
+    .from(P.table)
+    .insert({
+      [P.columns.clientId]: clientId,
+      [P.columns.name]: name,
+      [P.columns.service]: text(fd, "service"),
+      [P.columns.startDate]: start,
+      [P.columns.dueDate]: due,
+    })
+    .select(P.columns.id)
+    .single();
   if (error) return { error: error.message };
+  try {
+    await insertTemplateTasks(db, String((data as Record<string, unknown>)[P.columns.id]), start, due);
+  } catch (e) {
+    console.error("[admin] template tasks", e);
+  }
   revalidatePath(`/admin/clients/${clientId}`);
-  return { ok: true, message: `Added ${name}` };
+  revalidatePath("/admin/projects");
+  return { ok: true, message: `Added ${name} with the launch checklist` };
 }
 
 /* Stripe */
