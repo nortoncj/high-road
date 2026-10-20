@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, useTransition, type ChangeEvent, type FormEvent, type KeyboardEvent, type MouseEvent } from "react";
+import { useRef, useState, useTransition, type ChangeEvent, type FormEvent, type KeyboardEvent, type MouseEvent } from "react";
 import { toast } from "sonner";
 import { TbCalendarPlus, TbPlus, TbRocket, TbTrash, TbX } from "react-icons/tb";
 import { projectPage } from "@/content/admin";
@@ -21,7 +21,12 @@ import { Input } from "@/components/admin/ui/input";
 export function Checklist({ projectId, tasks: initial, today }: { projectId: string; tasks: ProjectTask[]; today: string }) {
   const [tasks, setTasks] = useState(initial);
   const [, startTransition] = useTransition();
-  useEffect(() => setTasks(initial), [initial]);
+  // Fresh server data replaces local edits. Done during render, not in an effect.
+  const [seen, setSeen] = useState(initial);
+  if (initial !== seen) {
+    setSeen(initial);
+    setTasks(initial);
+  }
 
   const run = (optimistic: ProjectTask[], action: () => Promise<TaskResult>) => {
     const before = tasks;

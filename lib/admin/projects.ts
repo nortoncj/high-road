@@ -96,7 +96,7 @@ export async function listProjects(q?: string): Promise<Loaded<Board>> {
 
   const day = today();
   const needle = q?.trim().toLowerCase() ?? "";
-  const projects = ((data ?? []) as Row[])
+  const projects = ((data ?? []) as unknown as Row[])
     .map((r) => toProject(r, day))
     .filter((p) => !needle || p.name.toLowerCase().includes(needle) || p.client?.name.toLowerCase().includes(needle));
 
@@ -117,7 +117,7 @@ export async function getProject(id: string): Promise<{ project: Project; today:
   const { data, error } = await db.from(P.table).select(projectSelect).eq(P.columns.id, id).maybeSingle();
   if (error || !data) return null;
   const day = today();
-  return { project: toProject(data as Row, day), today: day };
+  return { project: toProject(data as unknown as Row, day), today: day };
 }
 
 /** Sidebar badge: projects past their launch date. */
@@ -138,7 +138,7 @@ export async function clientOptions(): Promise<{ id: string; name: string }[]> {
     .select(`id:${C.columns.id}, name:${C.columns.name}`)
     .neq(C.columns.status, "churned")
     .order(C.columns.name, { ascending: true });
-  return ((data ?? []) as Row[]).map((r) => ({ id: String(r.id), name: str(r.name) ?? "Client" }));
+  return ((data ?? []) as unknown as Row[]).map((r) => ({ id: String(r.id), name: str(r.name) ?? "Client" }));
 }
 
 /** Writes the standard checklist for a new project. Used by the New project form and the client page. */

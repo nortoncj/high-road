@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useEffect, useState } from "react";
+import { useActionState, useState } from "react";
 import { TbBrandGoogleDrive, TbExternalLink, TbLoader2 } from "react-icons/tb";
 import { projectPage } from "@/content/admin";
 import type { FormState } from "@/lib/admin/client-actions";
@@ -21,9 +21,11 @@ export function DriveCard({
   const [editing, setEditing] = useState(!url);
   const [state, run, pending] = useActionState<FormState, FormData>(action, {});
   useResultToast(state);
-  useEffect(() => {
+  const [seen, setSeen] = useState(state);
+  if (state !== seen) {
+    setSeen(state);
     if (state.ok) setEditing(false);
-  }, [state]);
+  }
 
   return (
     <Card className="gap-4">

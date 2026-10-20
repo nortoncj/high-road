@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, useTransition, type MouseEvent, type ReactNode } from "react";
+import { useRef, useState, useTransition, type MouseEvent, type ReactNode } from "react";
 import {
   DndContext,
   DragOverlay,
@@ -63,7 +63,12 @@ export function ProjectBoard({ projects, today }: { projects: Project[]; today: 
   const [, startTransition] = useTransition();
   const justDragged = useRef(false);
 
-  useEffect(() => setItems(projects), [projects]);
+  // Fresh server data replaces local moves. Done during render, not in an effect.
+  const [seen, setSeen] = useState(projects);
+  if (projects !== seen) {
+    setSeen(projects);
+    setItems(projects);
+  }
 
   const sensors = useSensors(
     useSensor(MouseSensor, { activationConstraint: { distance: 6 } }),
@@ -98,7 +103,7 @@ export function ProjectBoard({ projects, today }: { projects: Project[]; today: 
 
   const lanes: Lane[] = [...boardStatuses];
   if (items.some((p) => p.status === "on_hold")) lanes.push("on_hold");
-  const cutoff = new Date(Date.now() - DONE_RECENT_DAYS * 86_400_000).toISOString();
+  const cutoff = new Date(Date.parse(`${today}T00:00:00Z`) - DONE_RECENT_DAYS * 86_400_000).toISOString();
   const active = items.find((p) => p.id === activeId) ?? null;
 
   const menu = (p: Project) => (

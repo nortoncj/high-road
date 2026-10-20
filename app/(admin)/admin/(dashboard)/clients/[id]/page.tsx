@@ -6,6 +6,8 @@ import { clientPage } from "@/content/admin";
 import { requireAdmin } from "@/lib/admin/auth";
 import { addProject, createStripeCustomer, linkStripe, syncClientStripe } from "@/lib/admin/client-actions";
 import { getClient } from "@/lib/admin/clients";
+import { createPaymentPlan } from "@/lib/admin/payment-plan-actions";
+import { today } from "@/lib/admin/projects";
 import { initials, shortDate, toDate } from "@/lib/admin/format";
 import { leadSourceLabel } from "@/lib/admin/schema";
 import { stripeConfigured, stripeDashboardUrl } from "@/lib/admin/stripe-sync";
@@ -14,6 +16,7 @@ import { Button } from "@/components/admin/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/admin/ui/card";
 import { BillingCard } from "@/components/admin/clients/BillingCard";
 import { ClientStatusBadge, HealthNote } from "@/components/admin/clients/ClientBits";
+import { PaymentPlansCard } from "@/components/admin/clients/PaymentPlansCard";
 import { PaymentsCard } from "@/components/admin/clients/PaymentsCard";
 import { ProjectsCard } from "@/components/admin/clients/ProjectsCard";
 
@@ -94,6 +97,14 @@ export default async function ClientDetailPage({ params }: Props) {
             linkAction={linkStripe.bind(null, c.id)}
             createAction={createStripeCustomer.bind(null, c.id)}
             syncAction={syncClientStripe.bind(null, c.id)}
+          />
+          <PaymentPlansCard
+            plans={detail.paymentPlans}
+            projects={detail.projects.ok ? detail.projects.data.filter((p) => p.status !== "cancelled").map((p) => ({ id: p.id, name: p.name })) : []}
+            canInvoice={stripeConfigured() && Boolean(c.stripeCustomerId)}
+            stripeReady={stripeConfigured()}
+            today={today()}
+            createAction={createPaymentPlan.bind(null, c.id)}
           />
           <ProjectsCard projects={detail.projects} addAction={addProject.bind(null, c.id)} />
         </div>

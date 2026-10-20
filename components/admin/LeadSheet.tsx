@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, useTransition, type ReactNode } from "react";
+import { useState, useTransition, type ReactNode } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import Link from "next/link";
@@ -28,13 +28,10 @@ export function LeadSheet({ lead, closeHref }: { lead: Lead | null; closeHref: s
   const [dismissed, setDismissed] = useState<string | null>(null);
 
   // Keep the last lead around so the sheet can animate out after the URL drops it.
-  const last = useRef<Lead | null>(lead);
-  if (lead) last.current = lead;
-  const shown = last.current;
-
-  useEffect(() => {
-    if (!lead) setDismissed(null);
-  }, [lead]);
+  // Adjusting state during render (not in an effect) is React's pattern for "reset when a prop changes".
+  const [shown, setShown] = useState<Lead | null>(lead);
+  if (lead && lead !== shown) setShown(lead);
+  if (!lead && dismissed !== null) setDismissed(null);
 
   if (!shown) return null;
   const open = Boolean(lead) && dismissed !== lead?.id;

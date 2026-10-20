@@ -11,6 +11,9 @@ import { tables, type PlanKind } from "./schema";
  *   - the webhook (app/api/stripe/webhook) calls handleStripeEvent on every change
  *   - "Sync now" / "Sync Stripe" buttons call syncCustomer / syncAll, for backfill or a missed webhook
  *
+ * Payment plan installments go the other way: "Send invoice" creates a one-off Stripe invoice
+ * (createInstallmentInvoice), and the webhook marks the installment paid when it's paid.
+ *
  * Every subscription event re-fetches the subscription from Stripe instead of trusting the event
  * body. Webhooks can arrive out of order; the fresh copy is always right.
  */
@@ -38,6 +41,7 @@ type Db = SupabaseClient;
 const S = tables.subscriptions;
 const C = tables.clients;
 const I = tables.invoices;
+const IN = tables.installments;
 
 /* Shapes, loosely typed on purpose: Stripe moved some fields between API versions
    (current_period_end went from the subscription to its items in 2025), so we read both. */
@@ -145,6 +149,7 @@ type InvoiceLike = {
   hosted_invoice_url?: string | null;
   status_transitions: { paid_at: number | null };
   lines: { data: { description: string | null }[] };
+  metadata?: Record<string, string> | null;
 };
 
 function invoiceRow(inv: InvoiceLike, clientId: string | null) {
@@ -158,6 +163,8 @@ function invoiceRow(inv: InvoiceLike, clientId: string | null) {
     [I.columns.number]: inv.number,
     [I.columns.description]: inv.lines.data[0]?.description ?? null,
     [I.columns.hostedUrl]: inv.hosted_invoice_url ?? null,
+    // Installment invoices carry their project, so the payment shows against it. Others leave it alone.
+    ...(inv.metadata?.project_id ? { [I.columns.projectId]: inv.metadata.project_id } : {}),
   };
 }
 
@@ -228,6 +235,103 @@ export async function upsertInvoice(db: Db, invoice: InvoiceLike) {
   if (invoice.status !== "paid" || !invoice.customer) return;
   const clientId = await clientFor(db, customerId(invoice.customer));
   await upsertOrThrow(db, I.table, [invoiceRow(invoice, clientId)], I.columns.stripeInvoiceId);
+  await settleInstallment(db, invoice);
+}
+
+/* Payment plan installments */
+
+/** Days to pay when the installment's due date is today or already past. */
+const LATE_INVOICE_DAYS = 7;
+
+/**
+ * A one-off invoice for one installment: draft → line item → finalize → email. Only the line we
+ * add goes on it (pending_invoice_items_behavior: exclude), so stray invoice items stay put.
+ * If Stripe can't email it (no email on the customer), it's still finalized and the pay link works.
+ */
+export async function createInstallmentInvoice(p: {
+  customer: string;
+  amountCents: number;
+  description: string;
+  dueOn: string | null;
+  metadata: Record<string, string>;
+}): Promise<{ id: string; url: string | null; sendError: string | null }> {
+  const s = stripe();
+  const due = p.dueOn ? Math.floor(Date.parse(`${p.dueOn}T12:00:00Z`) / 1000) : null;
+  const future = due !== null && due > Date.now() / 1000 + 3600;
+
+  const draft = await s.invoices.create({
+    customer: p.customer,
+    collection_method: "send_invoice",
+    ...(future ? { due_date: due! } : { days_until_due: LATE_INVOICE_DAYS }),
+    auto_advance: false,
+    pending_invoice_items_behavior: "exclude",
+    description: p.description,
+    metadata: p.metadata,
+  });
+  let finalized: Stripe.Invoice;
+  try {
+    await s.invoiceItems.create({
+      customer: p.customer,
+      invoice: draft.id,
+      amount: p.amountCents,
+      currency: "usd",
+      description: p.description,
+      metadata: p.metadata,
+    });
+    finalized = await s.invoices.finalizeInvoice(draft.id);
+  } catch (e) {
+    await s.invoices.del(draft.id).catch(() => {});
+    throw e;
+  }
+
+  let sendError: string | null = null;
+  try {
+    await s.invoices.sendInvoice(finalized.id);
+  } catch (e) {
+    sendError = (e as Error).message;
+  }
+  return { id: finalized.id, url: finalized.hosted_invoice_url ?? null, sendError };
+}
+
+/** Paid by Zelle or cash after the Stripe invoice went out: close it in Stripe so no reminders go out. */
+export async function payInvoiceOutOfBand(db: Db, invoiceId: string) {
+  const inv = await stripe().invoices.pay(invoiceId, { paid_out_of_band: true });
+  await upsertInvoice(db, inv as unknown as InvoiceLike);
+}
+
+/** Void an open installment invoice. Already paid or void is fine; anything else throws. */
+export async function voidStripeInvoice(invoiceId: string) {
+  const inv = await stripe().invoices.retrieve(invoiceId);
+  if (inv.status === "open") await stripe().invoices.voidInvoice(invoiceId);
+  else if (inv.status === "draft") await stripe().invoices.del(invoiceId);
+}
+
+/** invoice.paid → the installment it was for is paid. Metadata first, in case the id never got saved. */
+async function settleInstallment(db: Db, inv: InvoiceLike) {
+  const installmentId = inv.metadata?.installment_id;
+  const update = db
+    .from(IN.table)
+    .update({
+      [IN.columns.status]: "paid",
+      [IN.columns.paidAt]: iso(inv.status_transitions.paid_at) ?? new Date().toISOString(),
+      [IN.columns.method]: "stripe",
+      [IN.columns.stripeInvoiceId]: inv.id,
+      [IN.columns.invoiceUrl]: inv.hosted_invoice_url ?? null,
+    })
+    .neq(IN.columns.status, "paid");
+  const { error } = installmentId ? await update.eq(IN.columns.id, installmentId) : await update.eq(IN.columns.stripeInvoiceId, inv.id);
+  // Payment plan tables not set up yet: nothing to settle.
+  if (error && error.code !== "42P01" && error.code !== "PGRST205") throw new Error(`${IN.table}: ${error.message}`);
+}
+
+/** invoice.voided in Stripe → the installment is back to unbilled, so you can resend or mark it paid. */
+async function reopenInstallment(db: Db, inv: { id: string }) {
+  const { error } = await db
+    .from(IN.table)
+    .update({ [IN.columns.status]: "pending", [IN.columns.stripeInvoiceId]: null, [IN.columns.invoiceUrl]: null })
+    .eq(IN.columns.stripeInvoiceId, inv.id)
+    .eq(IN.columns.status, "invoiced");
+  if (error && error.code !== "42P01" && error.code !== "PGRST205") throw new Error(`${IN.table}: ${error.message}`);
 }
 
 /** Pull everything for one customer: all subscriptions and the last two years of paid invoices. */
@@ -255,6 +359,7 @@ export async function syncCustomer(db: Db, clientId: string, stripeCustomer: str
     (invoices.data as unknown as InvoiceLike[]).map((inv) => invoiceRow(inv, clientId)),
     I.columns.stripeInvoiceId,
   );
+  for (const inv of invoices.data as unknown as InvoiceLike[]) if (inv.metadata?.installment_id) await settleInstallment(db, inv);
 
   return { subscriptions: subs.data.length, invoices: invoices.data.length };
 }
@@ -304,6 +409,9 @@ export async function handleStripeEvent(db: Db, event: Stripe.Event) {
     }
     case "invoice.paid":
       await upsertInvoice(db, event.data.object as unknown as InvoiceLike);
+      break;
+    case "invoice.voided":
+      await reopenInstallment(db, event.data.object as { id: string });
       break;
     default:
       break;

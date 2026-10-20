@@ -14,6 +14,13 @@ export function usd(cents: number, compact = false): string {
   return compact && Math.abs(dollars) >= 10_000 ? usdCompact.format(dollars) : usdFmt.format(dollars);
 }
 
+const usdCentsFmt = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", minimumFractionDigits: 2 });
+
+/** Whole dollars when it's even, cents when it isn't: "$2,000", "$666.67". For installments, where cents are real. */
+export function usdExact(cents: number): string {
+  return cents % 100 === 0 ? usd(cents) : usdCentsFmt.format(cents / 100);
+}
+
 export function num(n: number): string {
   return numFmt.format(n);
 }

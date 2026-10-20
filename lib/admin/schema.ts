@@ -104,6 +104,36 @@ export const tables = {
     },
     paidStatus: "paid",
   },
+  paymentPlans: {
+    table: "payment_plans",
+    columns: {
+      id: "id",
+      clientId: "client_id",
+      projectId: "project_id",
+      title: "title",
+      totalCents: "total_cents",
+      status: "status",
+      notes: "notes",
+      createdAt: "created_at",
+    },
+  },
+  installments: {
+    table: "plan_installments",
+    columns: {
+      id: "id",
+      planId: "plan_id",
+      position: "position",
+      label: "label",
+      amountCents: "amount_cents",
+      dueOn: "due_on",
+      status: "status",
+      paidAt: "paid_at",
+      method: "method",
+      stripeInvoiceId: "stripe_invoice_id",
+      invoiceUrl: "invoice_url",
+      invoiceId: "invoice_id",
+    },
+  },
   projectTasks: {
     table: "project_tasks",
     columns: {
@@ -215,3 +245,23 @@ export function toProjectStatus(v: unknown): ProjectStatus {
 /** The four board columns, in order. on_hold gets its own lane only when something's in it; cancelled stays off the board. */
 export const boardStatuses = ["planning", "in_progress", "review", "done"] as const;
 export type BoardStatus = (typeof boardStatuses)[number];
+
+/* Payment plans (one-off work paid in installments) */
+
+export const installmentStatuses = ["pending", "invoiced", "paid", "void"] as const;
+export type InstallmentStatus = (typeof installmentStatuses)[number];
+export function toInstallmentStatus(v: unknown): InstallmentStatus {
+  return typeof v === "string" && (installmentStatuses as readonly string[]).includes(v) ? (v as InstallmentStatus) : "pending";
+}
+
+/** How a hand-marked payment came in. "stripe" is set by the webhook, not picked by hand. */
+export const paymentMethods = ["zelle", "cash", "check", "venmo", "other"] as const;
+export type PaymentMethod = (typeof paymentMethods)[number] | "stripe";
+export const paymentMethodLabel: Record<PaymentMethod, string> = {
+  stripe: "Stripe",
+  zelle: "Zelle",
+  cash: "Cash",
+  check: "Check",
+  venmo: "Venmo",
+  other: "Other",
+};

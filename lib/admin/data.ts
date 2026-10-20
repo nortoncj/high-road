@@ -165,21 +165,21 @@ export async function getOverview(range: DateRange): Promise<Overview> {
   if (paidNow.error) kpis.push({ key: "revenue", label: k.revenue.label, value: null, format: "usd", issue: toIssue(I.table, paidNow.error) });
   else {
     const sum = (rows: Row[] | null) => (rows ?? []).reduce((t, r) => t + (Number(r.amountCents) || 0), 0);
-    const cur = sum(paidNow.data as Row[] | null);
-    const prev = sum(paidPrev.data as Row[] | null);
+    const cur = sum(paidNow.data as unknown as Row[] | null);
+    const prev = sum(paidPrev.data as unknown as Row[] | null);
     kpis.push({ key: "revenue", label: k.revenue.label, value: cur, format: "usd", change: pct(cur, prev), note: k.revenue.hint });
   }
 
   const recentLeads: Overview["recentLeads"] = recent.error
     ? { ok: false, issue: toIssue(L.table, recent.error) }
-    : { ok: true, data: { rows: ((recent.data ?? []) as Row[]).map(toLead), total: leadsNow.count ?? 0 } };
+    : { ok: true, data: { rows: ((recent.data ?? []) as unknown as Row[]).map(toLead), total: leadsNow.count ?? 0 } };
 
   let services: Overview["services"];
   if (serviceRows.error) services = { ok: false, issue: toIssue(L.table, serviceRows.error) };
   else {
     const counts = new Map<string, number>();
     let untagged = 0;
-    for (const r of (serviceRows.data ?? []) as Row[]) {
+    for (const r of (serviceRows.data ?? []) as unknown as Row[]) {
       const s = str(r.service);
       if (!s) untagged++;
       else counts.set(s, (counts.get(s) ?? 0) + 1);
@@ -219,7 +219,7 @@ async function getActivity(db: Awaited<ReturnType<typeof createSupabase>>, range
   const usd = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 });
 
   if (!leads.error)
-    for (const r of (leads.data ?? []) as Row[]) {
+    for (const r of (leads.data ?? []) as unknown as Row[]) {
       const lead = toLead(r);
       items.push({
         id: `lead-${lead.id}`,
@@ -235,10 +235,10 @@ async function getActivity(db: Awaited<ReturnType<typeof createSupabase>>, range
 
   if (!events.error && events.data?.length) {
     // Names come from a second small query instead of a join, so lead_events works whatever type leads.id is.
-    const eventRows = events.data as Row[];
+    const eventRows = events.data as unknown as Row[];
     const ids = [...new Set(eventRows.map((r) => String(r.leadId)))];
     const { data: named } = await db.from(L.table).select(selectAs(L.columns, ["id", "name", "email"])).in(L.columns.id, ids);
-    const names = new Map(((named ?? []) as Row[]).map((r) => [String(r.id), toLead(r).name]));
+    const names = new Map(((named ?? []) as unknown as Row[]).map((r) => [String(r.id), toLead(r).name]));
     for (const r of eventRows) {
       const status = toLeadStatus(r.toStatus);
       items.push({
@@ -252,7 +252,7 @@ async function getActivity(db: Awaited<ReturnType<typeof createSupabase>>, range
   }
 
   if (!payments.error)
-    for (const r of (payments.data ?? []) as Row[]) {
+    for (const r of (payments.data ?? []) as unknown as Row[]) {
       const client = r.client as Row | null;
       items.push({
         id: `pay-${String(r.id)}`,
@@ -264,7 +264,7 @@ async function getActivity(db: Awaited<ReturnType<typeof createSupabase>>, range
     }
 
   if (!projects.error)
-    for (const r of (projects.data ?? []) as Row[]) {
+    for (const r of (projects.data ?? []) as unknown as Row[]) {
       items.push({ id: `proj-${String(r.id)}`, kind: "project", title: `Launched: ${str(r.name) ?? "a project"}`, at: String(r.completedAt) });
     }
 
@@ -317,7 +317,7 @@ export async function listLeads({ q, status, page }: LeadsQuery): Promise<Loaded
 
   return {
     ok: true,
-    data: { rows: ((res.data ?? []) as Row[]).map(toLead), total, pages: Math.max(1, Math.ceil(total / LEADS_PER_PAGE)), counts },
+    data: { rows: ((res.data ?? []) as unknown as Row[]).map(toLead), total, pages: Math.max(1, Math.ceil(total / LEADS_PER_PAGE)), counts },
   };
 }
 
@@ -328,7 +328,7 @@ export async function getLead(id: string): Promise<Lead | null> {
     clientForLead(id).catch(() => null),
   ]);
   if (error || !data) return null;
-  return { ...toLead(data as Row), client };
+  return { ...toLead(data as unknown as Row), client };
 }
 
 /** For the badge on "Leads" in the sidebar. */
