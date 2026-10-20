@@ -9,6 +9,12 @@ const nextConfig: NextConfig = {
   },
   cacheComponents: true,
   partialPrefetching: true,
+  // The server runs out of memory type checking (tsc needs ~550MB). The Deploy workflow type checks
+  // on GitHub's runner first and only then builds on the server with SKIP_TYPECHECK=1.
+  // Local `next build` still type checks.
+  typescript: {
+    ignoreBuildErrors: process.env.SKIP_TYPECHECK === "1",
+  },
   turbopack: {
     rules: {
       "*.css": {

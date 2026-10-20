@@ -7,7 +7,21 @@ concurrency:
   group: deploy
 
 jobs:
+  # Type check here, where there's memory to spare. The server can't fit tsc alongside the build.
+  typecheck:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npx next typegen
+      - run: npx tsc --noEmit
+
   deploy:
+    needs: typecheck
     runs-on: ubuntu-latest
     steps:
       - uses: appleboy/ssh-action@v1
@@ -18,6 +32,8 @@ jobs:
           script: |
             export NVM_DIR="$HOME/.nvm"
             . "$NVM_DIR/nvm.sh"
+            # Already type checked by the typecheck job above.
+            export SKIP_TYPECHECK=1
             ~/deploy.sh || exit 1
 
             # Warm the image cache so the first visitor (and PageSpeed) doesn't wait on resizes
