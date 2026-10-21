@@ -87,6 +87,18 @@
   color: var(--ink-muted);
 }
 
+.fieldError {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 500;
+  color: #9c1249;
+}
+
+.field input[aria-invalid="true"],
+.field textarea[aria-invalid="true"] {
+  border-color: #9c1249;
+}
+
 .trap {
   position: absolute;
   left: -9999px;

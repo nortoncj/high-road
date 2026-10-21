@@ -1,57 +1,49 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import { useEffect, useId, useRef, useState, type FormEvent } from "react";
+import { useActionState, useEffect, useId, useRef } from "react";
 import { TbArrowRight, TbLoader2, TbLock } from "react-icons/tb";
 import { book } from "@/content/book";
+import { submitLead, type ContactState, type Field } from "@/components/contact/actions";
 import styles from "./ContactForm.module.css";
 
-type Status = "idle" | "sending" | "error";
+const initial: ContactState = {};
+const FIELD_ORDER: Field[] = ["name", "email", "phone", "website", "message"];
 
 /**
- * Message form. Posts to your existing contact route (which sends the Brevo confirmation),
- * then pushes to the thank-you page. Swap the endpoint in content/book.ts.
- * Spam: a hidden honeypot field plus a minimum fill time. Bots fill both; people don't.
+ * Message form under the calendar. Same server action as /contact: emails you through Brevo,
+ * saves the lead (source "book"), then the server sends them to /thanks/message.
+ * Spam: a hidden honeypot field plus a minimum fill time, both checked on the server.
  */
 export function ContactForm() {
   const m = book.message;
   const f = m.fields;
   const id = useId();
-  const router = useRouter();
-  // Stamped on mount, not during render: Date.now() in render breaks prerendering with cacheComponents.
-  const startedAt = useRef(0);
-  const [status, setStatus] = useState<Status>("idle");
+  const [state, action, pending] = useActionState(submitLead, initial);
+  const startedRef = useRef<HTMLInputElement>(null);
+  const formRef = useRef<HTMLFormElement>(null);
 
+  // Timestamp for the "too fast to be human" check. Set after mount to avoid a hydration mismatch.
   useEffect(() => {
-    startedAt.current = Date.now();
+    if (startedRef.current) startedRef.current.value = String(Date.now());
   }, []);
 
-  async function onSubmit(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    const data = Object.fromEntries(new FormData(e.currentTarget)) as Record<string, string>;
-
-    // Honeypot filled or submitted in under 3 seconds: pretend it worked, send nothing.
-    if (data.company_fax || Date.now() - startedAt.current < 3000) {
-      router.push(m.successHref);
-      return;
-    }
-    delete data.company_fax;
-
-    setStatus("sending");
-    try {
-      const res = await fetch(m.endpoint, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...data, source: "book-page" }),
-      });
-      if (!res.ok) throw new Error(String(res.status));
-      router.push(m.successHref);
-    } catch {
-      setStatus("error");
-    }
-  }
+  // After a failed submit, put focus on the first field with a problem.
+  useEffect(() => {
+    const first = FIELD_ORDER.find((k) => state.errors?.[k]);
+    if (first) formRef.current?.querySelector<HTMLElement>(`[name="${first}"]`)?.focus();
+  }, [state.errors]);
 
   const fid = (k: string) => `${id}-${k}`;
+  const v = state.values ?? {};
+  const err = state.errors ?? {};
+  const describe = (k: Field, hint?: boolean) =>
+    [err[k] ? fid(`${k}-error`) : null, hint ? fid(`${k}-hint`) : null].filter(Boolean).join(" ") || undefined;
+  const fieldError = (k: Field) =>
+    err[k] ? (
+      <p id={fid(`${k}-error`)} className={styles.fieldError}>
+        {err[k]}
+      </p>
+    ) : null;
 
   return (
     <div className={styles.wrap}>
@@ -60,15 +52,40 @@ export function ContactForm() {
         <p className={styles.body}>{m.body}</p>
       </div>
 
-      <form className={styles.form} onSubmit={onSubmit}>
+      <form ref={formRef} className={styles.form} action={action} noValidate>
+        <input type="hidden" name="source" value="book" />
+        <input ref={startedRef} type="hidden" name="startedAt" defaultValue="" />
+
         <div className={styles.row}>
           <div className={styles.field}>
             <label htmlFor={fid("name")}>{f.name.label}</label>
-            <input id={fid("name")} name="name" autoComplete="name" placeholder={f.name.placeholder} required />
+            <input
+              id={fid("name")}
+              name="name"
+              autoComplete="name"
+              maxLength={120}
+              placeholder={f.name.placeholder}
+              defaultValue={v.name}
+              aria-invalid={err.name ? true : undefined}
+              aria-describedby={describe("name")}
+              required
+            />
+            {fieldError("name")}
           </div>
           <div className={styles.field}>
             <label htmlFor={fid("email")}>{f.email.label}</label>
-            <input id={fid("email")} name="email" type="email" autoComplete="email" placeholder={f.email.placeholder} required />
+            <input
+              id={fid("email")}
+              name="email"
+              type="email"
+              autoComplete="email"
+              placeholder={f.email.placeholder}
+              defaultValue={v.email}
+              aria-invalid={err.email ? true : undefined}
+              aria-describedby={describe("email")}
+              required
+            />
+            {fieldError("email")}
           </div>
         </div>
 
@@ -81,11 +98,14 @@ export function ContactForm() {
               type="tel"
               autoComplete="tel"
               placeholder={f.phone.placeholder}
-              aria-describedby={fid("phone-hint")}
+              defaultValue={v.phone}
+              aria-invalid={err.phone ? true : undefined}
+              aria-describedby={describe("phone", true)}
             />
             <p id={fid("phone-hint")} className={styles.hint}>
               {f.phone.hint}
             </p>
+            {fieldError("phone")}
           </div>
           <div className={styles.field}>
             <label htmlFor={fid("website")}>{f.website.label}</label>
@@ -95,34 +115,47 @@ export function ContactForm() {
               inputMode="url"
               autoComplete="url"
               placeholder={f.website.placeholder}
-              aria-describedby={fid("website-hint")}
+              defaultValue={v.website}
+              aria-invalid={err.website ? true : undefined}
+              aria-describedby={describe("website", true)}
             />
             <p id={fid("website-hint")} className={styles.hint}>
               {f.website.hint}
             </p>
+            {fieldError("website")}
           </div>
         </div>
 
         <div className={styles.field}>
           <label htmlFor={fid("message")}>{f.message.label}</label>
-          <textarea id={fid("message")} name="message" rows={5} placeholder={f.message.placeholder} required />
+          <textarea
+            id={fid("message")}
+            name="message"
+            rows={5}
+            placeholder={f.message.placeholder}
+            defaultValue={v.message}
+            aria-invalid={err.message ? true : undefined}
+            aria-describedby={describe("message")}
+            required
+          />
+          {fieldError("message")}
         </div>
 
         {/* Honeypot: hidden from people and screen readers, irresistible to bots */}
         <div className={styles.trap} aria-hidden="true">
-          <label htmlFor={fid("fax")}>Company fax</label>
-          <input id={fid("fax")} name="company_fax" tabIndex={-1} autoComplete="off" />
+          <label htmlFor={fid("company")}>Company website</label>
+          <input id={fid("company")} name="company" tabIndex={-1} autoComplete="off" />
         </div>
 
-        {status === "error" ? (
+        {state.formError ? (
           <p className={styles.error} role="alert">
-            {m.error}
+            {state.formError}
           </p>
         ) : null}
 
         <div className={styles.foot}>
-          <button type="submit" className={styles.submit} disabled={status === "sending"}>
-            {status === "sending" ? (
+          <button type="submit" className={styles.submit} disabled={pending}>
+            {pending ? (
               <>
                 <TbLoader2 className={styles.spin} aria-hidden="true" />
                 {m.sending}

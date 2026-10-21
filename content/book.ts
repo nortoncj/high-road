@@ -1,7 +1,5 @@
 // Every word on /book lives here. [Brackets] are yours to fill.
 
-import { site } from "@/content/home";
-
 export const bookMeta = {
   title: "Book a Free 15 Minute Call, WebTech Ninjas",
   description:
@@ -46,9 +44,7 @@ export const book = {
   message: {
     heading: "Rather write it out?",
     body: "Tell me a little about your business and what's not working. I'll reply by email, usually the same day.",
-    // TODO: your existing Brevo-backed contact route.
-    endpoint: "/api/contact",
-    successHref: "/thanks/message",
+    // Submits through submitLead (components/contact/actions.ts), the same as /contact.
     fields: {
       name: { label: "Your name", placeholder: "Dana Ruiz" },
       email: { label: "Email", placeholder: "dana@ruizheating.com" },
@@ -58,7 +54,6 @@ export const book = {
     },
     submit: "Send my message",
     sending: "Sending",
-    error: `That didn't send. Call or text me at ${site.phone} and I'll sort it out.`,
     privacy: "I'll only use this to reply to you. No newsletters, no list.",
   },
 };
