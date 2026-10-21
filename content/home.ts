@@ -96,7 +96,7 @@ export const site = {
   city: "Orlando, FL",
   bookHref: "/book",
   demoHref: "/demo",
-  priceFloor: "$1,300",
+  priceFloor: "$1,500",
   // TODO: point at the route that saves leads to Supabase.
   leadEndpoint: "/api/leads",
   logo: {
