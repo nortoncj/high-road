@@ -9,6 +9,18 @@ import {
   VFW,
   AboutHeadshot,
 } from "@img/thumbnails";
+import {
+  ctaBg,
+  heroCleaning,
+  heroHomecare,
+  heroHVAC,
+  heroPlumbing,
+  heroRoofing,
+  pillarHiring,
+  pillarLeads,
+  pillarNight,
+  reportBg,
+} from "@img/home";
 
 
 export type NavLink = { label: string; href: string };
@@ -78,9 +90,8 @@ export type FeaturedProject = Project & {
   quote: { text: string; name: string; title: string };
 };
 
-// Placeholder photos live in /public/assets/img/home (served from /assets/img/home). They are faceted stand-ins,
-// each labelled with the real shot to take. Swap the src, keep the alt honest.
-const photo = (name: string) => `/assets/img/home/${name}.jpg`;
+// Placeholder photos live in /public/assets/img/home and are exported from its index.ts. They are faceted
+// stand-ins, each labelled with the real shot to take. Swap the file, keep the alt honest.
 
 export const site = {
   name: "WebTech Ninjas",
@@ -127,7 +138,7 @@ export const hero = {
       label: "HVAC",
       line: "When the AC dies in July, they call whoever shows up first. Make it you.",
       image: {
-        src: photo("hero-hvac"),
+        src: heroHVAC.src,
         alt: "HVAC tech on a rooftop condenser at dusk",
       },
     },
@@ -136,7 +147,7 @@ export const hero = {
       label: "Plumbing",
       line: "Burst pipe at midnight? They're calling whoever answers. Make it you.",
       image: {
-        src: photo("hero-plumbing"),
+        src: heroPlumbing.src,
         alt: "Plumber loading the van at sunrise",
       },
     },
@@ -145,7 +156,7 @@ export const hero = {
       label: "Roofing",
       line: "After the storm, the first roofer they trust gets the job. Make it you.",
       image: {
-        src: photo("hero-roofing"),
+        src: heroRoofing.src,
         alt: "Roofing crew on a pitched roof at golden hour",
       },
     },
@@ -154,7 +165,7 @@ export const hero = {
       label: "Cleaning",
       line: "Regulars want to rebook in ten seconds, not ten texts. Make it easy.",
       image: {
-        src: photo("hero-cleaning"),
+        src: heroCleaning.src,
         alt: "Cleaner finishing a bright kitchen",
       },
     },
@@ -163,7 +174,7 @@ export const hero = {
       label: "Home care",
       line: "Families pick the agency that feels safe at first glance. Make it yours.",
       image: {
-        src: photo("hero-homecare"),
+        src: heroHomecare.src,
         alt: "Caregiver and client talking on a porch",
       },
     },
@@ -195,7 +206,7 @@ export const pillars = {
       title: "Leads you don't share",
       body: "Lead sites sell the same homeowner to five companies. Your own site and Google listing send the call to you, and only you.",
       image: {
-        src: photo("pillar-leads"),
+        src: pillarLeads.src,
         alt: "Owner answering a call in the truck",
       },
     },
@@ -204,7 +215,7 @@ export const pillars = {
       title: "Answers at 2 a.m.",
       body: "Emergencies don't wait for business hours. Click-to-call on every page, online booking, and an after-hours request form that pings your phone the second it lands.",
       image: {
-        src: photo("pillar-night"),
+        src: pillarNight.src,
         alt: "Porch light on at night with a phone lit up",
       },
     },
@@ -213,7 +224,7 @@ export const pillars = {
       title: "A hiring pipeline",
       body: "A careers page and an application form that asks the right questions up front, so you only call back the people worth calling.",
       image: {
-        src: photo("pillar-hiring"),
+        src: pillarHiring.src,
         alt: "Crew photo in front of the trucks",
       },
       link: { label: "Try the demo application", href: "/demo" },
@@ -306,7 +317,7 @@ export const report = {
   eyebrow: "Every month",
   heading: "A report you can read in two minutes.",
   body: "Calls, bookings, reviews and where they came from. No jargon, no 40-page PDF. Just what moved and what I'm doing next.",
-  image: { src: photo("report-bg"), alt: "" },
+  image: { src: reportBg.src, alt: "" },
   title: "October report",
   badge: "Example data",
   stats: [
@@ -497,7 +508,7 @@ export const book = {
   eyebrow: "Free 15 minute call",
   heading: "Let's make your phone ring.",
   body: "We'll look at your site and your Google listing together. You'll leave knowing what's costing you calls, whether you hire me or not.",
-  image: { src: photo("cta-bg"), alt: "" },
+  image: { src: ctaBg.src, alt: "" },
   fields: {
     name: { label: "Your name", placeholder: "Dana Ruiz" },
     business: { label: "Business name", placeholder: "Ruiz Heating & Air" },

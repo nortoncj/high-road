@@ -15,6 +15,7 @@ import {
 import { problems, type Problem } from "@/content/services/website-design";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import { Reveal } from "@/components/ui/Reveal";
+import { ctaBg } from "@img/home";
 import styles from "./Problems.module.css";
 
 const icons: Record<Problem["icon"], IconType> = {
@@ -104,7 +105,7 @@ function Alerts() {
     <div className={styles.stage} aria-hidden="true">
       <div className={styles.phone}>
         <div className={styles.screen}>
-          <Image src="/assets/img/home/cta-bg.jpg" alt="" fill sizes="280px" className={styles.wallpaper} />
+          <Image src={ctaBg} alt="" fill sizes="280px" className={styles.wallpaper} />
           <div className={styles.lock}>
             <TbLock />
             <span className={styles.clock}>2:14</span>

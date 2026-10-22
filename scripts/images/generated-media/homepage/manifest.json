@@ -1,0 +1,284 @@
+[
+  {
+    "ts": "2026-10-21T21:49:02",
+    "job": "van-driveway",
+    "model": "flux-2-pro",
+    "endpoint": "fal-ai/flux-2-pro",
+    "est_cost": 0.09,
+    "request_id": [
+      "01a1614b-a667-7b70-93bd-b8a6c45744a4",
+      "01a1614b-e411-74a1-aed0-a149d1708ec4"
+    ],
+    "files": [
+      "generated-media/homepage/van-driveway-1.jpg",
+      "generated-media/homepage/van-driveway-2.jpg"
+    ],
+    "prompt": "A plain white service van with no logos or text parked in the driveway of a single story stucco home at golden hour, long shadows across the concrete, palm tree and green lawn. A technician in a plain navy work shirt walks toward the front door carrying a toolbag, seen from behind. Candid documentary photo, shot on Sony A7IV, 35mm lens, f/2.8, natural light, warm cinematic color grade, slight film grain, shallow depth of field, real skin texture, unposed, suburban American neighborhood. No text, no logos, no lettering, no watermarks.",
+    "client": "WebTech Ninjas",
+    "params": {
+      "image_size": {
+        "width": 1920,
+        "height": 1080
+      }
+    },
+    "refs": [],
+    "remote_urls": [
+      "https://v3b.fal.media/files/b/0aaf578c/AoJDpj-NkLfaGkdHsrKH2_aq1MEZoY.jpg",
+      "https://v3b.fal.media/files/b/0aaf578d/7cBquGEXo0mChgnv9AEo2_aXzY8GI4.jpg"
+    ]
+  },
+  {
+    "ts": "2026-10-21T21:49:31",
+    "job": "cleaner-kitchen",
+    "model": "flux-2-pro",
+    "endpoint": "fal-ai/flux-2-pro",
+    "est_cost": 0.09,
+    "request_id": [
+      "01a1614c-26a1-7a02-bf53-a79890126584",
+      "01a1614c-5ba8-7321-ab55-af046bffcfe2"
+    ],
+    "files": [
+      "generated-media/homepage/cleaner-kitchen-1.jpg",
+      "generated-media/homepage/cleaner-kitchen-2.jpg"
+    ],
+    "prompt": "A house cleaner in her 30s wiping down a white quartz kitchen island, bright morning light through a window, spray bottle and microfiber cloth in hand, spotless reflective countertop, slight smile, caught mid motion. The kitchen feels lived in, with a fruit bowl on the counter. Candid documentary photo, shot on Sony A7IV, 35mm lens, f/2.8, natural light, warm cinematic color grade, slight film grain, shallow depth of field, real skin texture, unposed, suburban American neighborhood. No text, no logos, no lettering, no watermarks.",
+    "client": "WebTech Ninjas",
+    "params": {
+      "image_size": {
+        "width": 1920,
+        "height": 1080
+      }
+    },
+    "refs": [],
+    "remote_urls": [
+      "https://v3b.fal.media/files/b/0aaf578f/HYh6ry1rNdyrTNj8vOJ1M_N8S7xSKv.jpg",
+      "https://v3b.fal.media/files/b/0aaf5790/-pNhchEAGw6Om-2az9TsI_v5OBahoX.jpg"
+    ]
+  },
+  {
+    "ts": "2026-10-21T21:50:05",
+    "job": "caregiver-porch",
+    "model": "flux-2-pro",
+    "endpoint": "fal-ai/flux-2-pro",
+    "est_cost": 0.09,
+    "request_id": [
+      "01a1614c-94d5-7db0-8a17-15c9e0ab71e0",
+      "01a1614c-dac0-7411-95e6-11898f93a248"
+    ],
+    "files": [
+      "generated-media/homepage/caregiver-porch-1.jpg",
+      "generated-media/homepage/caregiver-porch-2.jpg"
+    ],
+    "prompt": "A female caregiver in her 30s in light blue scrubs sits beside an elderly man on a wooden porch swing; both laugh at something off camera, each holding a coffee mug. Screened porch with potted plants, late afternoon side light. Subjects in the left half of the frame. Candid documentary photo, shot on Sony A7IV, 35mm lens, f/2.8, natural light, warm cinematic color grade, slight film grain, shallow depth of field, real skin texture, unposed, suburban American neighborhood. No text, no logos, no lettering, no watermarks.",
+    "client": "WebTech Ninjas",
+    "params": {
+      "image_size": {
+        "width": 1920,
+        "height": 1080
+      }
+    },
+    "refs": [],
+    "remote_urls": [
+      "https://v3b.fal.media/files/b/0aaf5792/78yfA8R4GSk1fEUVxqAsQ_CZtfLnj6.jpg",
+      "https://v3b.fal.media/files/b/0aaf5794/N6NfIhRiMZ9aR2FITrQnA_8FkRZrQY.jpg"
+    ]
+  },
+  {
+    "ts": "2026-10-21T21:50:38",
+    "job": "hvac-rooftop",
+    "model": "flux-2-pro",
+    "endpoint": "fal-ai/flux-2-pro",
+    "est_cost": 0.09,
+    "request_id": [
+      "01a1614d-1bd0-71f0-a963-90c383575c81",
+      "01a1614d-61eb-7892-9883-7e4cc8127c97"
+    ],
+    "files": [
+      "generated-media/homepage/hvac-rooftop-1.jpg",
+      "generated-media/homepage/hvac-rooftop-2.jpg"
+    ],
+    "prompt": "An HVAC technician in a plain work shirt kneels beside a rooftop condenser unit at dusk with gauges connected and a headlamp on, focused expression. Flat commercial rooftop, orange and purple sky behind him, shot from a low angle. Candid documentary photo, shot on Sony A7IV, 35mm lens, f/2.8, natural light, warm cinematic color grade, slight film grain, shallow depth of field, real skin texture, unposed, suburban American neighborhood. No text, no logos, no lettering, no watermarks.",
+    "client": "WebTech Ninjas",
+    "params": {
+      "image_size": {
+        "width": 1920,
+        "height": 1080
+      }
+    },
+    "refs": [],
+    "remote_urls": [
+      "https://v3b.fal.media/files/b/0aaf5796/PREQaOVzuiPw5qPgx2Ti__kCpoH7Gj.jpg",
+      "https://v3b.fal.media/files/b/0aaf5797/80QoSPTz0lDdWINlp0V61_PHayheAc.jpg"
+    ]
+  },
+  {
+    "ts": "2026-10-21T21:51:12",
+    "job": "plumber-sunrise",
+    "model": "flux-2-pro",
+    "endpoint": "fal-ai/flux-2-pro",
+    "est_cost": 0.09,
+    "request_id": [
+      "01a1614d-9aa7-7dd3-9f1a-e55f0ed2ec30",
+      "01a1614d-e0b3-7e53-bc68-d2129fa548e4"
+    ],
+    "files": [
+      "generated-media/homepage/plumber-sunrise-1.jpg",
+      "generated-media/homepage/plumber-sunrise-2.jpg"
+    ],
+    "prompt": "A plumber in his 40s loads a coiled drain snake into the open back doors of a plain white van with no logos at sunrise. Organized shelving and parts bins inside the van, cool blue morning light with a warm sun flare on the horizon, quiet residential street. Candid documentary photo, shot on Sony A7IV, 35mm lens, f/2.8, natural light, warm cinematic color grade, slight film grain, shallow depth of field, real skin texture, unposed, suburban American neighborhood. No text, no logos, no lettering, no watermarks.",
+    "client": "WebTech Ninjas",
+    "params": {
+      "image_size": {
+        "width": 1920,
+        "height": 1080
+      }
+    },
+    "refs": [],
+    "remote_urls": [
+      "https://v3b.fal.media/files/b/0aaf5799/c3TWoWqLMWqxSvZaU1KGH_C2cYEFI9.jpg",
+      "https://v3b.fal.media/files/b/0aaf579a/AI5jmAP18ec0ZlXQJLI0U_XvOBh7ki.jpg"
+    ]
+  },
+  {
+    "ts": "2026-10-21T21:51:43",
+    "job": "roofing-crew",
+    "model": "flux-2-pro",
+    "endpoint": "fal-ai/flux-2-pro",
+    "est_cost": 0.09,
+    "request_id": [
+      "01a1614e-228d-7be1-9c58-83eaabf292dd",
+      "01a1614e-6020-7942-b662-6492aca930a2"
+    ],
+    "files": [
+      "generated-media/homepage/roofing-crew-1.jpg",
+      "generated-media/homepage/roofing-crew-2.jpg"
+    ],
+    "prompt": "Three roofers in safety harnesses install asphalt shingles on a steep pitched roof at golden hour; one holds a nail gun, one carries a bundle of shingles on his shoulder. Wide shot from the ground looking up, warm backlight. Candid documentary photo, shot on Sony A7IV, 35mm lens, f/2.8, natural light, warm cinematic color grade, slight film grain, shallow depth of field, real skin texture, unposed, suburban American neighborhood. No text, no logos, no lettering, no watermarks.",
+    "client": "WebTech Ninjas",
+    "params": {
+      "image_size": {
+        "width": 1920,
+        "height": 1080
+      }
+    },
+    "refs": [],
+    "remote_urls": [
+      "https://v3b.fal.media/files/b/0aaf579c/zQIxORsjoTCDyMx6mZXJl_AErSCf5S.jpg",
+      "https://v3b.fal.media/files/b/0aaf579e/1Gr5_lHYryVV4nJ8hIrs-_MsBJoAq1.jpg"
+    ]
+  },
+  {
+    "ts": "2026-10-21T21:52:18",
+    "job": "crew-trucks",
+    "model": "flux-2-pro",
+    "endpoint": "fal-ai/flux-2-pro",
+    "est_cost": 0.09,
+    "request_id": [
+      "01a1614e-9a93-7d21-83fc-530ee1002e4b",
+      "01a1614e-d82d-70d3-a82c-58fcaef5b849"
+    ],
+    "files": [
+      "generated-media/homepage/crew-trucks-1.jpg",
+      "generated-media/homepage/crew-trucks-2.jpg"
+    ],
+    "prompt": "A four person service crew of mixed ages stands in front of two plain white pickup trucks with no logos in a gravel lot, wearing matching plain navy work shirts with no logos. Relaxed confident poses, arms crossed or hands in pockets, late afternoon light, environmental team portrait. Candid documentary photo, shot on Sony A7IV, 35mm lens, f/2.8, natural light, warm cinematic color grade, slight film grain, shallow depth of field, real skin texture, unposed, suburban American neighborhood. No text, no logos, no lettering, no watermarks.",
+    "client": "WebTech Ninjas",
+    "params": {
+      "image_size": {
+        "width": 1920,
+        "height": 1080
+      }
+    },
+    "refs": [],
+    "remote_urls": [
+      "https://v3b.fal.media/files/b/0aaf579f/XgkF9QIdfSFWpC7i9SGEy_xwrt2pYd.jpg",
+      "https://v3b.fal.media/files/b/0aaf57a1/AFecoz07sxUnjaxEFxR8y_VcxUibBr.jpg"
+    ]
+  },
+  {
+    "ts": "2026-10-21T21:52:46",
+    "job": "owner-truck",
+    "model": "flux-2-pro",
+    "endpoint": "fal-ai/flux-2-pro",
+    "est_cost": 0.09,
+    "request_id": [
+      "01a1614f-23e0-7421-ba0f-5826a98c8b19",
+      "01a1614f-58d2-7633-bb9d-ad11c5172e8e"
+    ],
+    "files": [
+      "generated-media/homepage/owner-truck-1.jpg",
+      "generated-media/homepage/owner-truck-2.jpg"
+    ],
+    "prompt": "A small business owner in his 40s with short dark hair and a light beard sits in the driver seat of a work truck, phone to his ear mid conversation, clipboard on the dashboard, coffee cup in the holder. Shot through the open driver window, midday light. Candid documentary photo, shot on Sony A7IV, 35mm lens, f/2.8, natural light, warm cinematic color grade, slight film grain, shallow depth of field, real skin texture, unposed, suburban American neighborhood. No text, no logos, no lettering, no watermarks.",
+    "client": "WebTech Ninjas",
+    "params": {
+      "image_size": {
+        "width": 1920,
+        "height": 1080
+      }
+    },
+    "refs": [],
+    "remote_urls": [
+      "https://v3b.fal.media/files/b/0aaf57a2/nqcgmhIp_qtTl546JmkPM_XGyv7IKY.jpg",
+      "https://v3b.fal.media/files/b/0aaf57a4/Zni_lV1hKgTJELBkEAjFe_TzeQIbSw.jpg"
+    ]
+  },
+  {
+    "ts": "2026-10-21T21:53:17",
+    "job": "porch-2am",
+    "model": "flux-2-pro",
+    "endpoint": "fal-ai/flux-2-pro",
+    "est_cost": 0.09,
+    "request_id": [
+      "01a1614f-9229-7752-a5c9-d2f8aaa40e1b",
+      "01a1614f-cfbf-7c33-a845-03c19a9bd19c"
+    ],
+    "files": [
+      "generated-media/homepage/porch-2am-1.jpg",
+      "generated-media/homepage/porch-2am-2.jpg"
+    ],
+    "prompt": "The front porch of a suburban home at 2 AM, a single porch light glowing warm, dark quiet street. A woman in a bathrobe stands in the doorway looking at her glowing smartphone screen with a worried expression. Moody low light, high ISO grain. Candid documentary photo, shot on Sony A7IV, 35mm lens, f/2.8, natural light, warm cinematic color grade, slight film grain, shallow depth of field, real skin texture, unposed, suburban American neighborhood. No text, no logos, no lettering, no watermarks.",
+    "client": "WebTech Ninjas",
+    "params": {
+      "image_size": {
+        "width": 1920,
+        "height": 1080
+      }
+    },
+    "refs": [],
+    "remote_urls": [
+      "https://v3b.fal.media/files/b/0aaf57a5/t9uQKpJMcatJ1sEFCbuCg_RzyFXONh.jpg",
+      "https://v3b.fal.media/files/b/0aaf57a7/gpIwUh5BYcDdhMPkxyWsd_kc4p1D38.jpg"
+    ]
+  },
+  {
+    "ts": "2026-10-21T21:54:05",
+    "job": "owner-report",
+    "model": "flux-2-pro",
+    "endpoint": "fal-ai/flux-2-pro/edit",
+    "est_cost": 0.15,
+    "request_id": [
+      "01a16150-0b56-73e0-8711-261f3f7e6611",
+      "01a16150-6abe-70e1-9847-99ddb2a0ce67"
+    ],
+    "files": [
+      "generated-media/homepage/owner-report-1.jpg",
+      "generated-media/homepage/owner-report-2.jpg"
+    ],
+    "prompt": "The same man from the reference image, same face, hair and beard, now sitting at a kitchen table in early morning, reading a printed report with charts, wearing reading glasses, coffee mug beside him, closed laptop on the table, soft window light, satisfied subtle smile. Candid documentary photo, shot on Sony A7IV, 35mm lens, f/2.8, natural light, warm cinematic color grade, slight film grain, shallow depth of field, real skin texture, unposed, suburban American neighborhood. No text, no logos, no lettering, no watermarks.",
+    "client": "WebTech Ninjas",
+    "params": {
+      "image_size": {
+        "width": 1920,
+        "height": 1080
+      }
+    },
+    "refs": [
+      "job:owner-truck"
+    ],
+    "remote_urls": [
+      "https://v3b.fal.media/files/b/0aaf57a9/hGA2dJbq5Z10g73d3JWrf_Zok5RaJR.jpg",
+      "https://v3b.fal.media/files/b/0aaf57ac/OkWeCp4IOqqhLysVzvHET_mILf4sFC.jpg"
+    ]
+  }
+]

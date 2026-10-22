@@ -1,0 +1,140 @@
+{
+  "client": "WebTech Ninjas",
+  "output_dir": "generated-media/homepage",
+  "budget_usd": 3.0,
+  "jobs": [
+    {
+      "id": "van-driveway",
+      "model": "flux-2-pro",
+      "mode": "t2i",
+      "prompt": "A plain white service van with no logos or text parked in the driveway of a single story stucco home at golden hour, long shadows across the concrete, palm tree and green lawn. A technician in a plain navy work shirt walks toward the front door carrying a toolbag, seen from behind. Candid documentary photo, shot on Sony A7IV, 35mm lens, f/2.8, natural light, warm cinematic color grade, slight film grain, shallow depth of field, real skin texture, unposed, suburban American neighborhood. No text, no logos, no lettering, no watermarks.",
+      "count": 2,
+      "params": {
+        "image_size": {
+          "width": 1920,
+          "height": 1080
+        }
+      }
+    },
+    {
+      "id": "cleaner-kitchen",
+      "model": "flux-2-pro",
+      "mode": "t2i",
+      "prompt": "A house cleaner in her 30s wiping down a white quartz kitchen island, bright morning light through a window, spray bottle and microfiber cloth in hand, spotless reflective countertop, slight smile, caught mid motion. The kitchen feels lived in, with a fruit bowl on the counter. Candid documentary photo, shot on Sony A7IV, 35mm lens, f/2.8, natural light, warm cinematic color grade, slight film grain, shallow depth of field, real skin texture, unposed, suburban American neighborhood. No text, no logos, no lettering, no watermarks.",
+      "count": 2,
+      "params": {
+        "image_size": {
+          "width": 1920,
+          "height": 1080
+        }
+      }
+    },
+    {
+      "id": "caregiver-porch",
+      "model": "flux-2-pro",
+      "mode": "t2i",
+      "prompt": "A female caregiver in her 30s in light blue scrubs sits beside an elderly man on a wooden porch swing; both laugh at something off camera, each holding a coffee mug. Screened porch with potted plants, late afternoon side light. Subjects in the left half of the frame. Candid documentary photo, shot on Sony A7IV, 35mm lens, f/2.8, natural light, warm cinematic color grade, slight film grain, shallow depth of field, real skin texture, unposed, suburban American neighborhood. No text, no logos, no lettering, no watermarks.",
+      "count": 2,
+      "params": {
+        "image_size": {
+          "width": 1920,
+          "height": 1080
+        }
+      }
+    },
+    {
+      "id": "hvac-rooftop",
+      "model": "flux-2-pro",
+      "mode": "t2i",
+      "prompt": "An HVAC technician in a plain work shirt kneels beside a rooftop condenser unit at dusk with gauges connected and a headlamp on, focused expression. Flat commercial rooftop, orange and purple sky behind him, shot from a low angle. Candid documentary photo, shot on Sony A7IV, 35mm lens, f/2.8, natural light, warm cinematic color grade, slight film grain, shallow depth of field, real skin texture, unposed, suburban American neighborhood. No text, no logos, no lettering, no watermarks.",
+      "count": 2,
+      "params": {
+        "image_size": {
+          "width": 1920,
+          "height": 1080
+        }
+      }
+    },
+    {
+      "id": "plumber-sunrise",
+      "model": "flux-2-pro",
+      "mode": "t2i",
+      "prompt": "A plumber in his 40s loads a coiled drain snake into the open back doors of a plain white van with no logos at sunrise. Organized shelving and parts bins inside the van, cool blue morning light with a warm sun flare on the horizon, quiet residential street. Candid documentary photo, shot on Sony A7IV, 35mm lens, f/2.8, natural light, warm cinematic color grade, slight film grain, shallow depth of field, real skin texture, unposed, suburban American neighborhood. No text, no logos, no lettering, no watermarks.",
+      "count": 2,
+      "params": {
+        "image_size": {
+          "width": 1920,
+          "height": 1080
+        }
+      }
+    },
+    {
+      "id": "roofing-crew",
+      "model": "flux-2-pro",
+      "mode": "t2i",
+      "prompt": "Three roofers in safety harnesses install asphalt shingles on a steep pitched roof at golden hour; one holds a nail gun, one carries a bundle of shingles on his shoulder. Wide shot from the ground looking up, warm backlight. Candid documentary photo, shot on Sony A7IV, 35mm lens, f/2.8, natural light, warm cinematic color grade, slight film grain, shallow depth of field, real skin texture, unposed, suburban American neighborhood. No text, no logos, no lettering, no watermarks.",
+      "count": 2,
+      "params": {
+        "image_size": {
+          "width": 1920,
+          "height": 1080
+        }
+      }
+    },
+    {
+      "id": "crew-trucks",
+      "model": "flux-2-pro",
+      "mode": "t2i",
+      "prompt": "A four person service crew of mixed ages stands in front of two plain white pickup trucks with no logos in a gravel lot, wearing matching plain navy work shirts with no logos. Relaxed confident poses, arms crossed or hands in pockets, late afternoon light, environmental team portrait. Candid documentary photo, shot on Sony A7IV, 35mm lens, f/2.8, natural light, warm cinematic color grade, slight film grain, shallow depth of field, real skin texture, unposed, suburban American neighborhood. No text, no logos, no lettering, no watermarks.",
+      "count": 2,
+      "params": {
+        "image_size": {
+          "width": 1920,
+          "height": 1080
+        }
+      }
+    },
+    {
+      "id": "owner-truck",
+      "model": "flux-2-pro",
+      "mode": "t2i",
+      "prompt": "A small business owner in his 40s with short dark hair and a light beard sits in the driver seat of a work truck, phone to his ear mid conversation, clipboard on the dashboard, coffee cup in the holder. Shot through the open driver window, midday light. Candid documentary photo, shot on Sony A7IV, 35mm lens, f/2.8, natural light, warm cinematic color grade, slight film grain, shallow depth of field, real skin texture, unposed, suburban American neighborhood. No text, no logos, no lettering, no watermarks.",
+      "count": 2,
+      "params": {
+        "image_size": {
+          "width": 1920,
+          "height": 1080
+        }
+      }
+    },
+    {
+      "id": "porch-2am",
+      "model": "flux-2-pro",
+      "mode": "t2i",
+      "prompt": "The front porch of a suburban home at 2 AM, a single porch light glowing warm, dark quiet street. A woman in a bathrobe stands in the doorway looking at her glowing smartphone screen with a worried expression. Moody low light, high ISO grain. Candid documentary photo, shot on Sony A7IV, 35mm lens, f/2.8, natural light, warm cinematic color grade, slight film grain, shallow depth of field, real skin texture, unposed, suburban American neighborhood. No text, no logos, no lettering, no watermarks.",
+      "count": 2,
+      "params": {
+        "image_size": {
+          "width": 1920,
+          "height": 1080
+        }
+      }
+    },
+    {
+      "id": "owner-report",
+      "model": "flux-2-pro",
+      "mode": "edit",
+      "prompt": "The same man from the reference image, same face, hair and beard, now sitting at a kitchen table in early morning, reading a printed report with charts, wearing reading glasses, coffee mug beside him, closed laptop on the table, soft window light, satisfied subtle smile. Candid documentary photo, shot on Sony A7IV, 35mm lens, f/2.8, natural light, warm cinematic color grade, slight film grain, shallow depth of field, real skin texture, unposed, suburban American neighborhood. No text, no logos, no lettering, no watermarks.",
+      "refs": [
+        "job:owner-truck"
+      ],
+      "count": 2,
+      "params": {
+        "image_size": {
+          "width": 1920,
+          "height": 1080
+        }
+      }
+    }
+  ]
+}
