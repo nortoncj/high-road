@@ -1,7 +1,6 @@
 import Script from "next/script";
 import React from "react";
 import { Geist, Geist_Mono } from "next/font/google";
-import { GoogleTagManager } from "@next/third-parties/google";
 import { Footer, TopNav } from "@/components/home";
 import { buildMetadata } from "@/lib/seo";
 import "../globals.css";
@@ -14,6 +13,7 @@ import "../globals.css";
 export const metadata = buildMetadata({});
 
 const GTM_ID = "GTM-NZZ2DH99";
+const GA_ID = "G-P3VJZQ9VNG";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,24 +33,26 @@ function Frontendlayout({
   const clarityId = process.env.NEXT_PUBLIC_CLARITY_ID;
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
-      <GoogleTagManager gtmId={GTM_ID} />
       <body className="min-h-full flex flex-col">
-        {/* Google Tag Manager */}
-        <Script
-          src="https://www.googletagmanager.com/gtag/js?id=G-P3VJZQ9VNG"
-          strategy="afterInteractive"
-        />
-
-        <Script id="gtag-init" strategy="afterInteractive">
+        {/*
+          Analytics: the dataLayer/gtag queues are set up right away (tiny, no network) so events
+          pushed early (e.g. ConversionPing) are kept, while the heavy GTM/GA4/Clarity downloads wait
+          for browser idle time and don't compete with the page loading.
+        */}
+        <Script id="analytics-init" strategy="beforeInteractive">
           {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
+            window.gtag = gtag;
+            dataLayer.push({'gtm.start': new Date().getTime(), event: 'gtm.js'});
             gtag('js', new Date());
-            gtag('config', 'G-P3VJZQ9VNG');
+            gtag('config', '${GA_ID}');
           `}
         </Script>
+        <Script src={`https://www.googletagmanager.com/gtm.js?id=${GTM_ID}`} strategy="lazyOnload" />
+        <Script src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`} strategy="lazyOnload" />
         {clarityId && (
-          <Script id="ms-clarity" strategy="afterInteractive">
+          <Script id="ms-clarity" strategy="lazyOnload">
             {`
       (function(c,l,a,r,i,t,y){
         c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};

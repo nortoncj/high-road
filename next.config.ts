@@ -2,8 +2,10 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   /* config options here */
+  // next.config.js
   experimental: {
     agentFeedback: true,
+    inlineCss:true,
     // Two root layouts ((frontend) and (admin)) need app/global-not-found.tsx for unmatched URLs.
     globalNotFound: true,
   },
