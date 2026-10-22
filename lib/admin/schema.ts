@@ -203,11 +203,12 @@ export function toLeadStatus(v: unknown): LeadStatus {
   return "new";
 }
 
-export type LeadSource = "calendly" | "contact_form" | "other";
+export type LeadSource = "calendly" | "contact_form" | "home_form" | "other";
 
 export function toLeadSource(v: unknown): LeadSource {
   const s = typeof v === "string" ? v.toLowerCase() : "";
   // "book" and "contact" are the site's message forms (the /book one sits under the calendar), not bookings.
+  if (s === "home") return "home_form";
   if (s === "book" || s === "contact") return "contact_form";
   if (s.includes("calendly") || s.includes("book")) return "calendly";
   if (s.includes("contact") || s.includes("form") || s.includes("message")) return "contact_form";
@@ -217,6 +218,7 @@ export function toLeadSource(v: unknown): LeadSource {
 export const leadSourceLabel: Record<LeadSource, string> = {
   calendly: "Booked call",
   contact_form: "Message",
+  home_form: "New lead",
   other: "Other",
 };
 

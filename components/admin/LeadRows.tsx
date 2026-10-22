@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { IconType } from "react-icons";
-import { TbCalendarEvent, TbMessage, TbWorld } from "react-icons/tb";
+import { TbCalendarEvent, TbMessage, TbUserPlus, TbWorld } from "react-icons/tb";
 import { leadsPage } from "@/content/admin";
 import type { Lead } from "@/lib/admin/data";
 import { fullDateTime, initials, relativeTime } from "@/lib/admin/format";
@@ -12,6 +12,7 @@ import { StatusBadge } from "./StatusBadge";
 const sourceIcon: Record<LeadSource, IconType> = {
   calendly: TbCalendarEvent,
   contact_form: TbMessage,
+  home_form: TbUserPlus,
   other: TbWorld,
 };
 

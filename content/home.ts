@@ -109,7 +109,6 @@ export const site = {
   demoHref: "/demo",
   priceFloor: "$1,500",
   // TODO: point at the route that saves leads to Supabase.
-  leadEndpoint: "/api/leads",
   logo: {
     onDark: "/brand/mask-light.png",
     onLight: "/brand/mask-dark.png",
@@ -520,11 +519,6 @@ export const book = {
   },
   submit: "Book my free call",
   sending: "Sending",
-  successTitle: (first: string) => `Got it, ${first}.`,
-  successBody: "Pick a time that works and I'll call you.",
-  successCta: "Pick a time",
-  error:
-    "That didn't send. Call or text me at 727-808-9853 and I'll set it up.",
 };
 
 export const about = {

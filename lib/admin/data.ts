@@ -225,7 +225,7 @@ async function getActivity(db: Awaited<ReturnType<typeof createSupabase>>, range
         id: `lead-${lead.id}`,
         kind: "lead",
         title: `New lead: ${lead.name}`,
-        detail: [lead.service, lead.source === "calendly" ? "booked a call" : lead.source === "contact_form" ? "sent a message" : null]
+        detail: [lead.service, lead.source === "calendly" ? "booked a call" : lead.source === "contact_form" ? "sent a message" : lead.source === "home_form" ? "left their details" : null]
           .filter(Boolean)
           .join(", "),
         at: lead.createdAt,

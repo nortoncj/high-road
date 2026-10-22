@@ -11,7 +11,7 @@ create table public.leads (
   phone          text check (char_length(phone) <= 40),
   website        text check (char_length(website) <= 300),
   message        text not null check (char_length(message) between 1 and 4000),
-  source         text not null default 'contact' check (source in ('contact', 'book')),
+  source         text not null default 'contact' check (source in ('contact', 'book', 'home')),
   status         public.lead_status not null default 'new',
   email_sent     boolean not null default false,
   constraint leads_has_contact check (email is not null or phone is not null)

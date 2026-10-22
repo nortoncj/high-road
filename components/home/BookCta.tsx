@@ -1,41 +1,36 @@
 "use client";
 
 import Image from "next/image";
-import { useId, useState, type FormEvent } from "react";
+import { useActionState, useEffect, useId, useRef } from "react";
 import { TbArrowRight, TbLoader2 } from "react-icons/tb";
-import { book, site } from "@/content/home";
-import { Button } from "@/components/ui/Button";
+import { book } from "@/content/home";
+import { submitLead, type ContactState } from "@/components/contact/actions";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import styles from "./BookCta.module.css";
 
-type Status = "idle" | "sending" | "sent" | "error";
+const initial: ContactState = {};
 
-/** Closing ask on a photo: a three-field lead form, then a link to pick a time. */
+/**
+ * Closing ask on a photo: a three-field lead form. Same server action as /book and /contact:
+ * emails you through Brevo, saves the lead (source "home"), then sends them to /thanks/message.
+ */
 export function BookCta() {
   const id = useId();
-  const [status, setStatus] = useState<Status>("idle");
-  const [first, setFirst] = useState("");
   const f = book.fields;
+  const [state, action, pending] = useActionState(submitLead, initial);
+  const startedRef = useRef<HTMLInputElement>(null);
 
-  async function onSubmit(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    const form = e.currentTarget;
-    const data = Object.fromEntries(new FormData(form)) as Record<string, string>;
-    setFirst((data.name ?? "").trim().split(/\s+/)[0] || "friend");
-    setStatus("sending");
-    try {
-      const res = await fetch(site.leadEndpoint, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...data, source: "home-book-cta" }),
-      });
-      if (!res.ok) throw new Error(String(res.status));
-      setStatus("sent");
-      form.reset();
-    } catch {
-      setStatus("error");
-    }
-  }
+  // Timestamp for the server's "too fast to be human" check. Set after mount to avoid a hydration mismatch.
+  useEffect(() => {
+    if (startedRef.current) startedRef.current.value = String(Date.now());
+  }, []);
+
+  const v = state.values ?? {};
+  const err = state.errors ?? {};
+  // The phone-or-email box maps to whichever of the two the server checked.
+  const contactError = err.email ?? err.phone;
+  const contactValue = v.email || v.phone;
+  const problem = state.formError ?? err.name ?? err.business ?? contactError;
 
   return (
     <section id="book" className={styles.section} aria-labelledby="book-heading">
@@ -54,60 +49,79 @@ export function BookCta() {
         </div>
 
         <div className={styles.card}>
-          {status === "sent" ? (
-            <div className={styles.done} role="status">
-              <p className={styles.doneTitle}>{book.successTitle(first)}</p>
-              <p className={styles.doneBody}>{book.successBody}</p>
-              <Button href={site.bookHref} arrow>
-                {book.successCta}
-              </Button>
+          <form className={styles.form} action={action}>
+            <input type="hidden" name="source" value="home" />
+            <input ref={startedRef} type="hidden" name="startedAt" defaultValue="" />
+
+            <div className={styles.field}>
+              <label htmlFor={`${id}-name`}>{f.name.label}</label>
+              <input
+                id={`${id}-name`}
+                name="name"
+                autoComplete="name"
+                maxLength={120}
+                placeholder={f.name.placeholder}
+                defaultValue={v.name}
+                aria-invalid={err.name ? true : undefined}
+                required
+              />
             </div>
-          ) : (
-            <form className={styles.form} onSubmit={onSubmit} noValidate={false}>
-              <div className={styles.field}>
-                <label htmlFor={`${id}-name`}>{f.name.label}</label>
-                <input id={`${id}-name`} name="name" autoComplete="name" placeholder={f.name.placeholder} required />
-              </div>
-              <div className={styles.field}>
-                <label htmlFor={`${id}-biz`}>{f.business.label}</label>
-                <input id={`${id}-biz`} name="business" autoComplete="organization" placeholder={f.business.placeholder} required />
-              </div>
-              <div className={styles.field}>
-                <label htmlFor={`${id}-contact`}>{f.contact.label}</label>
-                <input
-                  id={`${id}-contact`}
-                  name="contact"
-                  autoComplete="tel"
-                  placeholder={f.contact.placeholder}
-                  aria-describedby={`${id}-contact-hint`}
-                  required
-                />
-                <p id={`${id}-contact-hint`} className={styles.hint}>
-                  {f.contact.hint}
-                </p>
-              </div>
+            <div className={styles.field}>
+              <label htmlFor={`${id}-biz`}>{f.business.label}</label>
+              <input
+                id={`${id}-biz`}
+                name="business"
+                autoComplete="organization"
+                maxLength={200}
+                placeholder={f.business.placeholder}
+                defaultValue={v.business}
+                aria-invalid={err.business ? true : undefined}
+                required
+              />
+            </div>
+            <div className={styles.field}>
+              <label htmlFor={`${id}-contact`}>{f.contact.label}</label>
+              <input
+                id={`${id}-contact`}
+                name="contact"
+                autoComplete="tel"
+                placeholder={f.contact.placeholder}
+                defaultValue={contactValue}
+                aria-invalid={contactError ? true : undefined}
+                aria-describedby={`${id}-contact-hint`}
+                required
+              />
+              <p id={`${id}-contact-hint`} className={styles.hint}>
+                {f.contact.hint}
+              </p>
+            </div>
 
-              {status === "error" ? (
-                <p className={styles.error} role="alert">
-                  {book.error}
-                </p>
-              ) : null}
+            {/* Honeypot: hidden from people and screen readers, irresistible to bots */}
+            <div hidden aria-hidden="true">
+              <label htmlFor={`${id}-company`}>Company website</label>
+              <input id={`${id}-company`} name="company" tabIndex={-1} autoComplete="off" />
+            </div>
 
-              <button type="submit" className={styles.submit} disabled={status === "sending"}>
-                {status === "sending" ? (
-                  <>
-                    <TbLoader2 className={styles.spin} aria-hidden="true" />
-                    {book.sending}
-                  </>
-                ) : (
-                  <>
-                    {book.submit}
-                    <TbArrowRight aria-hidden="true" />
-                  </>
-                )}
-              </button>
-            </form>
-          )}
+            {problem ? (
+              <p className={styles.error} role="alert">
+                {problem}
+              </p>
+            ) : null}
+
+            <button type="submit" className={styles.submit} disabled={pending}>
+              {pending ? (
+                <>
+                  <TbLoader2 className={styles.spin} aria-hidden="true" />
+                  {book.sending}
+                </>
+              ) : (
+                <>
+                  {book.submit}
+                  <TbArrowRight aria-hidden="true" />
+                </>
+              )}
+            </button>
+          </form>
         </div>
       </div>
     </section>

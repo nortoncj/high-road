@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: "/",
       disallow: "/private/",
     },
-    sitemap: "https://webtechninjas.com/sitemap.xml",
+    sitemap: "https://www.webtechninjas.com/sitemap.xml",
   };
 }

@@ -53,6 +53,7 @@ export const contactForm = {
     email: "That email doesn't look right.",
     phone: "Please add a phone number I can call or text.",
     message: "Tell me a little about what's going on.",
+    business: "Please add your business name.",
     tooLong: "That's a bit long. Can you trim it down?",
     rateLimited: "Looks like you've sent a few already. Give it a few minutes, or call or text me.",
     server: "Something went wrong on my end. Please call or text me instead and I'll sort it out.",

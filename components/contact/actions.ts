@@ -7,7 +7,7 @@ import { sendLeadAlert, type LeadForEmail } from "@/lib/brevo";
 import { supabaseAdmin } from "@/lib/supabase/admin";
 import { allow } from "@/lib/rate-limit";
 
-export type Field = "name" | "email" | "phone" | "message" | "website";
+export type Field = "name" | "email" | "phone" | "message" | "website" | "business";
 
 export type ContactState = {
   errors?: Partial<Record<Field, string>>;
@@ -16,11 +16,12 @@ export type ContactState = {
   values?: Record<string, string>;
 };
 
-const SOURCES = new Set(["contact", "book"]);
+const SOURCES = new Set(["contact", "book", "home"]);
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const str = (fd: FormData, k: string) => String(fd.get(k) ?? "").trim();
 
 export async function submitLead(_prev: ContactState, fd: FormData): Promise<ContactState> {
+  const source = SOURCES.has(str(fd, "source")) ? str(fd, "source") : "contact";
   const values = {
     name: str(fd, "name"),
     method: str(fd, "method") === "phone" ? "phone" : "email",
@@ -28,8 +29,18 @@ export async function submitLead(_prev: ContactState, fd: FormData): Promise<Con
     phone: str(fd, "phone"),
     website: str(fd, "website"),
     message: str(fd, "message"),
+    business: str(fd, "business"),
   };
-  const source = SOURCES.has(str(fd, "source")) ? str(fd, "source") : "contact";
+
+  // The homepage form has one "phone or email" box and no message, so fill those in here.
+  if (source === "home") {
+    const contact = str(fd, "contact");
+    const isEmail = contact.includes("@");
+    values.method = isEmail ? "email" : "phone";
+    values.email = isEmail ? contact : "";
+    values.phone = isEmail ? "" : contact;
+    values.message = values.business ? `New lead\nBusiness: ${values.business}` : "New lead";
+  }
 
   // ---- Spam traps: bots get a fake success and nothing is saved. ----
   const honeypot = str(fd, "company");
@@ -57,6 +68,9 @@ export async function submitLead(_prev: ContactState, fd: FormData): Promise<Con
   if (values.email && values.email.length > 254) errors.email = e.tooLong;
 
   if (values.website.length > 300) errors.website = e.tooLong;
+
+  if (source === "home" && !values.business) errors.business = e.business;
+  else if (values.business.length > 200) errors.business = e.tooLong;
 
   if (values.message.length < 2) errors.message = e.message;
   else if (values.message.length > 4000) errors.message = e.tooLong;

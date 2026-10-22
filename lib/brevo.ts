@@ -13,6 +13,11 @@ export type LeadForEmail = {
 const esc = (s: string) =>
   s.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]!);
 
+const SOURCE_LABEL: Record<string, string> = {
+  book: "/book (under the calendar)",
+  home: "Homepage (book a call form)",
+};
+
 /** Emails you the lead through Brevo's transactional API. Returns true if Brevo accepted it. */
 export async function sendLeadAlert(lead: LeadForEmail): Promise<boolean> {
   const apiKey = process.env.BREVO_API_KEY;
@@ -23,12 +28,13 @@ export async function sendLeadAlert(lead: LeadForEmail): Promise<boolean> {
     return false;
   }
 
+  const origin = SOURCE_LABEL[lead.source] ?? "/contact";
   const reach = lead.contactMethod === "email" ? `Email: ${lead.email}` : `Phone/text: ${lead.phone}`;
   const lines = [
     `Name: ${lead.name}`,
     reach,
     `Website: ${lead.website || "none"}`,
-    `From: ${lead.source === "book" ? "/book (under the calendar)" : "/contact"}`,
+    `From: ${origin}`,
     "",
     lead.message,
   ];
@@ -40,7 +46,7 @@ export async function sendLeadAlert(lead: LeadForEmail): Promise<boolean> {
       <p style="margin:0">Name: ${esc(lead.name)}</p>
       <p style="margin:0">${esc(reach)}</p>
       <p style="margin:0">Website: ${esc(lead.website || "none")}</p>
-      <p style="margin:0 0 12px">From: ${lead.source === "book" ? "/book (under the calendar)" : "/contact"}</p>
+      <p style="margin:0 0 12px">From: ${esc(origin)}</p>
       <p style="margin:0 0 16px;white-space:pre-wrap;padding:12px;background:#f6f2ea;border-radius:6px">${esc(lead.message)}</p>
       <p style="margin:0"><a href="${esc(adminUrl)}">Open your leads</a></p>
     </div>`;
