@@ -3,6 +3,7 @@
 import { useRef, useState, useTransition, type ChangeEvent, type FormEvent, type KeyboardEvent, type MouseEvent } from "react";
 import { toast } from "sonner";
 import { TbCalendarPlus, TbPlus, TbRocket, TbTrash, TbX } from "react-icons/tb";
+import posthog from "posthog-js";
 import { projectPage } from "@/content/admin";
 import { addTask, deleteTask, setTaskDue, toggleTask, type TaskResult } from "@/lib/admin/project-actions";
 import { dueLabel, launchPhases, phaseOrder } from "@/lib/admin/project-logic";
@@ -77,7 +78,10 @@ export function Checklist({ projectId, tasks: initial, today }: { projectId: str
                     key={t.id}
                     task={t}
                     today={today}
-                    onToggle={(v) => run(tasks.map((x) => (x.id === t.id ? { ...x, done: v } : x)), () => toggleTask(t.id, v))}
+                    onToggle={(v) => {
+                      posthog.capture("checklist_task_toggled", { completed: v });
+                      run(tasks.map((x) => (x.id === t.id ? { ...x, done: v } : x)), () => toggleTask(t.id, v));
+                    }}
                     onDue={(d) => run(tasks.map((x) => (x.id === t.id ? { ...x, dueDate: d } : x)), () => setTaskDue(t.id, d))}
                     onDelete={() => run(tasks.filter((x) => x.id !== t.id), () => deleteTask(t.id))}
                   />

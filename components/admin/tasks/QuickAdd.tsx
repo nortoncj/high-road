@@ -2,6 +2,7 @@
 
 import { useActionState, useEffect, useMemo, useRef, useState, type KeyboardEvent as ReactKeyboardEvent, type ReactNode } from "react";
 import { TbCalendar, TbFolders, TbLoader2, TbPlus, TbUsers, TbX } from "react-icons/tb";
+import posthog from "posthog-js";
 import { tasksPage } from "@/content/admin";
 import type { FormState } from "@/lib/admin/client-actions";
 import { quickAdd } from "@/lib/admin/task-actions";
@@ -84,6 +85,12 @@ export function QuickAdd({
   return (
     <form
       action={action}
+      onSubmit={() =>
+        posthog.capture("task_create_submitted", {
+          has_due_date: Boolean(parsed.dueDate),
+          linked_to: projectId ? "project" : clientId ? "client" : "none",
+        })
+      }
       className={cn(
         "flex flex-col gap-2",
         dock &&

@@ -6,6 +6,7 @@ import { contactForm } from "@/content/contact";
 import { sendLeadAlert, type LeadForEmail } from "@/lib/brevo";
 import { supabaseAdmin } from "@/lib/supabase/admin";
 import { allow } from "@/lib/rate-limit";
+import { flushPostHogLogs, logLeadSubmissionAccepted, logLeadSubmissionProcessed } from "@/lib/posthog-logs";
 
 export type Field = "name" | "email" | "phone" | "message" | "website" | "business";
 
@@ -21,7 +22,7 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const str = (fd: FormData, k: string) => String(fd.get(k) ?? "").trim();
 
 export async function submitLead(_prev: ContactState, fd: FormData): Promise<ContactState> {
-  const source = SOURCES.has(str(fd, "source")) ? str(fd, "source") : "contact";
+  const source = SOURCES.has(str(fd, "source")) ? (str(fd, "source") as "contact" | "book" | "home") : "contact";
   const values = {
     name: str(fd, "name"),
     method: str(fd, "method") === "phone" ? "phone" : "email",
@@ -77,6 +78,8 @@ export async function submitLead(_prev: ContactState, fd: FormData): Promise<Con
 
   if (Object.keys(errors).length) return { errors, values };
 
+  logLeadSubmissionAccepted(source);
+
   const lead: LeadForEmail = {
     name: values.name,
     contactMethod: values.method as "email" | "phone",
@@ -108,6 +111,9 @@ export async function submitLead(_prev: ContactState, fd: FormData): Promise<Con
   } catch (err) {
     console.error("[lead] Supabase unreachable", err);
   }
+
+  logLeadSubmissionProcessed({ source, emailAlertDelivered: emailed, databaseRecordSaved: saved });
+  await flushPostHogLogs();
 
   // Only fail if BOTH paths failed. Otherwise you have the lead somewhere.
   if (!emailed && !saved) return { formError: e.server, values };

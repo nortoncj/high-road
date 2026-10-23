@@ -2,6 +2,7 @@
 
 import { useActionState, useEffect, useId, useRef } from "react";
 import { TbArrowRight, TbLoader2, TbLock } from "react-icons/tb";
+import posthog from "posthog-js";
 import { book } from "@/content/book";
 import { submitLead, type ContactState, type Field } from "@/components/contact/actions";
 import styles from "./ContactForm.module.css";
@@ -52,7 +53,13 @@ export function ContactForm() {
         <p className={styles.body}>{m.body}</p>
       </div>
 
-      <form ref={formRef} className={styles.form} action={action} noValidate>
+      <form
+        ref={formRef}
+        className={styles.form}
+        action={action}
+        onSubmit={() => posthog.capture("lead_form_submit_attempted", { source: "book" })}
+        noValidate
+      >
         <input type="hidden" name="source" value="book" />
         <input ref={startedRef} type="hidden" name="startedAt" defaultValue="" />
 

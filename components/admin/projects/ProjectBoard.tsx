@@ -15,6 +15,7 @@ import {
 } from "@dnd-kit/core";
 import { toast } from "sonner";
 import { TbCheck, TbDots } from "react-icons/tb";
+import posthog from "posthog-js";
 import { projectsPage } from "@/content/admin";
 import { moveProject } from "@/lib/admin/project-actions";
 import type { Project } from "@/lib/admin/projects";
@@ -79,6 +80,7 @@ export function ProjectBoard({ projects, today }: { projects: Project[]; today: 
     const current = items.find((p) => p.id === id);
     if (!current || current.status === to) return;
     const before = items;
+    posthog.capture("project_status_changed", { from_status: current.status, to_status: to });
     setItems(items.map((p) => (p.id === id ? { ...p, status: to, health: to === "done" ? "done" : p.health } : p)));
     startTransition(async () => {
       const res = await moveProject(id, to);

@@ -1,6 +1,7 @@
 "use client";
 
-import { useTransition } from "react";
+import { useEffect, useRef, useTransition } from "react";
+import posthog from "posthog-js";
 import { useTheme } from "next-themes";
 import { TbDeviceDesktop, TbExternalLink, TbLoader2, TbLogout, TbMoon, TbSelector, TbSun } from "react-icons/tb";
 import { adminBrand } from "@/content/admin";
@@ -19,7 +20,7 @@ import {
 } from "@/components/admin/ui/dropdown-menu";
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from "@/components/admin/ui/sidebar";
 
-export type AdminSummary = { name: string; email: string; role: string };
+export type AdminSummary = { id: string; name: string; email: string; role: string };
 
 const themes = [
   { value: "light", label: "Day", Icon: TbSun },
@@ -31,6 +32,18 @@ export function UserMenu({ admin }: { admin: AdminSummary }) {
   const { isMobile } = useSidebar();
   const { theme, setTheme } = useTheme();
   const [signingOut, startSignOut] = useTransition();
+  const identified = useRef(false);
+
+  useEffect(() => {
+    if (identified.current) return;
+
+    posthog.identify(admin.id, {
+      email: admin.email,
+      name: admin.name,
+      role: admin.role,
+    });
+    identified.current = true;
+  }, [admin]);
 
   return (
     <SidebarMenu>
@@ -85,6 +98,7 @@ export function UserMenu({ admin }: { admin: AdminSummary }) {
               disabled={signingOut}
               onSelect={(e) => {
                 e.preventDefault();
+                posthog.reset();
                 startSignOut(() => signOut());
               }}
             >

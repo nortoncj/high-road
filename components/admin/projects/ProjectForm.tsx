@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useActionState, type ReactNode } from "react";
 import { TbLoader2 } from "react-icons/tb";
+import posthog from "posthog-js";
 import { projectForm as copy } from "@/content/admin";
 import type { FormState } from "@/lib/admin/client-actions";
 import { projectStatuses, projectStatusMeta, type ProjectStatus } from "@/lib/admin/schema";
@@ -64,7 +65,12 @@ export function ProjectForm({
   };
 
   return (
-    <form action={run} className="flex w-full max-w-3xl flex-col gap-4 sm:gap-6" noValidate>
+    <form
+      action={run}
+      onSubmit={() => posthog.capture("project_save_submitted", { mode })}
+      className="flex w-full max-w-3xl flex-col gap-4 sm:gap-6"
+      noValidate
+    >
       <Card>
         <CardContent className="grid gap-4 sm:grid-cols-2">
           <div className="sm:col-span-2">{input("name", "text", values.name)}</div>

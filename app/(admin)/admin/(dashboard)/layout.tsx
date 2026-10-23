@@ -22,7 +22,7 @@ export default async function DashboardLayout({ children }: { children: ReactNod
       >
         Skip to content
       </a>
-      <AppSidebar admin={{ name: admin.name, email: admin.email, role: admin.role }} newLeads={newLeads} dueTodos={dueTodos} />
+      <AppSidebar admin={{ id: admin.id, name: admin.name, email: admin.email, role: admin.role }} newLeads={newLeads} dueTodos={dueTodos} />
       <SidebarInset className="bg-shore min-w-0">
         <TopBar />
         {/* SidebarInset already renders <main>, so this is a div. */}

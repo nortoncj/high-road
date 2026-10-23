@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useActionState, type ReactNode } from "react";
 import { TbInfoCircle, TbLoader2 } from "react-icons/tb";
+import posthog from "posthog-js";
 import { clientForm as copy } from "@/content/admin";
 import { saveClient, type FormState } from "@/lib/admin/client-actions";
 import { clientStatuses, clientStatusMeta, type ClientStatus } from "@/lib/admin/schema";
@@ -64,7 +65,12 @@ export function ClientForm({ values, cancelHref, fromLead }: { values: ClientFor
   };
 
   return (
-    <form action={action} className="flex w-full max-w-3xl flex-col gap-4 sm:gap-6" noValidate>
+    <form
+      action={action}
+      onSubmit={() => posthog.capture("client_save_submitted", { mode: values.id ? "edit" : "create", from_lead: Boolean(fromLead) })}
+      className="flex w-full max-w-3xl flex-col gap-4 sm:gap-6"
+      noValidate
+    >
       {values.id ? <input type="hidden" name="id" value={values.id} /> : null}
       {values.leadId ? <input type="hidden" name="lead_id" value={values.leadId} /> : null}
 

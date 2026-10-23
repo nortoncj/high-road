@@ -3,6 +3,7 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { TbArrowUpRight, TbCalendarEvent } from "react-icons/tb";
+import posthog from "posthog-js";
 import { book } from "@/content/book";
 import styles from "./CalendlyEmbed.module.css";
 
@@ -76,6 +77,7 @@ export function CalendlyEmbed() {
       if (event === "calendly.event_type_viewed") setReady(true);
       if (event === "calendly.event_scheduled" && !scheduled.current) {
         scheduled.current = true;
+        posthog.capture("booking_scheduled", { booking_source: "calendar_embed" });
         window.setTimeout(() => router.push(cfg.afterBookingHref), 1500);
       }
     };

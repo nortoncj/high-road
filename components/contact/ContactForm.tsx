@@ -2,6 +2,7 @@
 
 import { useActionState, useEffect, useId, useRef, useState } from "react";
 import { TbAlertCircle, TbArrowRight, TbLoader2, TbMail, TbPhone } from "react-icons/tb";
+import posthog from "posthog-js";
 import { contactForm as copy } from "@/content/contact";
 import { RichText } from "@/components/legal/RichText";
 import { submitLead, type ContactState, type Field } from "./actions";
@@ -48,7 +49,13 @@ export function ContactForm({ source = "contact" }: Props) {
     [err[f] ? id(`${f}-error`) : null, hint ? id(`${f}-hint`) : null].filter(Boolean).join(" ") || undefined;
 
   return (
-    <form ref={formRef} action={action} className={styles.form} noValidate>
+    <form
+      ref={formRef}
+      action={action}
+      onSubmit={() => posthog.capture("lead_form_submit_attempted", { source })}
+      className={styles.form}
+      noValidate
+    >
       <input type="hidden" name="source" value={source} />
       <input ref={startedRef} type="hidden" name="startedAt" defaultValue="" />
       {/* Honeypot: hidden from people and screen readers, irresistible to bots. */}

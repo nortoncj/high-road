@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useActionState, useEffect, useId, useRef } from "react";
 import { TbArrowRight, TbLoader2 } from "react-icons/tb";
+import posthog from "posthog-js";
 import { book } from "@/content/home";
 import { submitLead, type ContactState } from "@/components/contact/actions";
 import { Eyebrow } from "@/components/ui/Eyebrow";
@@ -49,7 +50,11 @@ export function BookCta() {
         </div>
 
         <div className={styles.card}>
-          <form className={styles.form} action={action}>
+          <form
+            className={styles.form}
+            action={action}
+            onSubmit={() => posthog.capture("lead_form_submit_attempted", { source: "home" })}
+          >
             <input type="hidden" name="source" value="home" />
             <input ref={startedRef} type="hidden" name="startedAt" defaultValue="" />
 

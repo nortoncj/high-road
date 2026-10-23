@@ -2,6 +2,7 @@
 
 import { useActionState, useState } from "react";
 import { TbAlertTriangle, TbCheck, TbLoader2, TbPlus } from "react-icons/tb";
+import posthog from "posthog-js";
 import { clientPage } from "@/content/admin";
 import type { FormState } from "@/lib/admin/client-actions";
 import { usdExact } from "@/lib/admin/format";
@@ -84,7 +85,18 @@ export function NewPaymentPlanForm({ action, projects, today }: { action: Action
   const input = "h-10 text-base sm:text-sm";
 
   return (
-    <form action={run} className="flex flex-col gap-4 rounded-lg border border-dashed p-3 sm:p-4" noValidate>
+    <form
+      action={run}
+      onSubmit={() =>
+        posthog.capture("payment_plan_create_submitted", {
+          installment_count: rows.length,
+          frequency: setup.every,
+          linked_to_project: projectId !== NO_PROJECT,
+        })
+      }
+      className="flex flex-col gap-4 rounded-lg border border-dashed p-3 sm:p-4"
+      noValidate
+    >
       <div className="grid gap-3 sm:grid-cols-2">
         <div className="flex flex-col gap-1.5">
           <Label htmlFor="pp-title">{f.title}</Label>
