@@ -26,7 +26,8 @@ export const adminNav: NavItem[] = [
 export const adminBrand = {
   name: "WebTech Ninjas",
   product: "Admin",
-  logo: { onLight: "/brand/mask-dark.png", onDark: "/brand/mask-light.png" },
+  /** Wordmark is 848×80. The square icon stands in when the sidebar collapses. */
+  logo: { onLight: "/brand/wtn-wordmark.svg", onDark: "/brand/wtn-wordmark-dark.svg", icon: "/brand/wtn-icon-hidden-n.svg" },
   siteHref: "/",
 } as const;
 

@@ -20,13 +20,7 @@ export function AuthShell({ children }: { children: ReactNode }) {
 
       <div className="mb-6 flex items-center gap-3 text-white">
         <div>
-          <Image
-            src={adminBrand.logo.onDark}
-            alt=""
-            width={200}
-            height={40}
-            priority
-          />
+          <Image src={adminBrand.logo.onDark} alt={adminBrand.name} width={848} height={80} className="h-6 w-auto" priority />
           {/* <p className="font-display text-lg leading-none font-semibold">{adminBrand.name}</p> */}
           <p className="mt-1 font-mono text-[11px] tracking-[0.14em] text-white/85 uppercase">
             {adminBrand.product}
