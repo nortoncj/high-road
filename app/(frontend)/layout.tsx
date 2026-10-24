@@ -33,22 +33,29 @@ function Frontendlayout({
   const clarityId = process.env.NEXT_PUBLIC_CLARITY_ID;
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col">
+      <head>
         {/*
           Analytics: the dataLayer/gtag queues are set up right away (tiny, no network) so events
           pushed early (e.g. ConversionPing) are kept, while the heavy GTM/GA4/Clarity downloads wait
-          for browser idle time and don't compete with the page loading.
+          for browser idle time and don't compete with the page loading. This lives in <head>, not
+          <body>: PostHog injects its extension scripts before the first `body > script` ahead of
+          hydration, which would land on top of a React-rendered script there and cause a mismatch.
         */}
-        <Script id="analytics-init" strategy="beforeInteractive">
-          {`
+        <script
+          id="analytics-init"
+          dangerouslySetInnerHTML={{
+            __html: `
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             window.gtag = gtag;
             dataLayer.push({'gtm.start': new Date().getTime(), event: 'gtm.js'});
             gtag('js', new Date());
             gtag('config', '${GA_ID}');
-          `}
-        </Script>
+          `,
+          }}
+        />
+      </head>
+      <body className="min-h-full flex flex-col">
         <Script src={`https://www.googletagmanager.com/gtm.js?id=${GTM_ID}`} strategy="lazyOnload" />
         <Script src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`} strategy="lazyOnload" />
         {clarityId && (

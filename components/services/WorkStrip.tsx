@@ -40,7 +40,7 @@ export function WorkStrip() {
                       </span>
                       <span className={styles.address}>
                         <TbLock />
-                        {host(p.href)}
+                        <span className={styles.host}>{host(p.href)}</span>
                       </span>
                     </div>
                     <div className={styles.view}>
@@ -48,7 +48,7 @@ export function WorkStrip() {
                         src={p.image.src}
                         alt={p.image.alt}
                         fill
-                        sizes="(min-width: 1080px) 290px, (min-width: 640px) 45vw, 80vw"
+                        sizes="(min-width: 1080px) 290px, 50vw"
                         className={styles.shot}
                       />
                     </div>

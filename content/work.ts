@@ -106,7 +106,8 @@ export const caseStudies: CaseStudy[] = [
       "A reviews page with a scrolling photo wall of his real builds",
     ],
     // TODO: inquiries or quote requests since launch, or a quote from Troy.
-    result: "Over 800 impressions and about 23 confirmed conversions in the first month, with more coming in every week.",
+    result:
+      "23 confirmed sales in the first month from about 800 impressions (2.9% of viewers), verified through customer reviews.",
     href: "https://nortoncj.github.io/ButcherBlockGuy/", // TODO: live domain
     tint: "brass",
     desktop: shot(
