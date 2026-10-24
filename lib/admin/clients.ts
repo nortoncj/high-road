@@ -1,7 +1,6 @@
 import "server-only";
 import { createSupabase } from "./supabase";
 import type { Issue, Loaded } from "./data";
-import { dueInstallments, plansForClient, type DueInstallment, type PaymentPlan } from "./payment-plans";
 import {
   billingSubscriptionStatuses,
   clientStatuses,
@@ -110,7 +109,7 @@ function healthOf(plans: ClientPlan[], now: number): ClientHealth {
 const clientSelect = `${selectAs(C.columns)}, subs:${S.table}(${selectAs(S.columns)})`;
 
 function toClient(r: Row, now = Date.now()): Client {
-  const history = ((r.subs as unknown as Row[] | null) ?? []).map(toPlan).sort((a, b) => (b.startedAt ?? "").localeCompare(a.startedAt ?? ""));
+  const history = ((r.subs as Row[] | null) ?? []).map(toPlan).sort((a, b) => (b.startedAt ?? "").localeCompare(a.startedAt ?? ""));
   let plans = history.filter((p) => (liveSubscriptionStatuses as readonly string[]).includes(p.status));
 
   const manual = {
@@ -194,8 +193,6 @@ export type ClientsList = {
   unlinked: number;
   /** Every client, unfiltered. Renewals use this whatever tab you're on. */
   everyone: Client[];
-  /** Payment plan installments due soon or overdue. Renewals again. */
-  dues: DueInstallment[];
 };
 
 export async function listClients({ status, q }: { status: ClientFilter; q?: string }): Promise<Loaded<ClientsList>> {
@@ -204,19 +201,18 @@ export async function listClients({ status, q }: { status: ClientFilter; q?: str
   const c = C.columns;
 
   // Small book of business: fetch every client once, filter in memory. Hundreds of rows is nothing.
-  const [all, unlinked, dues] = await Promise.all([
+  const [all, unlinked] = await Promise.all([
     db.from(C.table).select(clientSelect).order(c.name, { ascending: true }),
     db
       .from(S.table)
       .select(S.columns.id, { count: "exact", head: true })
       .is(S.columns.clientId, null)
       .in(S.columns.status, [...liveSubscriptionStatuses]),
-    dueInstallments(db, RENEWAL_WINDOW_DAYS),
   ]);
   if (all.error) return { ok: false, issue: toIssue(C.table, all.error) };
 
   const now = Date.now();
-  const clients = ((all.data ?? []) as unknown as Row[]).map((r) => toClient(r, now));
+  const clients = ((all.data ?? []) as Row[]).map((r) => toClient(r, now));
   const needle = term.toLowerCase();
   const matches = (cl: Client) =>
     !needle || [cl.name, cl.contactName, cl.email].some((v) => v?.toLowerCase().includes(needle));
@@ -242,14 +238,13 @@ export async function listClients({ status, q }: { status: ClientFilter; q?: str
       },
       unlinked: unlinked.count ?? 0,
       everyone: clients,
-      dues,
     },
   };
 }
 
 /* Renewals */
 
-export type RenewalKind = "failed" | "overdue" | "canceling" | "ending" | "installment" | "manual" | "renews";
+export type RenewalKind = "failed" | "canceling" | "ending" | "manual" | "renews";
 
 export type Renewal = {
   id: string;
@@ -261,24 +256,16 @@ export type Renewal = {
   at: string | null;
 };
 
-const urgency: Record<RenewalKind, number> = { failed: 0, overdue: 1, ending: 2, canceling: 3, installment: 4, manual: 4, renews: 5 };
+const urgency: Record<RenewalKind, number> = { failed: 0, ending: 1, canceling: 2, manual: 3, renews: 4 };
 
 /**
  * The next 30 days, from the clients list (so no extra queries).
  * Failed payments always show. Payment plans show 45 days out, because that's when you
  * want to be pitching the care plan, not the week it lapses.
  */
-export function renewalsFrom(clients: Client[], dues: DueInstallment[] = [], now: number = Date.now()): Renewal[] {
+export function renewalsFrom(clients: Client[], now: number = Date.now()): Renewal[] {
   const horizon = now + RENEWAL_WINDOW_DAYS * DAY;
-  const out: Renewal[] = dues.map((d) => ({
-    id: `inst-${d.id}`,
-    kind: d.overdue ? "overdue" : "installment",
-    clientId: d.clientId,
-    clientName: d.clientName,
-    planName: `${d.planTitle}: ${d.label}`,
-    amountCents: d.amountCents,
-    at: d.dueOn,
-  }));
+  const out: Renewal[] = [];
   for (const cl of clients) {
     if (cl.status === "churned") continue;
     for (const p of cl.plans) {
@@ -306,7 +293,6 @@ export type ClientDetail = {
   client: Client;
   projects: Loaded<ClientProject[]>;
   payments: Loaded<ClientPayment[]>;
-  paymentPlans: Loaded<PaymentPlan[]>;
   origin: ClientOrigin;
 };
 
@@ -314,9 +300,9 @@ export async function getClient(id: string): Promise<ClientDetail | null> {
   const db = await createSupabase();
   const { data, error } = await db.from(C.table).select(clientSelect).eq(C.columns.id, id).maybeSingle();
   if (error || !data) return null;
-  const client = toClient(data as unknown as Row);
+  const client = toClient(data as Row);
 
-  const [projects, payments, lead, paymentPlans] = await Promise.all([
+  const [projects, payments, lead] = await Promise.all([
     db.from(P.table).select(selectAs(P.columns)).eq(P.columns.clientId, id).order(P.columns.createdAt, { ascending: false }),
     db
       .from(I.table)
@@ -328,17 +314,16 @@ export async function getClient(id: string): Promise<ClientDetail | null> {
     client.leadId
       ? db.from(L.table).select(selectAs(L.columns, ["id", "name", "email", "source", "service", "createdAt"])).eq(L.columns.id, client.leadId).maybeSingle()
       : Promise.resolve({ data: null, error: null }),
-    plansForClient(db, id),
   ]);
 
-  const leadRow = lead.data as unknown as Row | null;
+  const leadRow = lead.data as Row | null;
   return {
     client,
     projects: projects.error
       ? { ok: false, issue: toIssue(P.table, projects.error) }
       : {
           ok: true,
-          data: ((projects.data ?? []) as unknown as Row[]).map((r) => ({
+          data: ((projects.data ?? []) as Row[]).map((r) => ({
             id: String(r.id),
             name: str(r.name) ?? "Untitled project",
             service: str(r.service),
@@ -351,7 +336,7 @@ export async function getClient(id: string): Promise<ClientDetail | null> {
       ? { ok: false, issue: toIssue(I.table, payments.error) }
       : {
           ok: true,
-          data: ((payments.data ?? []) as unknown as Row[]).map((r) => ({
+          data: ((payments.data ?? []) as Row[]).map((r) => ({
             id: String(r.id),
             amountCents: num(r.amountCents),
             paidAt: str(r.paidAt),
@@ -360,7 +345,6 @@ export async function getClient(id: string): Promise<ClientDetail | null> {
             url: str(r.hostedUrl),
           })),
         },
-    paymentPlans,
     origin: leadRow
       ? {
           id: String(leadRow.id),
@@ -377,6 +361,6 @@ export async function getClient(id: string): Promise<ClientDetail | null> {
 export async function clientForLead(leadId: string): Promise<{ id: string; name: string } | null> {
   const db = await createSupabase();
   const { data } = await db.from(C.table).select(`id:${C.columns.id}, name:${C.columns.name}`).eq(C.columns.leadId, leadId).maybeSingle();
-  const r = data as unknown as Row | null;
+  const r = data as Row | null;
   return r ? { id: String(r.id), name: str(r.name) ?? "Client" } : null;
 }

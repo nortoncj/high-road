@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { IconType } from "react-icons";
-import { TbAlertTriangle, TbCalendarDollar, TbCashOff, TbCreditCardOff, TbHourglassLow, TbReceipt, TbRepeat } from "react-icons/tb";
+import { TbAlertTriangle, TbCreditCardOff, TbHourglassLow, TbReceipt, TbRepeat } from "react-icons/tb";
 import { clientsPage } from "@/content/admin";
 import type { Renewal, RenewalKind } from "@/lib/admin/clients";
 import { daysFrom, shortDate, toDate, usd } from "@/lib/admin/format";
@@ -10,8 +10,6 @@ import { EmptyState } from "../States";
 
 const kinds: Record<RenewalKind, { Icon: IconType; chip: string; row: string }> = {
   failed: { Icon: TbCreditCardOff, chip: "bg-negative-soft text-negative", row: "bg-negative-soft/50" },
-  overdue: { Icon: TbCashOff, chip: "bg-negative-soft text-negative", row: "bg-negative-soft/50" },
-  installment: { Icon: TbCalendarDollar, chip: "bg-sea-foam text-primary", row: "" },
   ending: { Icon: TbHourglassLow, chip: "bg-brass-soft text-brass-ink", row: "bg-brass-soft/40" },
   canceling: { Icon: TbAlertTriangle, chip: "bg-warning-soft text-warning", row: "" },
   manual: { Icon: TbReceipt, chip: "bg-warning-soft text-warning", row: "" },
@@ -22,7 +20,7 @@ const MAX = 8;
 
 /**
  * Monthly care plan charges are routine and get one quiet line each. The rows that matter
- * (failed cards, overdue installments, payment plans hitting month 12, cancellations, manual bills) sort to the top
+ * (failed cards, payment plans hitting month 12, cancellations, manual bills) sort to the top
  * with a hint about what to do.
  */
 export function RenewalsCard({ items, className }: { items: Renewal[]; className?: string }) {

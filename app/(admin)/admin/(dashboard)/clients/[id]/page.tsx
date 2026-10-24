@@ -6,9 +6,6 @@ import { clientPage } from "@/content/admin";
 import { requireAdmin } from "@/lib/admin/auth";
 import { addProject, createStripeCustomer, linkStripe, syncClientStripe } from "@/lib/admin/client-actions";
 import { getClient } from "@/lib/admin/clients";
-import { createPaymentPlan } from "@/lib/admin/payment-plan-actions";
-import { today } from "@/lib/admin/projects";
-import { taskRefs, todosForClient } from "@/lib/admin/tasks";
 import { initials, shortDate, toDate } from "@/lib/admin/format";
 import { leadSourceLabel } from "@/lib/admin/schema";
 import { stripeConfigured, stripeDashboardUrl } from "@/lib/admin/stripe-sync";
@@ -17,10 +14,14 @@ import { Button } from "@/components/admin/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/admin/ui/card";
 import { BillingCard } from "@/components/admin/clients/BillingCard";
 import { ClientStatusBadge, HealthNote } from "@/components/admin/clients/ClientBits";
-import { PaymentPlansCard } from "@/components/admin/clients/PaymentPlansCard";
 import { PaymentsCard } from "@/components/admin/clients/PaymentsCard";
 import { ProjectsCard } from "@/components/admin/clients/ProjectsCard";
 import { ClientTasksCard } from "@/components/admin/tasks/ClientTasksCard";
+import { today } from "@/lib/admin/projects";
+import { taskRefs, todosForClient } from "@/lib/admin/tasks";
+import { addSite, setSiteActive } from "@/lib/admin/report-actions";
+import { sitesForClient, snippetFor } from "@/lib/admin/reports";
+import { TrackingCard } from "@/components/admin/reports/TrackingCard";
 
 type Props = { params: Promise<{ id: string }> };
 
@@ -32,7 +33,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function ClientDetailPage({ params }: Props) {
   await requireAdmin();
   const { id } = await params;
-  const [detail, todos, refs] = await Promise.all([getClient(id), todosForClient(id), taskRefs()]);
+  const [detail, todos, refs, sites] = await Promise.all([getClient(id), todosForClient(id), taskRefs(), sitesForClient(id)]);
   if (!detail) notFound();
   const { client: c, origin } = detail;
   const now = new Date();
@@ -100,20 +101,11 @@ export default async function ClientDetailPage({ params }: Props) {
             createAction={createStripeCustomer.bind(null, c.id)}
             syncAction={syncClientStripe.bind(null, c.id)}
           />
-          <PaymentPlansCard
-            plans={detail.paymentPlans}
-            projects={detail.projects.ok ? detail.projects.data.filter((p) => p.status !== "cancelled").map((p) => ({ id: p.id, name: p.name })) : []}
-            canInvoice={stripeConfigured() && Boolean(c.stripeCustomerId)}
-            stripeReady={stripeConfigured()}
-            today={today()}
-            createAction={createPaymentPlan.bind(null, c.id)}
-          />
+          <ClientTasksCard client={{ id: c.id, name: c.name }} todos={todos} refs={refs} today={today()} />
           <ProjectsCard projects={detail.projects} addAction={addProject.bind(null, c.id)} />
         </div>
 
         <div className="flex min-w-0 flex-col gap-4 sm:gap-6">
-          <ClientTasksCard client={{ id: c.id, name: c.name }} todos={todos} refs={refs} today={today()} />
-
           <Card className="gap-4">
             <CardHeader>
               <CardTitle className="font-display text-lg">{cp.contact}</CardTitle>
@@ -172,6 +164,14 @@ export default async function ClientDetailPage({ params }: Props) {
               )}
             </CardContent>
           </Card>
+
+          <TrackingCard
+            clientId={c.id}
+            sites={sites}
+            snippets={sites.ok ? Object.fromEntries(sites.data.map((s) => [s.id, snippetFor(s.siteKey)])) : {}}
+            addAction={addSite.bind(null, c.id)}
+            toggleAction={(siteId, active) => setSiteActive.bind(null, siteId, c.id, active)}
+          />
 
           <PaymentsCard payments={detail.payments} />
 

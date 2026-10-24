@@ -18,8 +18,7 @@ export function useResultToast(state: FormState) {
 
 /**
  * A one-button form for actions with no fields: "Sync Stripe", "Sync now", "Create in Stripe".
- * Pass a server action (bind any ids on the server first), or send ids as hidden `fields`.
- * `confirm` asks first, for anything destructive.
+ * Pass a server action (bind any ids on the server first).
  */
 export function ActionButton({
   action,
@@ -28,8 +27,6 @@ export function ActionButton({
   variant = "outline",
   size = "sm",
   className,
-  fields,
-  confirm,
 }: {
   action: Action;
   children: ReactNode;
@@ -37,14 +34,11 @@ export function ActionButton({
   variant?: "default" | "outline" | "secondary" | "ghost";
   size?: "sm" | "default";
   className?: string;
-  fields?: Record<string, string>;
-  confirm?: string;
 }) {
   const [state, run, pending] = useActionState<FormState, FormData>(action, {});
   useResultToast(state);
   return (
-    <form action={run} onSubmit={confirm ? (e) => void (window.confirm(confirm) || e.preventDefault()) : undefined}>
-      {fields ? Object.entries(fields).map(([k, v]) => <input key={k} type="hidden" name={k} value={v} />) : null}
+    <form action={run}>
       <Button type="submit" variant={variant} size={size} disabled={pending} className={className}>
         {pending ? (
           <>

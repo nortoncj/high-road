@@ -79,7 +79,7 @@ export default async function AdminClientsPage({ searchParams }: { searchParams:
             )}
           </Card>
         </div>
-        <RenewalsCard items={list.ok ? renewalsFrom(list.data.everyone, list.data.dues) : []} className="xl:sticky xl:top-20" />
+        <RenewalsCard items={list.ok ? renewalsFrom(list.data.everyone) : []} className="xl:sticky xl:top-20" />
       </div>
     </>
   );

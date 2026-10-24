@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useState } from "react";
+import { useActionState, useEffect, useState } from "react";
 import { TbLoader2, TbPlus } from "react-icons/tb";
 import { clientPage } from "@/content/admin";
 import type { FormState } from "@/lib/admin/client-actions";
@@ -16,11 +16,9 @@ export function AddProjectForm({ action }: { action: (prev: FormState, fd: FormD
   useResultToast(state);
   const p = clientPage.projects;
 
-  const [seen, setSeen] = useState(state);
-  if (state !== seen) {
-    setSeen(state);
+  useEffect(() => {
     if (state.ok) setOpen(false);
-  }
+  }, [state]);
 
   if (!open) {
     return (

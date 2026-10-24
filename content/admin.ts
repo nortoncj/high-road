@@ -3,14 +3,7 @@
  * Icons are picked in the components by `icon` key so this file stays plain data.
  */
 
-export type NavIcon =
-  | "overview"
-  | "leads"
-  | "clients"
-  | "projects"
-  | "tasks"
-  | "reports"
-  | "settings";
+export type NavIcon = "overview" | "leads" | "clients" | "projects" | "tasks" | "reports" | "settings";
 
 export type NavItem = {
   label: string;
@@ -26,17 +19,14 @@ export const adminNav: NavItem[] = [
   { label: "Clients", href: "/admin/clients", icon: "clients" },
   { label: "Projects", href: "/admin/projects", icon: "projects" },
   { label: "Tasks", href: "/admin/tasks", icon: "tasks" },
-  { label: "Reports", href: "/admin/reports", icon: "reports", soon: true },
+  { label: "Reports", href: "/admin/reports", icon: "reports" },
   { label: "Settings", href: "/admin/settings", icon: "settings", soon: true },
 ];
 
 export const adminBrand = {
   name: "WebTech Ninjas",
   product: "Admin",
-  logo: {
-    onLight: "/brand/wtn-wordmark-dark.svg",
-    onDark: "/brand/wtn-wordmark-dark.svg",
-  },
+  logo: { onLight: "/brand/mask-dark.png", onDark: "/brand/mask-light.png" },
   siteHref: "/",
 } as const;
 
@@ -55,8 +45,7 @@ export const login = {
   },
   code: {
     heading: "Check your email",
-    body: (email: string) =>
-      `If ${email} has admin access, a code and a sign-in link are on the way.`,
+    body: (email: string) => `If ${email} has admin access, a code and a sign-in link are on the way.`,
     label: "6 digit code",
     submit: "Sign in",
     verifying: "Checking...",
@@ -90,23 +79,14 @@ export const overview = {
   subhead: (range: string) => `Here's how ${range.toLowerCase()} went.`,
   kpis: {
     leads: { label: "New leads" },
-    clients: {
-      label: "Active clients",
-      note: (n: number) =>
-        n === 1 ? "1 new this period" : `${n} new this period`,
-    },
-    projects: {
-      label: "Open projects",
-      note: (n: number) =>
-        n === 0 ? "Nothing due this week" : `${n} due this week`,
-    },
+    clients: { label: "Active clients", note: (n: number) => (n === 1 ? "1 new this period" : `${n} new this period`) },
+    projects: { label: "Open projects", note: (n: number) => (n === 0 ? "Nothing due this week" : `${n} due this week`) },
     revenue: { label: "Revenue", hint: "Paid invoices" },
   },
   noPrev: "Nothing last period",
   leadsCard: {
     title: "Latest leads",
-    description: (n: number) =>
-      n === 1 ? "1 lead in this range" : `${n} leads in this range`,
+    description: (n: number) => (n === 1 ? "1 lead in this range" : `${n} leads in this range`),
     viewAll: "View all leads",
     empty: "No leads in this range yet. Try a wider date range.",
   },
@@ -143,17 +123,10 @@ export const leadsPage = {
     saved: (label: string) => `Marked as ${label}`,
     failed: "Couldn't update that lead",
   },
-  columns: {
-    lead: "Lead",
-    service: "Service",
-    source: "Source",
-    status: "Status",
-    date: "Date",
-  },
+  columns: { lead: "Lead", service: "Service", source: "Source", status: "Status", date: "Date" },
   convert: "Make them a client",
   viewClient: (name: string) => `View client: ${name}`,
-  convertHint:
-    "Closed and onboarded? This carries their details over and marks the lead Won.",
+  convertHint: "Closed and onboarded? This carries their details over and marks the lead Won.",
 } as const;
 
 export const clientsPage = {
@@ -166,8 +139,7 @@ export const clientsPage = {
   searchLabel: "Search clients",
   searchPlaceholder: "Business, contact or email",
   tabs: { active: "Active", paused: "Paused", churned: "Churned", all: "All" },
-  empty:
-    "No clients here yet. Turn a won lead into one from the Leads page, or add one by hand.",
+  empty: "No clients here yet. Turn a won lead into one from the Leads page, or add one by hand.",
   unlinked: (n: number) =>
     `${n} Stripe subscription${n === 1 ? " isn't" : "s aren't"} linked to a client yet. Link the customer on the client's page, or hit Sync Stripe to match by email.`,
   stats: {
@@ -179,44 +151,17 @@ export const clientsPage = {
     attentionNone: "All good",
     attentionSome: "Failed, canceling or ending",
   },
-  columns: {
-    client: "Client",
-    plan: "Plan",
-    monthly: "Monthly",
-    status: "Status",
-    next: "Next up",
-    since: "Since",
-  },
+  columns: { client: "Client", plan: "Plan", monthly: "Monthly", status: "Status", next: "Next up", since: "Since" },
   noPlan: "No plan",
   renewals: {
     title: "Renewals",
     description: "Next 30 days. Problems first.",
     empty: "Nothing due in the next 30 days.",
     kinds: {
-      failed: {
-        label: "Payment failed",
-        hint: "Card bounced. Stripe retries, but call them.",
-      },
-      overdue: {
-        label: "Installment overdue",
-        hint: "Past due. Nudge them, or mark it paid if it came in.",
-      },
-      installment: {
-        label: "Installment due",
-        hint: "Send the Stripe invoice, or mark it paid when it lands.",
-      },
-      ending: {
-        label: "Payment plan ends",
-        hint: "Month 12. Move them to a care plan or the site's on its own.",
-      },
-      canceling: {
-        label: "Canceling",
-        hint: "Turned off renewal. Worth a call before it lapses.",
-      },
-      manual: {
-        label: "Bill them",
-        hint: "Not in Stripe. Send the invoice yourself.",
-      },
+      failed: { label: "Payment failed", hint: "Card bounced. Stripe retries, but call them." },
+      ending: { label: "Payment plan ends", hint: "Month 12. Move them to a care plan or the site's on its own." },
+      canceling: { label: "Canceling", hint: "Turned off renewal. Worth a call before it lapses." },
+      manual: { label: "Bill them", hint: "Not in Stripe. Send the invoice yourself." },
       renews: { label: "Renews", hint: "" },
     },
   },
@@ -243,8 +188,7 @@ export const clientPage = {
     month: (n: number, of: number) => `Payment ${n} of ${of}`,
     manualNote: "Billed outside Stripe",
     linkTitle: "Connect Stripe",
-    linkBody:
-      "Paste their Stripe customer id or email. Plans and payments pull in right away, and the webhook keeps them current.",
+    linkBody: "Paste their Stripe customer id or email. Plans and payments pull in right away, and the webhook keeps them current.",
     linkPlaceholder: "cus_... or billing email",
     link: "Link",
     create: "Create in Stripe",
@@ -265,66 +209,7 @@ export const clientPage = {
     save: "Add",
     due_label: (d: string) => `Due ${d}`,
   },
-  payments: {
-    title: "Payments",
-    empty: "No payments on file yet.",
-    receipt: "Receipt",
-  },
-  paymentPlans: {
-    title: "Project payments",
-    description: "Fixed-price work paid in installments. Not a subscription.",
-    empty: "No payment plans. Add one when they say yes to a quote.",
-    add: "New payment plan",
-    paidOf: (paid: string, total: string) => `${paid} of ${total} paid`,
-    paidOff: "Paid off",
-    cancelled: "Cancelled",
-    started: (d: string) => `Started ${d}`,
-    next: (label: string, amount: string) => `Next: ${label}, ${amount}`,
-    due: (d: string) => `Due ${d}`,
-    overdue: (d: string) => `Overdue, was due ${d}`,
-    noDate: "No due date",
-    invoiced: "Invoice sent",
-    paid: (d: string, method: string) => `Paid ${d} · ${method}`,
-    sendInvoice: "Send invoice",
-    sending: "Sending...",
-    markPaid: "Mark paid",
-    copyLink: "Copy pay link",
-    copied: "Pay link copied",
-    undo: "Undo",
-    undoing: "Undoing...",
-    method: "Paid with",
-    paidOn: "Paid on",
-    save: "Save",
-    cancel: "Cancel",
-    remove: "Remove plan",
-    removing: "Removing...",
-    removeConfirm:
-      "Remove this payment plan? Open Stripe invoices get voided. If anything's been paid, the plan is cancelled instead and those payments stay on record.",
-    connectStripe: "Connect Stripe above to email invoices. You can still mark payments by hand.",
-    closed: (n: number) => `Paid off and cancelled (${n})`,
-    form: {
-      title: "What it's for",
-      titlePlaceholder: "Website build",
-      project: "Project",
-      noProject: "No project",
-      total: "Total $",
-      totalPlaceholder: "2000",
-      count: "Payments",
-      deposit: "Deposit $",
-      depositPlaceholder: "Optional",
-      firstDue: "First due",
-      every: "Then",
-      schedule: "Schedule",
-      scheduleHint: "Edit any row. Changing the fields above rebuilds it.",
-      label: "Label",
-      amount: "Amount",
-      dueOn: "Due",
-      sum: (sum: string, total: string) => `Adds up to ${sum} of ${total}`,
-      matches: (total: string) => `Adds up to ${total}`,
-      save: "Create plan",
-      saving: "Creating...",
-    },
-  },
+  payments: { title: "Payments", empty: "No payments on file yet.", receipt: "Receipt" },
   notes: { title: "Notes", empty: "Nothing yet. Add notes from Edit." },
 } as const;
 
@@ -332,15 +217,9 @@ export const clientForm = {
   newTitle: "Add client",
   newFromLead: (name: string) => `Add client from ${name}'s lead`,
   editTitle: (name: string) => `Edit ${name}`,
-  fromLeadNote:
-    "Contact details came over from the lead. Add the business name and you're set.",
-  sections: {
-    business: "Business",
-    billing: "Billing outside Stripe",
-    notes: "Notes",
-  },
-  billingHint:
-    "Only for clients you don't bill through Stripe. Stripe plans fill in on their own.",
+  fromLeadNote: "Contact details came over from the lead. Add the business name and you're set.",
+  sections: { business: "Business", billing: "Billing outside Stripe", notes: "Notes" },
+  billingHint: "Only for clients you don't bill through Stripe. Stripe plans fill in on their own.",
   fields: {
     name: { label: "Business name", placeholder: "Ruiz Heating & Air" },
     contact_name: { label: "Contact", placeholder: "Dana Ruiz" },
@@ -352,10 +231,7 @@ export const clientForm = {
     manual_plan: { label: "Plan", placeholder: "Handled (family rate)" },
     manual_monthly: { label: "Monthly $", placeholder: "79" },
     manual_renews_on: { label: "Next bill date" },
-    notes: {
-      label: "Notes",
-      placeholder: "Gate code, favorite colors, who signs off...",
-    },
+    notes: { label: "Notes", placeholder: "Gate code, favorite colors, who signs off..." },
   },
   save: "Save client",
   saving: "Saving...",
@@ -363,27 +239,11 @@ export const clientForm = {
 } as const;
 
 /** Placeholder pages for nav items marked `soon`. Honest about what isn't built yet. */
-export const comingSoon: Record<
-  string,
-  { title: string; body: string; planned: string[] }
-> = {
-  reports: {
-    title: "Reports",
-    body: "The monthly reports Growth care plan clients get.",
-    planned: [
-      "Calls, form fills and top pages per client",
-      "One click PDF to send",
-      "Month over month trends",
-    ],
-  },
+export const comingSoon: Record<string, { title: string; body: string; planned: string[] }> = {
   settings: {
     title: "Settings",
     body: "Admins, notifications and connections.",
-    planned: [
-      "Invite another admin",
-      "Email alerts for new leads",
-      "Calendly and Brevo connection status",
-    ],
+    planned: ["Invite another admin", "Email alerts for new leads", "Calendly and Brevo connection status"],
   },
 };
 
@@ -414,32 +274,15 @@ export const projectTemplate: TemplatePhase[] = [
   {
     phase: "Kickoff",
     at: 0.05,
-    items: [
-      "Kickoff call",
-      "Client drops assets in the Drive folder",
-      "Domain, hosting and Google Business Profile access",
-    ],
+    items: ["Kickoff call", "Client drops assets in the Drive folder", "Domain, hosting and Google Business Profile access"],
   },
   { phase: "Sitemap", at: 0.15, items: ["Sitemap and page list approved"] },
-  {
-    phase: "Brand",
-    at: 0.3,
-    items: ["Branding: colors, fonts, photo style", "Logo final (SVG + PNG)"],
-  },
-  {
-    phase: "Copy",
-    at: 0.5,
-    items: ["Homepage copy", "Service pages copy", "Client approves copy"],
-  },
+  { phase: "Brand", at: 0.3, items: ["Branding: colors, fonts, photo style", "Logo final (SVG + PNG)"] },
+  { phase: "Copy", at: 0.5, items: ["Homepage copy", "Service pages copy", "Client approves copy"] },
   {
     phase: "Build",
     at: 0.8,
-    items: [
-      "Landing page / homepage",
-      "Service and inner pages",
-      "Contact and booking forms wired to leads",
-      "Mobile pass",
-    ],
+    items: ["Landing page / homepage", "Service and inner pages", "Contact and booking forms wired to leads", "Mobile pass"],
   },
   {
     phase: "Launch checklist",
@@ -458,15 +301,7 @@ export const projectTemplate: TemplatePhase[] = [
       "Client sign-off",
     ],
   },
-  {
-    phase: "After launch",
-    at: 1,
-    items: [
-      "Launch announcement to client",
-      "Handoff: logins and how-to",
-      "2 week check-in",
-    ],
-  },
+  { phase: "After launch", at: 1, items: ["Launch announcement to client", "Handoff: logins and how-to", "2 week check-in"] },
 ];
 
 export const projectsPage = {
@@ -476,34 +311,21 @@ export const projectsPage = {
   add: "New project",
   searchLabel: "Search projects",
   searchPlaceholder: "Project or client",
-  columns: {
-    planning: "Planning",
-    in_progress: "In progress",
-    review: "Review",
-    done: "Done",
-    on_hold: "On hold",
-  },
+  columns: { planning: "Planning", in_progress: "In progress", review: "Review", done: "Done", on_hold: "On hold" },
   emptyColumn: "Nothing here",
   dropHere: "Drop here",
   doneOlder: (n: number) => `+${n} launched earlier`,
   move: "Move to",
-  dragHint:
-    "Drag cards between columns, or use the ⋯ menu. On a phone, press and hold to drag.",
+  dragHint: "Drag cards between columns, or use the ⋯ menu. On a phone, press and hold to drag.",
   slipping: {
-    late: (n: number) =>
-      n === 1 ? "1 project is past due" : `${n} projects are past due`,
-    behind: (n: number) =>
-      n === 1
-        ? "1 has checklist items behind schedule"
-        : `${n} have checklist items behind schedule`,
-    soon: (n: number) =>
-      n === 1 ? "1 is due this week" : `${n} are due this week`,
+    late: (n: number) => (n === 1 ? "1 project is past due" : `${n} projects are past due`),
+    behind: (n: number) => (n === 1 ? "1 has checklist items behind schedule" : `${n} have checklist items behind schedule`),
+    soon: (n: number) => (n === 1 ? "1 is due this week" : `${n} are due this week`),
   },
   next: (t: string) => `Next: ${t}`,
   allDone: "Checklist done",
   movedTo: (label: string) => `Moved to ${label}`,
-  openLaunch: (n: number) =>
-    `Moved to Done with ${n} launch item${n === 1 ? "" : "s"} still open. Worth a look.`,
+  openLaunch: (n: number) => `Moved to Done with ${n} launch item${n === 1 ? "" : "s"} still open. Worth a look.`,
   moveFailed: "Couldn't move that project",
   empty: "No projects yet. Start one here or from a client's page.",
 } as const;
@@ -512,10 +334,8 @@ export const projectPage = {
   back: "Projects",
   edit: "Edit",
   status: "Status",
-  late: (days: number) =>
-    `${days} day${days === 1 ? "" : "s"} past due. Push the date or chase whatever's blocking it.`,
-  behind: (n: number) =>
-    `${n} checklist item${n === 1 ? " is" : "s are"} behind schedule.`,
+  late: (days: number) => `${days} day${days === 1 ? "" : "s"} past due. Push the date or chase whatever's blocking it.`,
+  behind: (n: number) => `${n} checklist item${n === 1 ? " is" : "s are"} behind schedule.`,
   checklist: "Checklist",
   progress: (done: number, total: number) => `${done} of ${total} done`,
   addItem: "Add item",
@@ -543,74 +363,6 @@ export const projectPage = {
   notes: { title: "Notes", empty: "No notes. Add them from Edit." },
 } as const;
 
-/* Tasks */
-
-export const tasksPage = {
-  meta: { title: "Tasks" },
-  title: "Tasks",
-  description: "The small stuff that keeps falling through the cracks.",
-  tabs: { today: "Today", upcoming: "Upcoming", someday: "Someday", done: "Done" },
-  sections: { overdue: "Overdue", today: "Today", later: "Later" },
-  empty: {
-    today: "Nothing due today. Nice.",
-    upcoming: "Nothing scheduled ahead.",
-    someday: "No undated tasks.",
-    done: "Nothing checked off lately.",
-  },
-  quickAdd: {
-    label: "Add a task",
-    placeholder: "Send Ruiz the invoice fri #ruiz",
-    hint: "Add a day (tomorrow, fri, Nov 3) and #client or #project to link it.",
-    shortcut: "N",
-    add: "Add",
-    added: "Task added",
-  },
-  done: (title: string) => `Done: ${title}`,
-  undo: "Undo",
-  checklistTag: "Checklist",
-  reschedule: {
-    label: "Reschedule",
-    today: "Today",
-    tomorrow: "Tomorrow",
-    nextWeek: "Next week",
-    pick: "Pick a date",
-    none: "No date",
-    moved: (when: string) => `Moved to ${when}`,
-  },
-  edit: {
-    title: "Edit task",
-    titleLabel: "Task",
-    due: "Due date",
-    client: "Client",
-    project: "Project",
-    none: "None",
-    notes: "Notes",
-    notesPlaceholder: "Links, phone numbers, whatever you'll need",
-    save: "Save",
-    saving: "Saving...",
-    delete: "Delete",
-    deleted: "Task deleted",
-  },
-  clientCard: {
-    title: "Tasks",
-    all: "All tasks",
-    empty: "Nothing open for this client.",
-  },
-  overviewCard: {
-    title: "Upcoming tasks",
-    description: (n: number, overdue: number) =>
-      overdue > 0
-        ? `${overdue} overdue. Knock those out or push them.`
-        : n === 0
-          ? "Late, today and the next 7 days"
-          : `${n} due in the next 7 days`,
-    fallback: "Late, today and the next 7 days",
-    empty: "Nothing due this week. Add tasks from the Tasks page.",
-    all: "All tasks",
-    more: (n: number) => `+${n} more on the Tasks page`,
-  },
-} as const;
-
 export const projectForm = {
   newTitle: "New project",
   editTitle: (name: string) => `Edit ${name}`,
@@ -621,23 +373,67 @@ export const projectForm = {
     status: { label: "Status" },
     start_date: { label: "Start date" },
     due_date: { label: "Launch date" },
-    drive_url: {
-      label: "Google Drive folder",
-      placeholder: "https://drive.google.com/drive/folders/...",
-    },
-    notes: {
-      label: "Notes",
-      placeholder:
-        "Scope, the client's must-haves, anything you'll forget by week 3",
-    },
+    drive_url: { label: "Google Drive folder", placeholder: "https://drive.google.com/drive/folders/..." },
+    notes: { label: "Notes", placeholder: "Scope, the client's must-haves, anything you'll forget by week 3" },
   },
   template: "Start with the launch checklist",
-  templateHint:
-    "Adds your standard steps. With a start and launch date, each step gets a due date spread across the timeline.",
+  templateHint: "Adds your standard steps. With a start and launch date, each step gets a due date spread across the timeline.",
   shift: "Shift unfinished checklist dates along with the launch date",
   save: "Save project",
   saving: "Saving...",
   cancel: "Cancel",
+} as const;
+
+/* Tasks */
+
+export const tasksPage = {
+  meta: { title: "Tasks" },
+  title: "Tasks",
+  description: "The small stuff that keeps falling through the cracks.",
+  tabs: { today: "Today", upcoming: "Upcoming", someday: "No date", done: "Done" },
+  sections: { overdue: "Overdue", today: "Today", later: "Later" },
+  empty: {
+    today: "Nothing due today. Go build something.",
+    upcoming: "Nothing scheduled ahead.",
+    someday: "No undated tasks. Inbox zero, look at you.",
+    done: "Nothing finished in the last 7 days yet.",
+  },
+  quickAdd: {
+    label: "Add a task",
+    placeholder: "Call Dana tomorrow #ruiz",
+    hint: "Dates like today, fri, next week, 11/3 or in 3 days. #name links a client or project.",
+    add: "Add",
+    added: "Task added",
+    shortcut: "N",
+  },
+  checklistTag: "Checklist",
+  done: (title: string) => `Done: ${title}`,
+  undo: "Undo",
+  reschedule: {
+    label: "Reschedule",
+    today: "Today",
+    tomorrow: "Tomorrow",
+    nextWeek: "Next Monday",
+    none: "No date",
+    pick: "Pick a date",
+    moved: (when: string) => `Moved to ${when}`,
+  },
+  edit: {
+    title: "Edit task",
+    titleLabel: "Task",
+    notes: "Notes",
+    notesPlaceholder: "Links, phone numbers, the thing you'll forget",
+    due: "Due",
+    client: "Client",
+    project: "Project",
+    none: "None",
+    save: "Save",
+    saving: "Saving...",
+    delete: "Delete task",
+    deleted: "Task deleted",
+    openProject: "Checklist items live on their project. Open it to edit.",
+  },
+  clientCard: { title: "Tasks", empty: "No open tasks for this client.", all: "All tasks" },
 } as const;
 
 /* Reports */
