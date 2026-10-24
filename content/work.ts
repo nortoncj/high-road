@@ -29,8 +29,8 @@ export type Quote = { text: string; name: string; business: string };
 
 const shot = (slug: string, view: "desktop" | "mobile", alt: string): Shot =>
   view === "desktop"
-    ? { src: `/assets/img/work/${slug}-desktop.jpg`, alt, width: 1440, height: 3200 }
-    : { src: `/assets/img/work/${slug}-mobile.jpg`, alt, width: 390, height: 1700 };
+    ? { src: `/assets/img/work/${slug}-desktop.webp`, alt, width: 1440, height: 3200 }
+    : { src: `/assets/img/work/${slug}-mobile.webp`, alt, width: 390, height: 1700 };
 
 export const meta = {
   title: "Work",
