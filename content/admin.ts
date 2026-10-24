@@ -639,3 +639,122 @@ export const projectForm = {
   saving: "Saving...",
   cancel: "Cancel",
 } as const;
+
+/* Reports */
+
+/**
+ * Honesty rules for anything a client reads: "call taps" are taps on the phone number, not
+ * answered calls. Say so. Don't round up, don't guess why a number moved.
+ */
+export const reportsPage = {
+  meta: { title: "Reports" },
+  title: "Reports",
+  description: (month: string) => `${month}. What each client's site did, ready to send.`,
+  stats: {
+    calls: { label: "Call taps", hint: "Taps on a phone number" },
+    forms: { label: "Form fills", hint: "Forms sent from the site" },
+    visits: { label: "Visits", hint: "Each visitor once a day" },
+  },
+  allClients: "All tracked clients",
+  columns: { client: "Client", calls: "Call taps", forms: "Form fills", visits: "Visits", sent: "Report" },
+  sent: (d: string) => `Sent ${d}`,
+  notSent: "Not sent",
+  empty: "No client sites are tracked yet. Open a client and add their site to get a snippet.",
+  untracked: {
+    title: "Not tracking yet",
+    body: "Active clients with no site set up. Add their domain on the client page and paste the snippet.",
+    setup: "Set up",
+  },
+  status: {
+    live: "Live",
+    quiet: "Went quiet",
+    waiting: "Waiting for first visit",
+    paused: "Paused",
+  },
+  statusHint: {
+    quiet: "No hits in a week. The snippet may have been removed in an update.",
+    waiting: "Snippet not seen yet. Check it's on the live site.",
+  },
+} as const;
+
+export const reportPage = {
+  back: "Reports",
+  summaryTitle: "What they'll read",
+  trendLabel: "Last 12 months",
+  pages: {
+    title: "Top pages",
+    description: "Where visitors landed, and which pages made the phone ring.",
+    page: "Page",
+    views: "Views",
+    calls: "Calls",
+    forms: "Forms",
+    empty: "No page views this month.",
+  },
+  sources: {
+    title: "Where visitors came from",
+    description: "Where each visit started.",
+    empty: "No visits this month.",
+    gbpTip: "Tip: add ?utm_source=gbp to the website link on their Google Business Profile so it shows up here on its own instead of as Google search.",
+  },
+  sends: { title: "Sent", empty: "Not sent yet.", line: (month: string, to: string) => `${month} to ${to}` },
+  noSites: "This client has no site set up yet, so there's nothing to report.",
+  setupLink: "Set up tracking",
+  actions: {
+    preview: "Preview",
+    download: "Download PDF",
+    email: "Email to client",
+  },
+  emailSheet: {
+    title: "Email this report",
+    description: (month: string) => `${month} report goes out as a PDF from your Brevo account.`,
+    to: "Send to",
+    toHint: "Their email on file, or whoever got the last one.",
+    note: "Personal note (optional)",
+    notePlaceholder: "Nice jump in calls this month. Want to add a page for water heaters?",
+    send: "Send report",
+    sending: "Sending...",
+    already: (d: string) => `This month already went out ${d}. Sending again is fine; it'll be logged twice.`,
+    notConfigured: "Email isn't set up yet. Add BREVO_API_KEY and REPORT_FROM_EMAIL to your env.",
+  },
+  /** The email itself. {name} is the contact's first name. */
+  email: {
+    subject: (business: string, month: string) => `${business}: your website report for ${month}`,
+    greeting: (name: string | null) => (name ? `Hi ${name},` : "Hi,"),
+    intro: (business: string, month: string) => `Here's how ${business}'s website did in ${month}.`,
+    attached: "The full report is attached as a PDF.",
+    signoff: "Questions? Just reply to this email.",
+  },
+} as const;
+
+/** The PDF. Kept here so wording changes don't mean digging through drawing code. */
+export const reportPdf = {
+  eyebrow: "WEBSITE REPORT",
+  stats: { calls: "Call taps", forms: "Form fills", visits: "Visits" },
+  trend: "Last 12 months",
+  history: { title: "Month by month", leads: "Leads", visits: "Visits" },
+  pages: { title: "Top pages", page: "Page", views: "Views", calls: "Calls", forms: "Forms", empty: "No page views this month." },
+  sources: { title: "Where visitors came from", empty: "No visits this month." },
+  howWeCount:
+    "How we count: call taps are taps on your phone number from the website. Form fills are forms sent from the site. Visits count each visitor once per day. No cookies, no personal data.",
+  footer: "Prepared by WebTech Ninjas  ·  webtechninjas.com",
+} as const;
+
+export const trackingCard = {
+  title: "Website tracking",
+  description: "Calls, form fills and visits for their monthly report.",
+  addLabel: "Site domain",
+  addPlaceholder: "acmehvac.com",
+  add: "Add site",
+  adding: "Adding...",
+  copy: "Copy snippet",
+  copied: "Copied",
+  pause: "Pause",
+  resume: "Resume",
+  lastSeen: (ago: string) => `Last hit ${ago}`,
+  install: [
+    "WordPress: paste it into WPCode (Header & Footer) or the theme footer.",
+    "Custom sites: put it right before </body>.",
+    "Then open their site once with ?wtn_ignore=1 so your own visits don't count.",
+  ],
+  viewReport: "View report",
+} as const;
