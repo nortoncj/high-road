@@ -433,6 +433,19 @@ export const tasksPage = {
     deleted: "Task deleted",
     openProject: "Checklist items live on their project. Open it to edit.",
   },
+  overviewCard: {
+    title: "Upcoming tasks",
+    description: (n: number, overdue: number) =>
+      overdue > 0
+        ? `${overdue} overdue. Knock those out or push them.`
+        : n === 0
+          ? "Late, today and the next 7 days"
+          : `${n} due in the next 7 days`,
+    fallback: "Late, today and the next 7 days",
+    empty: "Nothing due this week. Add tasks from the Tasks page.",
+    all: "All tasks",
+    more: (n: number) => `+${n} more on the Tasks page`,
+  },
   clientCard: { title: "Tasks", empty: "No open tasks for this client.", all: "All tasks" },
 } as const;
 

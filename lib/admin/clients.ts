@@ -212,7 +212,7 @@ export async function listClients({ status, q }: { status: ClientFilter; q?: str
   if (all.error) return { ok: false, issue: toIssue(C.table, all.error) };
 
   const now = Date.now();
-  const clients = ((all.data ?? []) as Row[]).map((r) => toClient(r, now));
+  const clients = ((all.data ?? []) as unknown as Row[]).map((r) => toClient(r, now));
   const needle = term.toLowerCase();
   const matches = (cl: Client) =>
     !needle || [cl.name, cl.contactName, cl.email].some((v) => v?.toLowerCase().includes(needle));
@@ -300,7 +300,7 @@ export async function getClient(id: string): Promise<ClientDetail | null> {
   const db = await createSupabase();
   const { data, error } = await db.from(C.table).select(clientSelect).eq(C.columns.id, id).maybeSingle();
   if (error || !data) return null;
-  const client = toClient(data as Row);
+  const client = toClient(data as unknown as Row);
 
   const [projects, payments, lead] = await Promise.all([
     db.from(P.table).select(selectAs(P.columns)).eq(P.columns.clientId, id).order(P.columns.createdAt, { ascending: false }),
@@ -323,7 +323,7 @@ export async function getClient(id: string): Promise<ClientDetail | null> {
       ? { ok: false, issue: toIssue(P.table, projects.error) }
       : {
           ok: true,
-          data: ((projects.data ?? []) as Row[]).map((r) => ({
+          data: ((projects.data ?? []) as unknown as Row[]).map((r) => ({
             id: String(r.id),
             name: str(r.name) ?? "Untitled project",
             service: str(r.service),
@@ -336,7 +336,7 @@ export async function getClient(id: string): Promise<ClientDetail | null> {
       ? { ok: false, issue: toIssue(I.table, payments.error) }
       : {
           ok: true,
-          data: ((payments.data ?? []) as Row[]).map((r) => ({
+          data: ((payments.data ?? []) as unknown as Row[]).map((r) => ({
             id: String(r.id),
             amountCents: num(r.amountCents),
             paidAt: str(r.paidAt),
