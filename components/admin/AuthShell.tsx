@@ -19,10 +19,18 @@ export function AuthShell({ children }: { children: ReactNode }) {
       />
 
       <div className="mb-6 flex items-center gap-3 text-white">
-        <Image src={adminBrand.logo.onDark} alt="" width={32} height={40} priority />
         <div>
-          <p className="font-display text-lg leading-none font-semibold">{adminBrand.name}</p>
-          <p className="mt-1 font-mono text-[11px] tracking-[0.14em] text-white/85 uppercase">{adminBrand.product}</p>
+          <Image
+            src={adminBrand.logo.onDark}
+            alt=""
+            width={200}
+            height={40}
+            priority
+          />
+          {/* <p className="font-display text-lg leading-none font-semibold">{adminBrand.name}</p> */}
+          <p className="mt-1 font-mono text-[11px] tracking-[0.14em] text-white/85 uppercase">
+            {adminBrand.product}
+          </p>
         </div>
       </div>
 
@@ -30,7 +38,9 @@ export function AuthShell({ children }: { children: ReactNode }) {
         {children}
       </div>
 
-      <p className="mt-6 max-w-sm text-center text-xs text-white">{login.footer}</p>
+      <p className="mt-6 max-w-sm text-center text-xs text-white">
+        {login.footer}
+      </p>
     </div>
   );
 }

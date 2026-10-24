@@ -21,7 +21,7 @@ export function Footer() {
           <div className={styles.brandCol}>
             <Link href="/" className={styles.brand}>
               <Image src={site.logo.onDark} alt="" width={30} height={38} className={styles.mark} />
-              <span className={styles.wordmark}>{site.name}</span>
+              {/* <span className={styles.wordmark}>{site.name}</span> */}
             </Link>
             <p className={styles.oneLiner}>{site.oneLiner}</p>
           </div>

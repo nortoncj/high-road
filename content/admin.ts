@@ -33,7 +33,10 @@ export const adminNav: NavItem[] = [
 export const adminBrand = {
   name: "WebTech Ninjas",
   product: "Admin",
-  logo: { onLight: "/brand/mask-dark.png", onDark: "/brand/mask-light.png" },
+  logo: {
+    onLight: "/brand/wtn-wordmark-dark.svg",
+    onDark: "/brand/wtn-wordmark-dark.svg",
+  },
   siteHref: "/",
 } as const;
 

@@ -36,12 +36,12 @@ export function TopNav() {
           <Image
             src={site.logo.onDark}
             alt=""
-            width={30}
+            width={700}
             height={38}
             className={styles.mark}
             priority
           />
-          <span className={styles.wordmark}>{site.name}</span>
+          {/* <span className={styles.wordmark}>{site.name}</span> */}
         </Link>
 
         <ul className={styles.links}>

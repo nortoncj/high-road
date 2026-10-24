@@ -58,11 +58,11 @@ export function AppSidebar({
             <SidebarMenuButton size="lg" asChild tooltip={adminBrand.name}>
               <Link href="/admin" onClick={closeOnPhone}>
                 <span className="flex size-8 shrink-0 items-center justify-center">
-                  <Image src={adminBrand.logo.onLight} alt="" width={26} height={32} className="dark:hidden" priority />
-                  <Image src={adminBrand.logo.onDark} alt="" width={26} height={32} className="hidden dark:block" priority />
+                  <Image src={adminBrand.logo.onLight} alt="" width={260} height={32} className="dark:hidden" priority />
+                  <Image src={adminBrand.logo.onDark} alt="" width={260} height={32} className="hidden dark:block" priority />
                 </span>
                 <span className="grid min-w-0 leading-tight">
-                  <span className="font-display truncate text-[15px] font-semibold">{adminBrand.name}</span>
+                  {/* <span className="font-display truncate text-[15px] font-semibold">{adminBrand.name}</span> */}
                   <span className="text-muted-foreground font-mono text-[10px] tracking-[0.14em] uppercase">
                     {adminBrand.product}
                   </span>

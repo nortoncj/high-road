@@ -110,8 +110,8 @@ export const site = {
   priceFloor: "$1,500",
   // TODO: point at the route that saves leads to Supabase.
   logo: {
-    onDark: "/brand/mask-light.png",
-    onLight: "/brand/mask-dark.png",
+    onDark: "/brand/wtn-wordmark-dark.svg",
+    onLight: "/brand/wtn-wordmark.svg",
   },
 } as const;
 
