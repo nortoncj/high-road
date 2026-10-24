@@ -61,7 +61,11 @@ export const caseStudies: CaseStudy[] = [
   {
     slug: "john-clark",
     name: "John R Clark & CO",
-    meta: ["Contractor", "Tarpon Springs, FL", "Painting, wallpaper, tile, flooring, carpentry"],
+    meta: [
+      "Contractor",
+      "Tarpon Springs, FL",
+      "Painting, wallpaper, tile, flooring, carpentry",
+    ],
     problem:
       "John has 30+ years of work behind him, but his estimate requests were vanishing. His contact form was sending emails that never arrived, so customers who were ready to hire him were getting silence.",
     built: [
@@ -74,13 +78,25 @@ export const caseStudies: CaseStudy[] = [
     result: "Every estimate request now lands in his inbox within seconds.",
     href: "https://johnclarkco.com",
     tint: "foam",
-    desktop: shot("john-clark", "desktop", "John R Clark & CO website on desktop"),
-    mobile: shot("john-clark", "mobile", "John R Clark & CO website on a phone"),
+    desktop: shot(
+      "john-clark",
+      "desktop",
+      "John R Clark & CO website on desktop",
+    ),
+    mobile: shot(
+      "john-clark",
+      "mobile",
+      "John R Clark & CO website on a phone",
+    ),
   },
   {
     slug: "butcher-block",
     name: "Butcher Block Group",
-    meta: ["Custom woodworker", "Brandon, FL", "Countertops, tables, cutting boards, custom builds"],
+    meta: [
+      "Custom woodworker",
+      "Brandon, FL",
+      "Countertops, tables, cutting boards, custom builds",
+    ],
     problem:
       "Troy's work sells itself once people see it, but his old setup buried it. Customers had to dig to find photos, and he had no easy way to show off new pieces.",
     built: [
@@ -90,11 +106,19 @@ export const caseStudies: CaseStudy[] = [
       "A reviews page with a scrolling photo wall of his real builds",
     ],
     // TODO: inquiries or quote requests since launch, or a quote from Troy.
-    result: undefined,
+    result: "Over 800 impressions and about 23 confirmed conversions in the first month, with more coming in every week.",
     href: "https://nortoncj.github.io/ButcherBlockGuy/", // TODO: live domain
     tint: "brass",
-    desktop: shot("butcher-block", "desktop", "Butcher Block Group website on desktop"),
-    mobile: shot("butcher-block", "mobile", "Butcher Block Group website on a phone"),
+    desktop: shot(
+      "butcher-block",
+      "desktop",
+      "Butcher Block Group website on desktop",
+    ),
+    mobile: shot(
+      "butcher-block",
+      "mobile",
+      "Butcher Block Group website on a phone",
+    ),
   },
   {
     slug: "high-tyde",
@@ -109,7 +133,7 @@ export const caseStudies: CaseStudy[] = [
     ],
     // TODO: a result, or a quote from the owner.
     result: undefined,
-    href: undefined, // TODO: live URL
+    href: "https://nortoncj.github.io/highTyde/", // TODO: live URL
     tint: "glass",
     desktop: shot("high-tyde", "desktop", "High Tyde Sushi website on desktop"),
     mobile: shot("high-tyde", "mobile", "High Tyde Sushi website on a phone"),
@@ -128,8 +152,16 @@ export const caseStudies: CaseStudy[] = [
     result: undefined,
     href: "https://www.cdpliving.com",
     tint: "mist",
-    desktop: shot("casa-de-la-paz", "desktop", "Casa de la Paz website on desktop"),
-    mobile: shot("casa-de-la-paz", "mobile", "Casa de la Paz website on a phone"),
+    desktop: shot(
+      "casa-de-la-paz",
+      "desktop",
+      "Casa de la Paz website on desktop",
+    ),
+    mobile: shot(
+      "casa-de-la-paz",
+      "mobile",
+      "Casa de la Paz website on a phone",
+    ),
   },
 ];
 
