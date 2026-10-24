@@ -368,7 +368,8 @@ export const recentWork = {
     name: "Casa de la Paz",
     industry: "Assisted living and senior housing",
     badge: "Senior care",
-    highlight: "Careers page and online application that keep good hires coming in",
+    highlight:
+      "Careers page and online application that keep good hires coming in",
     href: "https://www.cdpliving.com", // TODO: case study or live site
     summary:
       "Website for an assisted living and senior housing community in Sarasota, Florida. Built to attract families and caregivers, with a careers page and online application.",
@@ -399,7 +400,7 @@ export const recentWork = {
       name: "John R Clark & Co",
       industry: "Property maintenance",
       highlight: "Turns 30 years of word of mouth into a site that earns trust",
-      href: "https://johnclarkco.com",
+      href: "https://johnrclarkco.com",
       image: {
         src: JohnRClark.src,
         alt: "A man with a painted mural on a wall behind him",
@@ -409,7 +410,7 @@ export const recentWork = {
       name: "VFW Post 6827",
       industry: "Veterans post",
       highlight: "Joining the post and finding it are one tap each",
-      href: "https://www.vfw6827.org",
+      href: "https://vfwpost6827.org/",
       image: {
         src: VFW.src,
         alt: "A group of veterans standing in front of a VFW post",

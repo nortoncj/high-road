@@ -76,7 +76,7 @@ export const caseStudies: CaseStudy[] = [
     ],
     // TODO: swap for before/after estimate requests per month once you have them.
     result: "Every estimate request now lands in his inbox within seconds.",
-    href: "https://johnclarkco.com",
+    href: "https://johnrclarkco.com",
     tint: "foam",
     desktop: shot(
       "john-clark",
