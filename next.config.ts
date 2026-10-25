@@ -1,6 +1,22 @@
+import { execSync } from "node:child_process";
 import type { NextConfig } from "next";
 
+/**
+ * One id per deploy (the commit being built). Without it, a tab still running the old JS that
+ * client-navigates after a deploy gets RSC data pointing at client components it doesn't have,
+ * and React crashes with error #130. With it, Next sees the mismatch and does a full reload.
+ */
+function deploymentId() {
+  if (process.env.NEXT_DEPLOYMENT_ID) return process.env.NEXT_DEPLOYMENT_ID;
+  try {
+    return execSync("git rev-parse --short HEAD", { stdio: ["ignore", "pipe", "ignore"] }).toString().trim();
+  } catch {
+    return undefined;
+  }
+}
+
 const nextConfig: NextConfig = {
+  deploymentId: deploymentId(),
   /* config options here */
   // next.config.js
   experimental: {
