@@ -163,7 +163,14 @@ export const tables = {
   },
   admins: {
     table: "admin_users",
-    columns: { userId: "user_id", fullName: "full_name", role: "role" },
+    columns: {
+      userId: "user_id",
+      fullName: "full_name",
+      role: "role",
+      email: "email",
+      leadAlerts: "lead_alerts",
+      createdAt: "created_at",
+    },
   },
 } as const;
 

@@ -17,23 +17,27 @@ export async function sendEmail(input: {
   html: string;
   text: string;
   attachments?: Attachment[];
+  /** Falls back to REPORT_REPLY_TO. */
+  replyTo?: { email: string; name?: string | null } | null;
+  tags?: string[];
 }): Promise<{ ok: true; messageId: string | null } | { ok: false; error: string }> {
   const key = process.env.BREVO_API_KEY;
   const from = process.env.REPORT_FROM_EMAIL;
   if (!key || !from) return { ok: false, error: "Email isn't set up yet (BREVO_API_KEY and REPORT_FROM_EMAIL)." };
 
-  const replyTo = process.env.REPORT_REPLY_TO;
+  const envReplyTo = process.env.REPORT_REPLY_TO;
+  const replyTo = input.replyTo ?? (envReplyTo ? { email: envReplyTo } : null);
   const body = {
     sender: { email: from, name: process.env.REPORT_FROM_NAME ?? "WebTech Ninjas" },
     to: [{ email: input.to.email, ...(input.to.name ? { name: input.to.name } : {}) }],
-    ...(replyTo ? { replyTo: { email: replyTo } } : {}),
+    ...(replyTo ? { replyTo: { email: replyTo.email, ...(replyTo.name ? { name: replyTo.name } : {}) } } : {}),
     subject: input.subject,
     htmlContent: input.html,
     textContent: input.text,
     ...(input.attachments?.length
       ? { attachment: input.attachments.map((a) => ({ name: a.name, content: Buffer.from(a.content).toString("base64") })) }
       : {}),
-    tags: ["monthly-report"],
+    tags: input.tags ?? ["monthly-report"],
   };
 
   try {
