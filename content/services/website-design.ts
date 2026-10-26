@@ -167,5 +167,5 @@ export const cta = {
   person: { name: about.name, line: "Answers his own phone", photo: about.photo },
   primaryCta: { label: "Book a free call", href: site.bookHref },
   secondaryCta: { label: "See my work", href: "/#work" },
-  fine: `Website packages start at ${site.priceFloor}.`,
+  fine: `Website packages start at $${site.priceFloor}.`,
 };

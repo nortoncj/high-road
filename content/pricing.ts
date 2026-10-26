@@ -28,12 +28,8 @@ export type Faq = { q: string; a: string };
 export const usd = (n: number) =>
   n.toLocaleString("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 });
 
-export const meta = {
-  title: "Pricing",
-  description:
-    "Fixed website prices for local businesses: Launch $1,500, Grow $2,500, Run $4,500, or pay monthly over 12 months with no money down. Optional care plans from $39/month.",
-  path: "/pricing",
-};
+const monthlyPrice = (once: number, multiplier: number, months = 12) =>
+  Math.round((once * multiplier) / months);
 
 export const hero = {
   eyebrow: "Pricing",
@@ -51,8 +47,8 @@ export const packages = {
     {
       id: "launch",
       name: "Launch",
-      once: 1500,
-      monthly: 149,
+      once: site.priceFloor,
+      monthly: monthlyPrice(site.priceFloor, 1.192),
       months: 12,
       blurb: "Get a real site up, fast. For new businesses, or anyone who needs to look legit this month.",
       features: [
@@ -68,8 +64,8 @@ export const packages = {
     {
       id: "grow",
       name: "Grow",
-      once: 2500,
-      monthly: 249,
+      once: site.priceFloor / 0.6,
+      monthly: monthlyPrice(site.priceFloor / 0.6, 1.1952),
       months: 12,
       featured: true,
       badge: "Most popular",
@@ -89,8 +85,8 @@ export const packages = {
     {
       id: "run",
       name: "Run",
-      once: 4500,
-      monthly: 399,
+      once: site.priceFloor / 0.6 / 0.55555,
+      monthly: monthlyPrice(site.priceFloor / 0.6 / 0.55555, 1.064),
       months: 12,
       blurb: "For businesses ready to track and automate every lead.",
       features: [
@@ -106,9 +102,12 @@ export const packages = {
   ] satisfies Package[],
 };
 
+
+
 /** Links each package CTA to the booking page with the package preselected. */
 export const packageHref = (id: Package["id"], billing: Billing) =>
   `${site.bookHref}?package=${id}&billing=${billing}`;
+
 
 export const payMonthly = {
   eyebrow: "Pay monthly",
@@ -130,13 +129,19 @@ export const care = {
   heading: "Optional. Your site keeps running either way.",
   body: "These just mean you never have to think about it.",
   plans: [
-    { id: "hosted", name: "Hosted", price: 39 },
+    { id: "hosted", name: "Hosted", price: 49 },
     { id: "handled", name: "Handled", price: 79, featured: true },
     { id: "growth", name: "Growth", price: 149 },
   ] satisfies CarePlan[],
   rows: careRows,
   includedNote: "Included with pay monthly",
   fine: "Cancel any time. If you leave, I'll hand over your files or move the site wherever you want.",
+};
+
+export const meta = {
+  title: "Pricing",
+  description: `Fixed website prices for local businesses: Launch $${packages.items[0].once.toLocaleString("en-US")}, Grow $${packages.items[1].once.toLocaleString("en-US")}, Run $${packages.items[2].once.toLocaleString("en-US")}, or pay monthly over 12 months with no money down. Optional care plans from $${care.plans[0].price}/month.`,
+  path: "/pricing",
 };
 
 export const addOns = {
@@ -151,6 +156,7 @@ export const addOns = {
     { name: "Full copywriting", price: 500, note: "Launch only" },
     { name: "Speed fix for an existing site", price: 500 },
     { name: "Business email setup", price: 600 },
+    
   ] satisfies AddOn[],
   budget: {
     heading: "Working with a smaller budget?",

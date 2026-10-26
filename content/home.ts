@@ -107,7 +107,8 @@ export const site = {
   city: "Orlando, FL",
   bookHref: "/book",
   demoHref: "/demo",
-  priceFloor: "$1,500",
+  // priceFloor: "$1,500",
+  priceFloor:600,
   // TODO: point at the route that saves leads to Supabase.
   logo: {
     onDark: "/brand/wtn-wordmark-dark.svg",
@@ -433,8 +434,8 @@ export const packages = {
     {
       name: "Launch",
       blurb: "Get a real site up, fast.",
-      price: site.priceFloor,
-      priceNote: "one time, or $149/mo for 12 months",
+      price: `\$${site.priceFloor.toLocaleString('en-US')}`,
+      priceNote: `one time, or $${Math.round(site.priceFloor * 1.192/12)}/mo for 12 months`,
       features: [
         "Up to 5 pages, built for phones first",
         "Click-to-call on every page",
@@ -447,8 +448,8 @@ export const packages = {
     {
       name: "Grow",
       blurb: "The one most businesses need.",
-      price: "$2,500",
-      priceNote: "one time, or $249/mo for 12 months",
+      price: `$${Math.round(site.priceFloor / 0.6).toLocaleString('en-US')}`,
+      priceNote: `one time, or $${Math.round(site.priceFloor * 1.1952 / 0.6 / 12)}/mo for 12 months`,
       featured: true,
       badge: "Most popular",
       features: [
@@ -463,8 +464,9 @@ export const packages = {
     {
       name: "Run",
       blurb: "For businesses ready to scale.",
-      price: "$4,500",
-      priceNote: "one time, or $399/mo for 12 months",
+      // price: "$4,500",
+      price: `$${Math.round(site.priceFloor / 0.6 / 0.55555).toLocaleString('en-US')}`,
+      priceNote: `one time, or $${Math.round(site.priceFloor * 1.064 / 0.6 / 0.55555 / 12)}/mo for 12 months`,
       features: [
         "Everything in Grow, up to 15 pages",
         "Lead dashboard to track every call and form",
