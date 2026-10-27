@@ -104,7 +104,7 @@ export function planRequests(
         endpoint: images.length ? m.edit : m.generate,
         input: imageInput(m, { prompt, aspectRatio: c.aspectRatio, quality: "max", count: 1, png: true, imageUrls: images }),
         kind: "image",
-        cost: imageCost(m, "max", 1),
+        cost: imageCost(m, "max", 1, images.length),
         plan: { carousel: { n, slideRatio: p.ratio }, presetId: ctx.presetId, prompt, model: m.label, label: `${n} slides` },
       },
     ];
@@ -112,8 +112,11 @@ export function planRequests(
 
   const m = imageModels[p.imageModel ?? f.model] ?? imageModels[f.model];
   const angles = p.format === "ad" && !editing ? anglesFor(p.count) : [undefined];
-  const perRequest = angles.length > 1 ? 1 : Math.min(Math.max(p.count, 1), 4);
-  return angles.map((angle) => {
+  const total = angles.length > 1 ? 1 : Math.min(Math.max(p.count, 1), 4);
+  // Models that return one image per call (FLUX) get one request per image.
+  const batches = total <= m.perRequest ? [total] : Array.from({ length: total }, () => 1);
+  const refs = Math.min(images.length, m.maxRefs);
+  return angles.flatMap((angle) => batches.map((perRequest) => {
     const pi: PromptInput = {
       format: p.format,
       brief: p.brief,
@@ -132,10 +135,10 @@ export function planRequests(
       endpoint: images.length ? m.edit : m.generate,
       input: imageInput(m, { prompt, aspectRatio: p.ratio, quality: p.quality, count: perRequest, png: f.png, imageUrls: images }),
       kind: "image" as const,
-      cost: imageCost(m, p.quality, perRequest),
+      cost: imageCost(m, p.quality, perRequest, refs),
       plan: { editing, presetId: ctx.presetId, prompt, model: m.label, label: angle ? `${angle.label} angle` : undefined },
     };
-  });
+  }));
 }
 
 export async function sendFromComposer(threadId: string, p: ComposerPayload): Promise<{ ok: true } | { ok: false; error: string }> {

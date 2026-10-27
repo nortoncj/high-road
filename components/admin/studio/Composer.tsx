@@ -110,7 +110,7 @@ export function Composer({
 
   const vm = videoModels[state.video.model];
   const ratioOptions = (f.kind === "video" ? vm.ratios : f.ratios).map((r) => ({ value: r, label: r }));
-  const cents = estimateCents({ format: state.format, quality: state.quality, count: state.count, imageModel: state.imageModel, editing: Boolean(state.base), video: state.video });
+  const cents = estimateCents({ format: state.format, quality: state.quality, count: state.count, imageModel: state.imageModel, editing: Boolean(state.base), refs: state.attachments.filter((a) => a.kind === "image").length + (state.base ? 1 : 0), video: state.video });
   const slideLines = lines(state.fields.slides).length;
 
   async function attach(files: FileList | null) {

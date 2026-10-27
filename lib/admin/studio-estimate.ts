@@ -8,6 +8,8 @@ export function estimateCents(p: {
   count: number;
   imageModel?: ImageModelId;
   editing?: boolean;
+  /** Reference images riding along (some models bill for them). */
+  refs?: number;
   video?: { model: VideoModelId; seconds: number; audio: boolean };
 }): number {
   const f = formats[p.format];
@@ -17,6 +19,6 @@ export function estimateCents(p: {
   }
   if (f.kind === "carousel") return imageCost(imageModels["nano-banana-2"], "max", 1);
   const m = imageModels[p.imageModel ?? f.model] ?? imageModels[f.model];
-  if (p.format === "ad" && !p.editing) return anglesFor(p.count).length * imageCost(m, p.quality, 1);
-  return imageCost(m, p.quality, p.count);
+  if (p.format === "ad" && !p.editing) return anglesFor(p.count).length * imageCost(m, p.quality, 1, p.refs);
+  return imageCost(m, p.quality, p.count, p.refs);
 }
