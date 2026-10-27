@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useRef, useState } from "react";
+import { useActionState, useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import { TbLoader2, TbPhotoPlus, TbPlus, TbTrash, TbX } from "react-icons/tb";
 import type { FormState } from "@/lib/admin/client-actions";
@@ -15,17 +15,42 @@ import { putFile } from "./upload";
 
 type Pic = { key: string; url: string };
 
-export function PresetForm({
-  preset,
-  clients,
-  action,
-}: {
+type Props = {
   preset: PresetView | null;
   clients: { id: string; name: string }[];
   action: (prev: FormState, fd: FormData) => Promise<FormState>;
-}) {
+};
+
+/**
+ * Next keeps this page alive after you leave it. After a save, the next visit should start from a
+ * fresh form (a blank one for "New preset"), so a saved form is swapped for a new one as the page
+ * hides. Leaving without saving, or a save that failed, keeps what you typed.
+ */
+export function PresetForm(props: Props) {
+  const [gen, setGen] = useState(0);
+  const saved = useRef(false);
+  useLayoutEffect(
+    () => () => {
+      if (!saved.current) return;
+      saved.current = false;
+      setGen((g) => g + 1);
+    },
+    [],
+  );
+  // Stable, so the body's error effect only reruns when the action state changes.
+  const onSubmitted = useCallback((ok: boolean) => {
+    saved.current = ok;
+  }, []);
+  return <PresetFormBody key={gen} {...props} onSubmitted={onSubmitted} />;
+}
+
+function PresetFormBody({ preset, clients, action, onSubmitted }: Props & { onSubmitted: (ok: boolean) => void }) {
   const [state, run, pending] = useActionState<FormState, FormData>(action, {});
   useResultToast(state);
+  // A successful save redirects, so the only state that comes back is an error.
+  useEffect(() => {
+    if (state.error) onSubmitted(false);
+  }, [state, onSubmitted]);
   const [palette, setPalette] = useState(preset?.palette.length ? preset.palette : [{ name: "Primary", hex: "#1F5C63" }]);
   const [logo, setLogo] = useState<Pic | null>(preset?.logoKey ? { key: preset.logoKey, url: preset.logoUrl ?? "" } : null);
   const [refs, setRefs] = useState<Pic[]>(preset ? preset.referenceKeys.map((k, i) => ({ key: k, url: preset.referenceUrls[i] ?? "" })) : []);
@@ -51,7 +76,7 @@ export function PresetForm({
   }
 
   return (
-    <form action={run} className="flex max-w-3xl flex-col gap-6">
+    <form action={run} onSubmit={() => onSubmitted(true)} className="flex max-w-3xl flex-col gap-6">
       {preset ? <input type="hidden" name="id" value={preset.id} /> : null}
       <input type="hidden" name="palette" value={JSON.stringify(palette)} />
       <input type="hidden" name="logo_key" value={logo?.key ?? ""} />
