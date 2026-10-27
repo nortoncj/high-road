@@ -7,10 +7,15 @@ import { requireAdmin } from "@/lib/admin/auth";
 import { clientOptions } from "@/lib/admin/projects";
 import { getPreset } from "@/lib/admin/studio";
 import { savePreset } from "@/lib/admin/studio-actions";
+import type { PresetView } from "@/lib/admin/studio-types";
 import { PageHeader } from "@/components/admin/PageHeader";
 import { PresetForm } from "@/components/admin/studio/PresetForm";
 
 export const metadata: Metadata = { title: studioPage.presetsPage.title };
+
+/** The saved fields only. The image URLs are signed per request, so they'd change the key every visit. */
+const presetKey = (p: PresetView | null) =>
+  p ? JSON.stringify([p.id, p.name, p.clientId, p.palette, p.displayFont, p.bodyFont, p.style, p.voice, p.avoid, p.logoKey, p.referenceKeys]) : "new";
 
 export default async function PresetEditPage({ params }: { params: Promise<{ id: string }> }) {
   await requireAdmin();
@@ -24,7 +29,9 @@ export default async function PresetEditPage({ params }: { params: Promise<{ id:
         {studioPage.presetsPage.title}
       </Link>
       <PageHeader title={preset ? preset.name : studioPage.presetsPage.add} description={studioPage.presetsPage.description} />
-      <PresetForm preset={preset} clients={clients} action={savePreset} />
+      {/* Next keeps this page alive after you leave it, and the form only reads `preset` when it
+          mounts. Keying on the saved data remounts it when the preset changed since then. */}
+      <PresetForm key={presetKey(preset)} preset={preset} clients={clients} action={savePreset} />
     </>
   );
 }
