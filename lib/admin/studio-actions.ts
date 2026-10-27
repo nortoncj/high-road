@@ -195,7 +195,7 @@ export async function savePreset(_prev: FormState, fd: FormData): Promise<FormSt
   const row = {
     name,
     client_id: values.client_id && UUID.test(values.client_id) ? values.client_id : null,
-    style: txt("style"),
+    style: txt("look"),
     palette,
     display_font: txt("display_font", 60),
     body_font: txt("body_font", 60),

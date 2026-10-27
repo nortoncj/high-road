@@ -108,14 +108,16 @@ export function PresetForm({
       </div>
       <p className="text-muted-foreground -mt-4 text-xs">Google Font names. Exact text uses them as-is; AI text gets them as a style hint.</p>
 
+      {/* The field is "look", not "style": a control named "style" replaces form.style, so React
+          can't hide this form when Next keeps the page around after you leave it. */}
       {[
-        { k: "style", label: "Look and feel", ph: "Bright, friendly, real photos of the crew on job sites. Clean white space, rounded shapes..." },
-        { k: "voice", label: "Voice for headlines", ph: "Plain, warm, no jargon. Talks to homeowners." },
-        { k: "avoid", label: "Never show", ph: "No stock handshakes, no competitors' trucks, no fake reviews." },
+        { k: "look", field: "style", label: "Look and feel", ph: "Bright, friendly, real photos of the crew on job sites. Clean white space, rounded shapes..." },
+        { k: "voice", field: "voice", label: "Voice for headlines", ph: "Plain, warm, no jargon. Talks to homeowners." },
+        { k: "avoid", field: "avoid", label: "Never show", ph: "No stock handshakes, no competitors' trucks, no fake reviews." },
       ].map((f) => (
         <div key={f.k} className="flex flex-col gap-1.5">
           <Label htmlFor={`pf-${f.k}`}>{f.label}</Label>
-          <Textarea id={`pf-${f.k}`} name={f.k} rows={3} defaultValue={v(f.k, preset?.[f.k as "style" | "voice" | "avoid"])} placeholder={f.ph} className="text-base sm:text-sm" />
+          <Textarea id={`pf-${f.k}`} name={f.k} rows={3} defaultValue={v(f.k, preset?.[f.field as "style" | "voice" | "avoid"])} placeholder={f.ph} className="text-base sm:text-sm" />
         </div>
       ))}
 
