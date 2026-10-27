@@ -4,6 +4,7 @@ import {
   TbInbox,
   TbLayoutDashboard,
   TbListCheck,
+  TbPalette,
   TbReportAnalytics,
   TbSettings,
   TbUsers,
@@ -17,5 +18,6 @@ export const navIcons: Record<NavIcon, IconType> = {
   projects: TbFolders,
   tasks: TbListCheck,
   reports: TbReportAnalytics,
+  studio: TbPalette,
   settings: TbSettings,
 };
