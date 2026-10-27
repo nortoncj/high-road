@@ -3,7 +3,7 @@
  * Icons are picked in the components by `icon` key so this file stays plain data.
  */
 
-export type NavIcon = "overview" | "leads" | "clients" | "projects" | "tasks" | "reports" | "settings";
+export type NavIcon = "overview" | "leads" | "clients" | "projects" | "tasks" | "reports" | "settings" | "studio";
 
 export type NavItem = {
   label: string;
@@ -19,6 +19,7 @@ export const adminNav: NavItem[] = [
   { label: "Clients", href: "/admin/clients", icon: "clients" },
   { label: "Projects", href: "/admin/projects", icon: "projects" },
   { label: "Tasks", href: "/admin/tasks", icon: "tasks" },
+  { label: "Studio", href: "/admin/studio", icon: "studio" },
   { label: "Reports", href: "/admin/reports", icon: "reports" },
   { label: "Settings", href: "/admin/settings", icon: "settings", soon: true },
 ];
@@ -622,5 +623,101 @@ export const settingsPage = {
     recheck: "Check again",
     checking: "Checking...",
     manage: (name: string) => `Open ${name}`,
+  },
+} as const;
+
+/* Studio */
+
+export const studioPage = {
+  meta: { title: "Studio" },
+  title: "Studio",
+  description: "Images and video for you, your personal brand and your clients. Pick a brand, pick a format, describe it.",
+  start: { title: "Start something", preset: "Brand", noPreset: "No brand", go: "New chat" },
+  recent: { title: "Recent chats", empty: "Nothing yet. Pick a format above.", pending: (n: number) => `${n} making` },
+  library: "Library",
+  presets: "Brand presets",
+  spend: (spent: string, cap: string | null) => (cap ? `${spent} of ${cap} this month` : `${spent} this month`),
+  setup: {
+    title: "Two things before the first image",
+    fal: "Add FAL_KEY to your env (fal.ai > Dashboard > Keys).",
+    storage: "Add the STORAGE_* env vars and the bucket's CORS rule (ADMIN_SETUP.md, Studio).",
+  },
+  thread: {
+    back: "Studio",
+    rename: "Rename",
+    delete: "Delete chat",
+    confirmDelete: "Delete this chat and every file in it? This can't be undone.",
+    empty: "Describe what you want below. Attach images or a video clip to use as references.",
+    making: "Making it",
+    queued: "In line at fal",
+    saving: "Saving to your bucket",
+    cancel: "Cancel",
+    estimate: (c: string) => `About ${c}`,
+  },
+  composer: {
+    placeholder: "Describe it. Then keep chatting to tweak it.",
+    videoPlaceholder: "How should it move? Slow push in, steam rising, crew walking in...",
+    editPlaceholder: "What should change?",
+    send: "Make it",
+    sending: "Sending...",
+    attach: "Attach images or a video",
+    details: "Details",
+    brandRefs: "Use brand logo and references",
+    editing: "Editing",
+    quality: "Quality",
+    count: "How many",
+    variants: "Variants",
+    model: "Model",
+    seconds: "Length",
+    audio: "Sound",
+    slides: "Slides",
+    zone: "Leave room at",
+    hint: "Ctrl + Enter to send",
+  },
+  actions: {
+    preview: "Preview",
+    edit: "Edit this",
+    text: "Add text",
+    animate: "Animate",
+    download: "Download",
+    downloadSized: "Download sized",
+    zip: "Download all slides",
+    delete: "Delete",
+    frame: "Use this frame",
+  },
+  textLayer: {
+    title: "Add your exact text",
+    headline: "Headline",
+    sub: "Smaller line",
+    cta: "Button",
+    zone: "Where",
+    align: "Align",
+    size: "Size",
+    color: "Text color",
+    scrim: "Background behind text",
+    scrimOptions: { none: "None", fade: "Soft fade", band: "Solid band" },
+    font: "Headline font",
+    save: "Save as new image",
+    saving: "Saving...",
+    corsHint: "If the preview stays blank, the bucket needs the CORS rule in ADMIN_SETUP.md.",
+  },
+  libraryPage: {
+    title: "Library",
+    description: "Everything Studio has made or you've uploaded. Delete what you don't need: storage is what you pay for.",
+    usage: (size: string, cost: string) => `${size} stored. ${cost}`,
+    free: "Inside R2's free 10 GB.",
+    perMonth: (d: string) => `About ${d}/month at R2 rates.`,
+    deleteSelected: (n: number) => `Delete ${n}`,
+    confirm: (n: number) => `Delete ${n} file${n === 1 ? "" : "s"} for good?`,
+    empty: "Nothing here yet.",
+    all: "All",
+  },
+  presetsPage: {
+    title: "Brand presets",
+    description: "Colors, fonts, look and voice that get folded into every prompt. One per brand or customer.",
+    add: "New preset",
+    builtin: "Built in",
+    edit: "Edit",
+    saved: "Saved.",
   },
 } as const;
