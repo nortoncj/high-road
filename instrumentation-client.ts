@@ -21,5 +21,17 @@ if (!posthogKey) {
     defaults: "2025-11-30",
     capture_exceptions: true,
     debug: process.env.NODE_ENV === "development",
+    // The project has no surveys, so don't download surveys.js on every page.
+    disable_surveys: true,
+    // Replay starts on the first interaction (below) so the recorder and its full DOM snapshot
+    // stay out of page load. Remote sampling and trigger settings still apply when it starts.
+    disable_session_recording: true,
   });
+
+  const events = ["pointerdown", "keydown", "touchstart", "scroll", "mousemove"] as const;
+  const startRecording = () => {
+    events.forEach((e) => window.removeEventListener(e, startRecording, true));
+    posthog.startSessionRecording();
+  };
+  events.forEach((e) => window.addEventListener(e, startRecording, { passive: true, capture: true }));
 }

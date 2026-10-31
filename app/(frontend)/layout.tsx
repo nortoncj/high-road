@@ -1,4 +1,3 @@
-import Script from "next/script";
 import React from "react";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Footer, TopNav } from "@/components/home";
@@ -13,7 +12,6 @@ import "../globals.css";
 export const metadata = buildMetadata({});
 
 const GTM_ID = "GTM-NZZ2DH99";
-const GA_ID = "G-P3VJZQ9VNG";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -36,11 +34,17 @@ function Frontendlayout({
       <head>
         {/*
           Analytics: the dataLayer/gtag queues are set up right away (tiny, no network) so events
-          pushed early (e.g. ConversionPing) are kept, while the heavy GTM/GA4/Clarity downloads wait
-          for browser idle time and don't compete with the page loading. This lives in <head>, not
-          <body>: PostHog injects its extension scripts before the first `body > script` ahead of
-          hydration, which would land on top of a React-rendered script there and cause a mismatch.
+          pushed early are kept. GTM (which brings GA4 and the Meta pixel) and Clarity download only
+          on the visitor's first interaction, or when a page calls window.loadAnalytics() (the
+          thank-you pages do, so conversions never wait on a click). Loading them on idle still put
+          ~750 KB of third-party JS inside the page-load window that PageSpeed measures.
+          GA4 is not loaded here directly: the GTM container already loads gtag.js for it, and
+          loading it twice downloaded the same 177 KB again and doubled page views.
+          This lives in <head>, not <body>: PostHog injects its extension scripts before the first
+          `body > script` ahead of hydration, which would land on top of a React-rendered script
+          there and cause a mismatch.
         */}
+        {/* eslint-disable-next-line @next/next/next-script-for-ga -- <GoogleTagManager> loads right after hydration, the cost this avoids. */}
         <script
           id="analytics-init"
           dangerouslySetInnerHTML={{
@@ -48,27 +52,37 @@ function Frontendlayout({
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             window.gtag = gtag;
-            dataLayer.push({'gtm.start': new Date().getTime(), event: 'gtm.js'});
-            gtag('js', new Date());
-            gtag('config', '${GA_ID}');
+            (function(){
+              var loaded = false;
+              var events = ['pointerdown', 'keydown', 'touchstart', 'scroll', 'mousemove'];
+              var opts = { passive: true, capture: true };
+              function add(src){
+                var s = document.createElement('script');
+                s.async = true;
+                s.src = src;
+                document.head.appendChild(s);
+              }
+              function load(){
+                if (loaded) return;
+                loaded = true;
+                events.forEach(function(e){ window.removeEventListener(e, load, opts); });
+                dataLayer.push({'gtm.start': new Date().getTime(), event: 'gtm.js'});
+                add('https://www.googletagmanager.com/gtm.js?id=${GTM_ID}');
+                ${
+                  clarityId
+                    ? `window.clarity = window.clarity || function(){(window.clarity.q = window.clarity.q || []).push(arguments)};
+                add('https://www.clarity.ms/tag/${clarityId}');`
+                    : ""
+                }
+              }
+              window.loadAnalytics = load;
+              events.forEach(function(e){ window.addEventListener(e, load, opts); });
+            })();
           `,
           }}
         />
       </head>
       <body className="min-h-full flex flex-col">
-        <Script src={`https://www.googletagmanager.com/gtm.js?id=${GTM_ID}`} strategy="lazyOnload" />
-        <Script src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`} strategy="lazyOnload" />
-        {clarityId && (
-          <Script id="ms-clarity" strategy="lazyOnload">
-            {`
-      (function(c,l,a,r,i,t,y){
-        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-      })(window, document, "clarity", "script", "${clarityId}");
-    `}
-          </Script>
-        )}
         <TopNav />
         <div>{children}</div>
         <Footer />

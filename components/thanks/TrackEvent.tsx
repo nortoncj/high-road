@@ -5,6 +5,7 @@ import { useEffect, useRef } from "react";
 declare global {
   interface Window {
     gtag?: (...args: unknown[]) => void;
+    loadAnalytics?: () => void;
   }
 }
 
@@ -18,6 +19,7 @@ export function TrackEvent({ name, params }: Props) {
     if (sent.current) return;
     sent.current = true;
     window.gtag?.("event", name, params ?? {});
+    window.loadAnalytics?.();
   }, [name, params]);
 
   return null;

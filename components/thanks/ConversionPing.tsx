@@ -6,6 +6,7 @@ import type { ThanksKind } from "@/content/thanks";
 type Win = Window & {
   dataLayer?: Record<string, unknown>[];
   gtag?: (...args: unknown[]) => void;
+  loadAnalytics?: () => void;
 };
 
 /**
@@ -26,6 +27,8 @@ export function ConversionPing({ kind }: { kind: ThanksKind }) {
     const payload = { lead_type: kind === "booked" ? "call_booked" : "message" };
     w.dataLayer?.push({ event: "generate_lead", ...payload });
     w.gtag?.("event", "generate_lead", payload);
+    // GTM normally waits for a first interaction; a conversion shouldn't (see the layout).
+    w.loadAnalytics?.();
   }, [kind]);
 
   return null;
