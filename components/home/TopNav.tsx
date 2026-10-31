@@ -35,7 +35,7 @@ export function TopNav() {
         <Link href="/" className={styles.brand}>
           <Image
             src={site.logo.onDark}
-            alt=""
+            alt="Webtech Ninjas"
             width={700}
             height={38}
             className={styles.mark}
