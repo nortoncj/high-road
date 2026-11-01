@@ -1,6 +1,7 @@
 import "server-only";
 import { cache } from "react";
 import { redirect } from "next/navigation";
+import { connection } from "next/server";
 import { createSupabase } from "./supabase";
 import { tables } from "./schema";
 
@@ -17,8 +18,13 @@ type Session =
  *
  * Being signed in isn't enough: the user must also have a row in admin_users.
  * shouldCreateUser: false already stops strangers from getting an account, this is the backstop.
+ *
+ * connection() keeps everything after this out of the prerender. With partialPrefetching on,
+ * cookies() alone doesn't: session data gets prerendered into the App Shell, and the admin
+ * pages read the clock (new Date / Date.now) right after, which errors in that prerender.
  */
 export const getSession = cache(async (): Promise<Session> => {
+  await connection();
   const supabase = await createSupabase();
   const {
     data: { user },
