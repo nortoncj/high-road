@@ -29,7 +29,7 @@ export function About() {
             </Button>
           </div>
           <p className={styles.fine}>
-            Website packages start at{" "}
+            Website packages start at{" $"}
             <span className={styles.price}>{site.priceFloor}</span>.
           </p>
         </div>
