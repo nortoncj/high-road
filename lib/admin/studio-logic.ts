@@ -237,13 +237,68 @@ export const lines = (s: string | undefined, max = 6) =>
     .filter(Boolean)
     .slice(0, max);
 
+/**
+ * Image models draw hex codes, swatch names and font names onto the picture as text, so the brand
+ * is described in plain words instead: "#1F5C63" becomes "dark teal", "Inter" becomes "sans-serif".
+ */
+export function colorWords(hex: string): string {
+  let h = hex.replace(/^#/, "");
+  if (h.length === 3) h = [...h].map((c) => c + c).join("");
+  if (!/^[0-9a-f]{6}$/i.test(h)) return "";
+  const [r, g, b] = [0, 2, 4].map((i) => parseInt(h.slice(i, i + 2), 16) / 255);
+  const max = Math.max(r, g, b);
+  const min = Math.min(r, g, b);
+  const l = (max + min) / 2;
+  const d = max - min;
+  const s = d === 0 ? 0 : d / (1 - Math.abs(2 * l - 1));
+  if (s < 0.12 || d < 0.04) {
+    if (l < 0.13) return "near-black";
+    if (l < 0.3) return "dark charcoal";
+    if (l < 0.55) return "mid gray";
+    if (l < 0.88) return "light gray";
+    return l > 0.995 ? "white" : "off-white";
+  }
+  let hue = d === 0 ? 0 : max === r ? ((g - b) / d) % 6 : max === g ? (b - r) / d + 2 : (r - g) / d + 4;
+  hue = (hue * 60 + 360) % 360;
+  const base =
+    hue < 12 || hue >= 345 ? (l > 0.6 ? "pink" : "red")
+    : hue < 40 ? (l < 0.4 ? "brown" : "orange")
+    : hue < 52 ? (l < 0.4 ? "brown" : "golden yellow")
+    : hue < 68 ? (l < 0.35 ? "olive" : "yellow")
+    : hue < 90 ? "lime green"
+    : hue < 155 ? "green"
+    : hue < 195 ? "teal"
+    : hue < 210 ? "sky blue"
+    : hue < 245 ? "blue"
+    : hue < 270 ? "violet"
+    : hue < 295 ? "purple"
+    : hue < 325 ? "magenta"
+    : "pink";
+  const tone = l < 0.22 ? "deep" : l < 0.38 ? "dark" : l > 0.85 ? "pale" : l > 0.72 ? "light" : s > 0.7 ? "vivid" : "";
+  return [s < 0.35 ? "muted" : "", tone, base].filter(Boolean).join(" ");
+}
+
+/** Swaps any hex codes typed into free text (style notes, briefs) for color words. */
+const hexToWords = (s: string) => s.replace(/#(?:[0-9a-f]{6}|[0-9a-f]{3})\b/gi, (m) => colorWords(m) || m);
+
+function fontKind(name: string): string {
+  if (/mono|code|courier|consol/i.test(name)) return "monospace";
+  if (/script|hand|brush|pacifico|lobster|dancing|caveat|satisfy/i.test(name)) return "script";
+  if (/bebas|anton|oswald|impact|condensed/i.test(name)) return "tall condensed sans-serif";
+  if (/sans/i.test(name)) return "sans-serif";
+  if (/serif|playfair|merriweather|lora|garamond|baskerville|georgia|times|bodoni|didot|caslon|crimson|fraunces|cormorant|spectral|newsreader|recoleta/i.test(name)) return "serif";
+  return "sans-serif";
+}
+
 function brandBlock(p: Preset | null): string[] {
   if (!p) return [];
   const out: string[] = [];
-  if (clean(p.style)) out.push(`Brand look (${p.name}): ${clean(p.style)}`);
-  if (p.palette.length) out.push(`Color palette, use these and stay close to them: ${p.palette.map((c) => `${c.name} ${c.hex}`).join(", ")}.`);
-  const fonts = [p.displayFont && `headlines in a bold font like ${p.displayFont}`, p.bodyFont && `small text in a clean sans like ${p.bodyFont}`].filter(Boolean);
+  if (clean(p.style)) out.push(`Brand look: ${hexToWords(clean(p.style))}`);
+  const colors = [...new Set(p.palette.map((c) => colorWords(c.hex)).filter(Boolean))];
+  if (colors.length) out.push(`Color palette, use these and stay close to them: ${colors.join(", ")}.`);
+  const fonts = [p.displayFont && `headlines in a bold ${fontKind(p.displayFont)}`, p.bodyFont && `small text in a clean ${fontKind(p.bodyFont)}`].filter(Boolean);
   if (fonts.length) out.push(`Typography: ${fonts.join(", ")}.`);
+  if (out.length) out.push("The brand notes above are visual direction only. Never write color names, color codes, font names or any words from these notes in the image.");
   return out;
 }
 
@@ -322,7 +377,7 @@ export function buildImagePrompt(i: PromptInput): string {
   }
   const parts = [
     ...formatBrief[i.format](i),
-    brief ? `Subject and idea: ${brief}` : "",
+    brief ? `Subject and idea: ${hexToWords(brief)}` : "",
     ...brandBlock(i.preset),
     ...textBlock(i),
     i.refs ? "Use the attached reference images for the brand's logo, style and subjects. Don't copy them literally." : "",
@@ -334,7 +389,7 @@ export function buildImagePrompt(i: PromptInput): string {
 export function buildVideoPrompt(o: { brief: string; preset: Preset | null; fromImage: boolean }): string {
   return [
     o.fromImage ? `Animate this image: ${clean(o.brief) || "subtle, natural motion and a slow camera push in"}. Keep the subject, colors and composition.` : clean(o.brief),
-    o.preset?.style && !o.fromImage ? `Look: ${clean(o.preset.style)}` : "",
+    o.preset?.style && !o.fromImage ? `Look: ${hexToWords(clean(o.preset.style))}` : "",
     "Smooth, realistic motion. No text on screen, no watermarks.",
   ]
     .filter(Boolean)
