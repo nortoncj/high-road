@@ -1,0 +1,154 @@
+.box {
+  padding: 24px 20px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface-sunken);
+  scroll-margin-top: calc(var(--nav-height) + 24px);
+}
+
+/* Doubled so it beats .prose > * from PortableBody */
+.box.box {
+  margin-block: 2em;
+}
+
+.head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px 24px;
+}
+
+.titles {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Scoped under .box so .prose h2 / ul / li rules from PortableBody don't leak in */
+.box .heading {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 26px;
+  line-height: 1.2;
+}
+
+.count {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--ink-muted);
+}
+
+.track {
+  height: 6px;
+  margin: 16px 0 18px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--brand) 12%, transparent);
+}
+
+.fill {
+  display: block;
+  width: var(--pct);
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--brand), var(--brand-soft));
+  transition: width var(--dur-settle) var(--ease-settle);
+}
+
+.box .list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.box .list > li {
+  margin: 0;
+}
+
+.task {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 52px;
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface-card);
+  font-size: 17px;
+  line-height: 1.4;
+  cursor: pointer;
+  transition: border-color var(--dur-quick) ease, background-color var(--dur-quick) ease;
+}
+
+.task:hover {
+  border-color: var(--brand-soft);
+}
+
+/* Native checkbox stays in the tab order, drawn by .box2 */
+.input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+}
+
+.box2 {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border: 2px solid var(--border-control);
+  border-radius: var(--radius-sm);
+  background: var(--surface-card);
+  color: transparent;
+  font-size: 18px;
+  transition: background-color var(--dur-quick) ease, border-color var(--dur-quick) ease, color var(--dur-quick) ease;
+}
+
+.input:focus-visible + .box2 {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.task[data-done="true"] {
+  background: var(--brand-tint);
+  border-color: var(--brand-tint-border);
+}
+
+.task[data-done="true"] .box2 {
+  border-color: var(--brand);
+  background: var(--brand);
+  color: var(--on-brand);
+  animation: pop var(--dur-settle) var(--ease-settle);
+}
+
+.task[data-done="true"] .label {
+  color: var(--ink-muted);
+  text-decoration: line-through;
+  text-decoration-color: color-mix(in srgb, var(--ink-muted) 60%, transparent);
+}
+
+@keyframes pop {
+  50% {
+    transform: scale(1.15);
+  }
+}
+
+.allDone {
+  margin: 16px 0 0;
+  font-weight: 700;
+  color: var(--status-good);
+}
+
+@media (min-width: 640px) {
+  .box {
+    padding: 28px;
+  }
+}

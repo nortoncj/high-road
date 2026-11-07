@@ -1,0 +1,236 @@
+.section {
+  padding-block: 0 var(--section-y);
+}
+
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px 40px;
+  margin-bottom: 24px;
+}
+
+.titles {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 0;
+}
+
+.heading {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(30px, 5vw, 42px);
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+}
+
+.search {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+  max-width: 400px;
+}
+
+.searchLabel {
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 20px;
+}
+
+.searchBox {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.searchBox svg {
+  position: absolute;
+  left: 14px;
+  font-size: 18px;
+  color: var(--ink-subtle);
+  pointer-events: none;
+}
+
+.searchInput {
+  width: 100%;
+  min-height: 48px;
+  padding: 0 14px 0 42px;
+  border: 1px solid var(--border-control);
+  border-radius: var(--radius-md);
+  background: var(--surface-card);
+  color: var(--ink);
+  font: inherit;
+  font-size: 16px;
+  transition: border-color var(--dur-quick) ease, box-shadow var(--dur-quick) ease;
+}
+
+.searchInput::placeholder {
+  color: var(--ink-subtle);
+}
+
+.searchInput:focus-visible {
+  outline: none;
+  border-color: var(--brand);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--focus) 30%, transparent);
+}
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px 24px;
+  margin-bottom: 28px;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 16px;
+  border: 1px solid var(--border-control);
+  border-radius: 999px;
+  background: var(--surface-card);
+  color: var(--brand-text);
+  font: inherit;
+  font-weight: 700;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background-color var(--dur-quick) ease, color var(--dur-quick) ease, border-color var(--dur-quick) ease;
+}
+
+.chip:hover {
+  background: var(--brand-tint);
+  border-color: var(--brand);
+}
+
+.chip[aria-pressed="true"] {
+  background: var(--brand);
+  border-color: var(--brand);
+  color: var(--on-brand);
+}
+
+.count {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  opacity: 0.8;
+}
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--ink-muted);
+}
+
+/* Live dot with a slow sonar ping */
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--brand-soft);
+  animation: ping 2.4s ease-out infinite;
+}
+
+@keyframes ping {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(48, 146, 157, 0.35);
+  }
+  50% {
+    box-shadow: 0 0 0 7px rgba(48, 146, 157, 0);
+  }
+}
+
+.grid {
+  display: grid;
+  gap: 24px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.grid > li {
+  min-width: 0;
+}
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 48px 24px;
+  border: 1px dashed var(--border-control);
+  border-radius: var(--radius-lg);
+  text-align: center;
+  color: var(--ink-muted);
+}
+
+.empty p {
+  margin: 0;
+}
+
+.emptyTitle {
+  font-family: var(--font-display);
+  font-size: 24px;
+  color: var(--ink);
+}
+
+.moreRow {
+  display: flex;
+  justify-content: center;
+  margin-top: 36px;
+}
+
+.moreButton {
+  min-height: 48px;
+  margin-top: 8px;
+  padding: 0 22px;
+  border: 1px solid var(--brand);
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--brand-text);
+  font: inherit;
+  font-weight: 700;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color var(--dur-quick) ease;
+}
+
+.moreButton:hover {
+  background: var(--brand-tint);
+}
+
+@media (min-width: 640px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1080px) {
+  .grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 28px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dot {
+    animation: none;
+  }
+}

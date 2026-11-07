@@ -118,9 +118,11 @@ export const site = {
 
 export const navLinks: NavLink[] = [
   { label: "Services", href: "/services" },
+  { label: "Industries", href: "/industries" },
   { label: "Work", href: "/work" },
   { label: "Pricing", href: "/pricing" },
   { label: "About", href: "/about" },
+  { label: "Blog", href: "/blog" },
 ];
 
 export const hero = {

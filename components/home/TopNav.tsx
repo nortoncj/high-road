@@ -9,6 +9,9 @@ import { navLinks, site } from "@/content/home";
 import { Button } from "@/components/ui/Button";
 import styles from "./TopNav.module.css";
 
+/** "/blog" is current on "/blog" and on every post under it. */
+const isCurrent = (pathname: string, href: string) => pathname === href || pathname.startsWith(`${href}/`);
+
 /** Glass nav. Sits over the hero photo on the homepage, stays readable on every other page. */
 export function TopNav() {
   const pathname = usePathname();
@@ -50,7 +53,7 @@ export function TopNav() {
               <Link
                 href={link.href}
                 className={styles.link}
-                aria-current={pathname === link.href ? "page" : undefined}
+                aria-current={isCurrent(pathname, link.href) ? "page" : undefined}
               >
                 {link.label}
               </Link>
@@ -88,7 +91,7 @@ export function TopNav() {
               <Link
                 href={link.href}
                 className={styles.panelLink}
-                aria-current={pathname === link.href ? "page" : undefined}
+                aria-current={isCurrent(pathname, link.href) ? "page" : undefined}
                 onClick={() => setOpen(false)}
               >
                 {link.label}

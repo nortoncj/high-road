@@ -1,0 +1,13 @@
+.img {
+  object-fit: cover;
+}
+
+/* Faceted stand-in: two skewed sea-glass planes over the brand teal */
+.fallback {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(115deg, transparent 0 46%, rgba(255, 255, 255, 0.08) 46% 62%, transparent 62%),
+    linear-gradient(28deg, transparent 0 58%, rgba(207, 225, 217, 0.14) 58% 74%, transparent 74%),
+    linear-gradient(135deg, #1f5c63 0%, #2a7f89 100%);
+}

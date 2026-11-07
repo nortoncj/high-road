@@ -53,6 +53,11 @@ const nextConfig: NextConfig = {
         destination: "https://www.webtechninjas.com/:path*",
         permanent: true,
       },
+      // The previous site's blog and case study URLs. Same Sanity slugs, new homes.
+      { source: "/case-studies", destination: "/work", permanent: true },
+      { source: "/case-studies/:slug", destination: "/work/:slug", permanent: true },
+      { source: "/field-notes", destination: "/blog", permanent: true },
+      { source: "/field-notes/:slug", destination: "/blog/:slug", permanent: true },
     ];
   },
 

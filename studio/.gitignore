@@ -1,0 +1,6 @@
+node_modules
+dist
+.sanity
+
+# The root .gitignore drops every .env*; this one documents the Studio's two values.
+!.env.example

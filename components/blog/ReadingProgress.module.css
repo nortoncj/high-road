@@ -1,0 +1,16 @@
+/* Rides just under the sticky nav */
+.track {
+  position: sticky;
+  top: var(--nav-height);
+  z-index: 40;
+  height: 3px;
+  background: color-mix(in srgb, var(--brand) 10%, transparent);
+}
+
+.bar {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, #1f5c63, #30929d 70%, #9d7b0f);
+  transform: scaleX(0);
+  transform-origin: left;
+}

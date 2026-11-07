@@ -221,3 +221,26 @@
     display: none;
   }
 }
+
+/* Six links: shrink the wordmark and tighten the gaps until the full container width is available */
+@media (min-width: 960px) and (max-width: 1239px) {
+  .nav {
+    gap: 18px;
+  }
+
+  .mark {
+    width: 200px;
+  }
+
+  .links {
+    gap: 20px;
+  }
+
+  .link {
+    font-size: 15px;
+  }
+
+  .actions {
+    padding-left: 16px;
+  }
+}

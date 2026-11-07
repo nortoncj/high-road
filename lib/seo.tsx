@@ -4,8 +4,13 @@ type MetadataInput = {
   image?: string;
   url?: string;
   keywords?: string[];
+  /** Page path, e.g. "/blog/my-post". Sets the canonical and og:url to that page on SITE_URL. */
+  path?: string;
+  type?: "website" | "article";
 };
 
+/** The canonical host. webtechninjas.com redirects here (next.config.ts). */
+export const SITE_URL = "https://www.webtechninjas.com";
 
 export function buildMetadata({
   title,
@@ -13,8 +18,11 @@ export function buildMetadata({
   image = "/og-image.png",
   url = "https://webtechninjas.com",
   keywords = [],
+  path,
+  type = "website",
 }: MetadataInput) {
   const fullTitle = title ? `${title} | Webtech Ninjas` : "Webtech Ninjas";
+  const canonical = path ? new URL(path, SITE_URL).toString() : url;
 
   const fullDescription =
     description ||
@@ -31,7 +39,7 @@ export function buildMetadata({
     description: fullDescription,
     keywords,
     alternates: {
-      canonical: url,
+      canonical,
     },
     other: {
       "google-site-verification": "YqzMHIzOgPMFfzOKYOZBnVOccDAZ1jdaJ_qHKcmI5x0",
@@ -45,7 +53,7 @@ export function buildMetadata({
     openGraph: {
       title: fullTitle,
       description: fullDescription,
-      url,
+      url: canonical,
       siteName: "Webtech Ninjas",
       images: [
         {
@@ -56,7 +64,7 @@ export function buildMetadata({
         },
       ],
       locale: "en_US",
-      type: "website",
+      type,
     },
 
     // -------------------------

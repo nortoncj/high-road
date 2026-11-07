@@ -1,0 +1,93 @@
+.header {
+  padding-top: 24px;
+}
+
+.headerInner {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  max-width: 860px;
+}
+
+.badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.badge,
+.format {
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 18px;
+}
+
+.badge {
+  background: var(--brand-tint);
+  color: var(--on-brand-tint);
+}
+
+.format {
+  background: var(--surface-sunken);
+  color: var(--ink-muted);
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(36px, 6.5vw, 58px);
+  line-height: 1.06;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+.lead {
+  margin: 0;
+  max-width: 720px;
+  font-size: 20px;
+  line-height: 1.55;
+  color: var(--ink-muted);
+}
+
+.heroWrap {
+  margin-top: 32px;
+}
+
+.hero {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  background: var(--surface-photo);
+  box-shadow: var(--shadow-lift);
+}
+
+.layout {
+  display: grid;
+  gap: 48px;
+  padding-block: 40px var(--section-y);
+}
+
+.article {
+  min-width: 0;
+  max-width: 720px;
+}
+
+@media (min-width: 768px) {
+  .hero {
+    aspect-ratio: 21 / 9;
+  }
+}
+
+@media (min-width: 1080px) {
+  .layout {
+    grid-template-columns: minmax(0, 720px) minmax(0, 360px);
+    justify-content: space-between;
+    gap: 64px;
+    padding-top: 48px;
+  }
+}

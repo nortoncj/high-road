@@ -1,0 +1,156 @@
+.section {
+  padding-block: 56px 64px;
+}
+
+.label {
+  margin: 0 0 18px;
+  font: inherit;
+}
+
+.wrap {
+  display: block;
+  color: var(--ink);
+  text-decoration: none;
+  border-radius: var(--radius-lg);
+}
+
+.wrap:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 4px;
+}
+
+.card {
+  display: grid;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface-card);
+  box-shadow: var(--shadow-rest);
+  transition: box-shadow var(--dur-base) var(--ease-settle), border-color var(--dur-quick) ease;
+}
+
+.wrap:hover .card {
+  border-color: var(--brand-tint-border);
+  box-shadow: var(--shadow-lift);
+}
+
+.media {
+  position: relative;
+  display: block;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: var(--surface-photo);
+}
+
+/* Slow Ken Burns drift on the hero image */
+.media img {
+  animation: kenburns 18s ease-in-out infinite alternate;
+}
+
+@keyframes kenburns {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.06);
+  }
+}
+
+.copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 24px 22px 26px;
+}
+
+.badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.badge,
+.featured {
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 18px;
+}
+
+.badge {
+  background: var(--brand-tint);
+  color: var(--on-brand-tint);
+}
+
+.featured {
+  background: color-mix(in srgb, var(--accent) 16%, transparent);
+  color: var(--accent-text);
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(28px, 4vw, 38px);
+  line-height: 1.12;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+
+.excerpt {
+  margin: 0;
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--ink-muted);
+}
+
+.foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  width: 100%;
+  margin-top: auto;
+}
+
+.more {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--brand-text);
+}
+
+.more svg {
+  transition: transform var(--dur-base) var(--ease-settle);
+}
+
+.wrap:hover .more svg {
+  transform: translateX(3px);
+}
+
+@media (min-width: 900px) {
+  .card {
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+  }
+
+  .media {
+    aspect-ratio: auto;
+    min-height: 420px;
+  }
+
+  .copy {
+    justify-content: center;
+    padding: 40px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .media img {
+    animation: none;
+  }
+}

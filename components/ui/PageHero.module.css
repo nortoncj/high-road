@@ -1,0 +1,152 @@
+.hero {
+  position: relative;
+  overflow: hidden;
+  padding-block: 48px 56px;
+  background:
+    linear-gradient(135deg, rgba(31, 92, 99, 0.1), rgba(48, 146, 157, 0.06) 45%, transparent 75%),
+    var(--surface-page);
+}
+
+.inner {
+  display: grid;
+  gap: 40px;
+  align-items: center;
+}
+
+.copy {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-width: 0;
+  max-width: 720px;
+}
+
+.headline {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(40px, 7.5vw, 64px);
+  line-height: 1.04;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  text-wrap: balance;
+}
+
+.body {
+  margin: 0;
+  max-width: 600px;
+  font-size: 18px;
+  line-height: 1.65;
+  color: var(--ink-muted);
+}
+
+.art {
+  display: none;
+  min-width: 0;
+}
+
+/* The coastal gradient, demoted to a thin rule (same as the footer) */
+.rule {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #1f5c63, #5fa7a9 40%, #f6f2ea 60%, #9d7b0f);
+  transform-origin: left;
+  animation: grow 900ms 300ms var(--ease-settle) both;
+}
+
+@keyframes grow {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* ---------- Drifting facets ---------- */
+
+.facets {
+  position: relative;
+  height: 340px;
+}
+
+.facet {
+  position: absolute;
+  animation: drift 14s ease-in-out infinite;
+}
+
+.f1 {
+  top: 8%;
+  right: 6%;
+  width: 120px;
+  height: 120px;
+  background: var(--brand);
+  opacity: 0.85;
+  clip-path: polygon(22% 0, 100% 0, 100% 78%, 78% 100%, 0 100%, 0 22%);
+}
+
+.f2 {
+  top: 46%;
+  right: 38%;
+  width: 64px;
+  height: 64px;
+  background: var(--brand-soft);
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+  animation-delay: -4s;
+}
+
+.f3 {
+  top: 72%;
+  right: 0;
+  width: 88px;
+  height: 80px;
+  background: var(--accent);
+  opacity: 0.85;
+  clip-path: polygon(0 0, 100% 18%, 74% 100%, 12% 82%);
+  animation-delay: -8s;
+}
+
+.f4 {
+  top: 18%;
+  right: 58%;
+  width: 40px;
+  height: 40px;
+  background: var(--brand-tint-border);
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  animation-delay: -11s;
+}
+
+@keyframes drift {
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate(12px, -16px) rotate(6deg);
+  }
+}
+
+@media (min-width: 1080px) {
+  .hero {
+    padding-block: 88px 80px;
+  }
+
+  .inner {
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr);
+    gap: 64px;
+  }
+
+  .art {
+    display: block;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .facet,
+  .rule {
+    animation: none;
+  }
+}

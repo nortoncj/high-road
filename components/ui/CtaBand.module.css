@@ -1,0 +1,149 @@
+.section {
+  padding-block: 0 var(--section-y);
+}
+
+.band {
+  position: relative;
+  overflow: hidden;
+  display: grid;
+  gap: 28px;
+  padding: 32px 20px;
+  border-radius: var(--radius-lg);
+}
+
+/* Coastal glow band, same as /work. Ends at #2a7f89 so white text holds 4.6:1 edge to edge. */
+.teal {
+  --ink: #ffffff;
+  --ink-muted: #e3ecea;
+  --brand-text: #cfe1d9;
+  --accent: #cfe1d9;
+  --accent-text: #ffffff;
+  background: linear-gradient(135deg, #1f5c63 0%, #1f5c63 35%, #2a7f89 100%);
+  color: var(--ink);
+  box-shadow: var(--shadow-float);
+}
+
+.soft {
+  background: var(--surface-sunken);
+  border: 1px solid var(--border);
+}
+
+/* Brass and sea-glass facets down the right edge */
+.stripes {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 48px;
+  width: 44px;
+  background: linear-gradient(90deg, color-mix(in srgb, var(--accent) 45%, transparent) 0 10px, transparent 10px 22px, color-mix(in srgb, var(--brand-soft) 40%, transparent) 22px 44px);
+  transform: skewX(-12deg);
+  pointer-events: none;
+}
+
+.copy {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 0;
+}
+
+.heading {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(30px, 6vw, 46px);
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  text-wrap: balance;
+}
+
+.soft .heading {
+  font-size: clamp(26px, 4.5vw, 36px);
+}
+
+.body {
+  margin: 0;
+  max-width: 600px;
+  font-size: 18px;
+  line-height: 1.6;
+  color: var(--ink-muted);
+}
+
+.actions {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.inlineActions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 20px;
+  margin-top: 8px;
+}
+
+.teal .solid {
+  background: #ffffff;
+  border-color: #ffffff;
+  color: #1f5c63;
+}
+
+.teal .solid::before {
+  background: #cfe1d9;
+}
+
+.teal .solid:hover {
+  color: #174950;
+}
+
+.teal .ghost {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.55);
+  color: #ffffff;
+}
+
+.teal .ghost::before {
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.teal .ghost:hover {
+  color: #ffffff;
+}
+
+.teal .quiet {
+  color: #ffffff;
+}
+
+.soft .solid {
+  background: var(--surface-card);
+}
+
+@media (min-width: 640px) {
+  .band {
+    padding: 40px;
+  }
+}
+
+@media (min-width: 1080px) {
+  .band {
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 0.6fr);
+    align-items: center;
+    gap: 48px;
+    padding: 56px;
+  }
+
+  /* Button column sized to the button, with room left for the stripes */
+  .soft {
+    grid-template-columns: minmax(0, 1fr) auto;
+    padding: 48px 56px;
+  }
+
+  .soft .actions {
+    margin-right: 112px;
+    white-space: nowrap;
+  }
+}
