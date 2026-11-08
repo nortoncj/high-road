@@ -13,14 +13,17 @@ type PageHeroProps = {
   children?: ReactNode;
   /** Right column on desktop. Defaults to drifting facets. */
   art?: ReactNode;
+  /** Above the eyebrow, e.g. breadcrumbs. */
+  crumbs?: ReactNode;
 };
 
-/** Hero for /blog and /industries: the teal wash from /work, a coastal rule underneath, facets on the right. */
-export function PageHero({ id, eyebrow, headline, body, children, art }: PageHeroProps) {
+/** Hero for /blog and the industry pages: the teal wash from /work, a coastal rule underneath, facets on the right. */
+export function PageHero({ id, eyebrow, headline, body, children, art, crumbs }: PageHeroProps) {
   return (
     <section className={styles.hero} aria-labelledby={id}>
       <div className={`container ${styles.inner}`}>
         <div className={styles.copy}>
+          {crumbs ? <div className={styles.crumbs}>{crumbs}</div> : null}
           <div className="settle" style={stagger(0)}>
             <Eyebrow>{eyebrow}</Eyebrow>
           </div>

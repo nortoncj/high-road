@@ -120,9 +120,37 @@ export type Industry = {
   group: IndustryGroup | null;
   line: string | null;
   clientWork: boolean | null;
-  href: string | null;
   image: SanityImage | null;
-  caseStudy: { slug: string; name: string } | null;
+  hasCaseStudy: boolean;
+};
+
+export type IndustryStat = { _key: string; value: string; label: string; source: string | null; sourceUrl: string | null };
+export type IndustryProblem = { _key: string; title: string; body: string | null };
+export type IndustrySolution = { _key: string; title: string; body: string | null; points: string[] | null };
+export type Faq = { _key: string; question: string; answer: string };
+
+export type IndustryCaseStudy = CaseStudyCard & {
+  highlight: { label: string | null; value: string | null } | null;
+  testimonial: { quote?: string | null; authorName?: string | null; authorBusiness?: string | null } | null;
+};
+
+export type IndustryDetail = Omit<Industry, "hasCaseStudy"> & {
+  updatedAt: string;
+  eyebrow: string | null;
+  headline: string | null;
+  intro: string | null;
+  stats: IndustryStat[] | null;
+  problemsHeading: string | null;
+  problems: IndustryProblem[] | null;
+  solutionsHeading: string | null;
+  solutions: IndustrySolution[] | null;
+  faqs: Faq[] | null;
+  cta: { heading?: string | null; body?: string | null; secondaryLabel?: string | null; secondaryHref?: string | null } | null;
+  seo: { title?: string | null; description?: string | null } | null;
+  caseStudies: IndustryCaseStudy[] | null;
+  /** Recent work from other industries, for when this one has no case study yet. */
+  otherCaseStudies: CaseStudyCard[];
+  others: { name: string; slug: string; group: IndustryGroup | null }[];
 };
 
 /* ---------- Case studies ---------- */

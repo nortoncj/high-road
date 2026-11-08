@@ -16,7 +16,7 @@ const stagger = (i: number) => ({ "--i": i }) as CSSProperties;
 
 export function caseStudyCrumbs(c: CaseStudyDetail): Crumb[] {
   return c.industryPage
-    ? [copy.industriesCrumb, { label: c.industryPage.name, href: `/industries#${c.industryPage.slug}` }, { label: c.name }]
+    ? [copy.industriesCrumb, { label: c.industryPage.name, href: `/industries/${c.industryPage.slug}` }, { label: c.name }]
     : [copy.workCrumb, { label: c.name }];
 }
 

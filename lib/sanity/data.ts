@@ -7,10 +7,12 @@ import {
   CASE_STUDY_SLUGS_QUERY,
   FEED_QUERY,
   INDUSTRIES_QUERY,
+  INDUSTRY_QUERY,
+  INDUSTRY_SLUGS_QUERY,
   POST_QUERY,
   POST_SLUGS_QUERY,
 } from "./queries";
-import type { CaseStudyDetail, Industry, PostCard, PostDetail } from "./types";
+import type { CaseStudyDetail, Industry, IndustryDetail, PostCard, PostDetail } from "./types";
 
 /**
  * Every Sanity read shares this tag. Posts, case studies and industries link to each other, so a
@@ -48,6 +50,18 @@ export async function getIndustries() {
   return sanityFetch<Industry[]>(INDUSTRIES_QUERY, {}, []);
 }
 
+export async function getIndustrySlugs() {
+  "use cache";
+  tagged();
+  return sanityFetch<string[]>(INDUSTRY_SLUGS_QUERY, {}, []);
+}
+
+export async function getIndustry(slug: string) {
+  "use cache";
+  tagged();
+  return sanityFetch<IndustryDetail | null>(INDUSTRY_QUERY, { slug }, null);
+}
+
 export async function getCaseStudySlugs() {
   "use cache";
   tagged();
@@ -63,12 +77,13 @@ export async function getCaseStudy(slug: string) {
 type Feed = {
   posts: { title: string; excerpt: string | null; publishedAt: string | null; slug: string; updatedAt: string; seoDescription: string | null }[];
   caseStudies: { slug: string; updatedAt: string }[];
+  industries: { slug: string; updatedAt: string }[];
 };
 
 export async function getFeed() {
   "use cache";
   tagged();
-  return sanityFetch<Feed>(FEED_QUERY, {}, { posts: [], caseStudies: [] });
+  return sanityFetch<Feed>(FEED_QUERY, {}, { posts: [], caseStudies: [], industries: [] });
 }
 
 /** Picked items first, then the newest ones, without repeats. */

@@ -28,7 +28,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }));
 
   try {
-    const { posts, caseStudies } = await getFeed();
+    const { posts, caseStudies, industries } = await getFeed();
 
     const postRoutes: MetadataRoute.Sitemap = posts.map((post) => ({
       url: `${SITE_URL}/blog/${post.slug}`,
@@ -40,7 +40,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: new Date(caseStudy.updatedAt || Date.now()),
     }));
 
-    return [...staticPages, ...postRoutes, ...caseStudyRoutes];
+    const industryRoutes: MetadataRoute.Sitemap = industries.map((industry) => ({
+      url: `${SITE_URL}/industries/${industry.slug}`,
+      lastModified: new Date(industry.updatedAt || Date.now()),
+    }));
+
+    return [...staticPages, ...industryRoutes, ...postRoutes, ...caseStudyRoutes];
   } catch (error) {
     console.error("Failed to generate sitemap:", error);
     return staticPages;

@@ -14,18 +14,18 @@ export type IndustryView = {
   image: Img | null;
 };
 
-/** Case study first, then the card's own link, then the services page. */
+export const industryHref = (slug: string) => `/industries/${slug}`;
+
 export function toIndustryView(it: Industry): IndustryView {
-  const href = it.caseStudy ? `/work/${it.caseStudy.slug}` : it.href?.trim() || industryBrowser.fallbackHref;
   return {
     id: it._id,
     slug: it.slug,
     name: it.name,
     line: it.line,
     group: it.group,
-    clientWork: Boolean(it.clientWork || it.caseStudy),
-    href,
-    linkLabel: it.caseStudy ? industryBrowser.caseStudy : industryBrowser.go,
+    clientWork: Boolean(it.clientWork || it.hasCaseStudy),
+    href: industryHref(it.slug),
+    linkLabel: it.hasCaseStudy ? industryBrowser.caseStudy : industryBrowser.go,
     image: toImg(it.image, { width: 640, aspect: 4 / 3, alt: "" }),
   };
 }

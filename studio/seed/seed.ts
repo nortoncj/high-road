@@ -6,14 +6,17 @@
  * Safe to run twice. It only creates documents that don't exist yet, and only fills case study
  * fields that are empty, so nothing you've edited in the Studio gets overwritten.
  *
- * Published: 5 categories, the contact form post, 12 industries, the John R Clark page sections.
+ * Published: 5 categories, the contact form post, 12 industries with their page copy (see
+ *            ./industry-pages.ts), the John R Clark page sections.
  * Drafts:    8 posts that only have a title and summary so far. Write them, then publish.
  */
 import { createReadStream } from "node:fs";
 import { resolve } from "node:path";
 import { getCliClient } from "sanity/cli";
+import { INDUSTRY_PAGES, statFor } from "./industry-pages";
 
-const client = getCliClient({ apiVersion: "2026-10-01" });
+// "raw" so the existence checks below see drafts too; newer API versions hide them by default.
+const client = getCliClient({ apiVersion: "2026-10-01", perspective: "raw" });
 
 // Run from the studio folder (npm run seed does that).
 const imagesDir = resolve(process.cwd(), "seed/images");
@@ -66,6 +69,7 @@ const CASE_STUDY_SLUGS = {
   butcherBlock: "butcher-block-guy-custom-countertops-website",
   casaDeLaPaz: "casa-de-la-paz-independent-living-website",
   lachelle: "lachelle-travels-adventures-website-development",
+  uncontained: "tiny-home-and-storage-units",
 };
 
 type Stub = { id: string; title: string; excerpt: string; category: string; image?: string; alt?: string; featured?: boolean; format?: string };
@@ -146,13 +150,12 @@ const INDUSTRIES: {
   image?: string;
   clientWork?: boolean;
   caseStudy?: keyof typeof CASE_STUDY_SLUGS;
-  href?: string;
 }[] = [
   { id: "contractors-and-remodelers", name: "Contractors and remodelers", group: "home", clientWork: true, caseStudy: "johnClark", image: "industry-remodeling.webp", line: "Project galleries and estimate forms that show off the work before you ever quote it." },
   { id: "custom-woodworking", name: "Custom woodworking", group: "makers", clientWork: true, caseStudy: "butcherBlock", image: "industry-woodworking.webp", line: "A gallery that sells the craft, and that you can update from your phone in a minute." },
-  { id: "restaurants-and-pop-ups", name: "Restaurants and pop-ups", group: "food", clientWork: true, href: "/work#high-tyde", image: "industry-restaurants.webp", line: "Menus, hours and this week's location, right where hungry people look first." },
+  { id: "restaurants-and-pop-ups", name: "Restaurants and pop-ups", group: "food", clientWork: true, image: "industry-restaurants.webp", line: "Menus, hours and this week's location, right where hungry people look first." },
   { id: "senior-living-and-home-care", name: "Senior living and home care", group: "care", clientWork: true, caseStudy: "casaDeLaPaz", image: "industry-senior-care.webp", line: "Warm, easy-to-read sites that help families trust you before they ever visit." },
-  { id: "tiny-homes-and-containers", name: "Tiny homes and containers", group: "makers", clientWork: true, href: "/work", image: "industry-tiny-homes.webp", line: "Floor plans, price ranges and quote requests for buyers doing serious research." },
+  { id: "tiny-homes-and-containers", name: "Tiny homes and containers", group: "makers", clientWork: true, caseStudy: "uncontained", image: "industry-tiny-homes.webp", line: "Floor plans, price ranges and quote requests for buyers doing serious research." },
   { id: "travel-and-professional-services", name: "Travel and professional services", group: "care", clientWork: true, caseStudy: "lachelle", image: "industry-travel.webp", line: "Booked consultations and trust signals for businesses that sell their expertise." },
   { id: "hvac", name: "HVAC", group: "home", image: "industry-hvac.webp", line: "Catch the emergency call on the hottest day of the year, before they try the next company." },
   { id: "plumbing", name: "Plumbing", group: "home", line: "When a pipe bursts, people call whoever shows up first on their phone. Make that you." },
@@ -322,12 +325,37 @@ async function main() {
       sortOrder: (i + 1) * 10,
       ...(it.image ? { image: image(assets[it.image]) } : {}),
       ...(caseStudy ? { caseStudies: [keyedRef(caseStudy)] } : {}),
-      ...(it.href ? { href: it.href } : {}),
     });
   });
 
   await tx.commit();
   console.log("Created categories, posts and industries (anything that already existed was left alone).");
+
+  // Fill the industry pages. setIfMissing never overwrites, and "href" is the old card link field.
+  const industryIds = INDUSTRIES.flatMap((it) => [`industry-${it.id}`, `drafts.industry-${it.id}`]);
+  const presentIndustries = new Set(await client.fetch<string[]>(`*[_id in $ids]._id`, { ids: industryIds }));
+  const pages = client.transaction();
+  for (const it of INDUSTRIES) {
+    const page = INDUSTRY_PAGES[it.id];
+    if (!page) continue;
+    const caseStudy = it.caseStudy ? studyId(it.caseStudy) : undefined;
+    const fields = {
+      ...(page.eyebrow ? { eyebrow: page.eyebrow } : {}),
+      headline: page.headline,
+      intro: page.intro,
+      stats: page.stats.map((k) => ({ _key: key(), _type: "industryStat", ...statFor(k) })),
+      problems: page.problems.map(([title, body]) => ({ _key: key(), _type: "industryProblem", title, body })),
+      solutions: page.solutions.map(([title, body, points]) => ({ _key: key(), _type: "industrySolution", title, body, ...(points ? { points } : {}) })),
+      faqs: page.faqs.map(([question, answer]) => ({ _key: key(), _type: "industryFaq", question, answer })),
+      ...(page.cta ? { cta: page.cta } : {}),
+      ...(caseStudy ? { caseStudies: [keyedRef(caseStudy)] } : {}),
+    };
+    for (const id of [`industry-${it.id}`, `drafts.industry-${it.id}`]) {
+      if (presentIndustries.has(id)) pages.patch(id, (p) => p.setIfMissing(fields).unset(["href"]));
+    }
+  }
+  await pages.commit();
+  console.log("Filled the empty industry page sections.");
 
   if (!johnClark) {
     console.log(`No case study with slug "${CASE_STUDY_SLUGS.johnClark}", so the case study page sections were skipped.`);

@@ -21,6 +21,11 @@
   max-width: 720px;
 }
 
+/* Breadcrumb links carry 12px of tap padding; pull the trail up so the gap matches the eyebrow's */
+.crumbs {
+  margin: -12px 0 -8px;
+}
+
 .headline {
   margin: 0;
   font-family: var(--font-display);

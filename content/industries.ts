@@ -1,4 +1,4 @@
-// Copy for /industries. The industry cards themselves live in Sanity (see /studio).
+// Copy for /industries and /industries/[slug]. The industries themselves live in Sanity (see /studio).
 
 import { site } from "@/content/home";
 import type { IndustryGroup } from "@/lib/sanity/types";
@@ -30,10 +30,8 @@ export const industryBrowser = {
     care: "Care and services",
   } satisfies Record<IndustryGroup, string>,
   showing: (shown: number, total: number) => `Showing ${shown} of ${total} industries`,
-  go: "See how it works",
-  caseStudy: "Read the case study",
-  /** Where a card links when it has no case study and no link of its own. */
-  fallbackHref: "/services",
+  go: "See how I help",
+  caseStudy: "See the work",
   empty: "Industries are on their way. In the meantime, tell me what you do and I'll tell you if I'm a fit.",
 };
 
@@ -71,4 +69,47 @@ export const industriesCta = {
   heading: "See what your site is costing you",
   body: "I'll look at your site the way your customers do and tell you what to fix first, whether you hire me or not.",
   primaryCta: { label: "Book a free call", href: site.bookHref },
+};
+
+/** "Contractors and HVAC" → "contractors and HVAC", for use mid-sentence. */
+const midSentence = (name: string) =>
+  name
+    .split(" ")
+    .map((w) => (w.length > 1 && w === w.toUpperCase() ? w : w.toLowerCase()))
+    .join(" ");
+
+/** Labels and fallbacks for /industries/[slug]. Anything an industry fills in the Studio wins. */
+export const industryPage = {
+  crumbs: { home: { label: "Industries", href: "/industries" } },
+  eyebrow: (name: string) => `Websites for ${midSentence(name)}`,
+  title: (name: string) => `${name} website design`,
+  primaryCta: { label: "Book a free call", href: site.bookHref },
+  proofLink: "See the work",
+  clientWork: "I've built for this industry",
+  stats: {
+    eyebrow: "By the numbers",
+    heading: "The numbers behind every lead",
+    source: "Source",
+  },
+  problems: { eyebrow: "The problem", heading: "Sound familiar?" },
+  solutions: {
+    eyebrow: "The fix",
+    heading: (name: string) => `What I build for ${midSentence(name)}`,
+  },
+  proof: {
+    eyebrow: "Proof",
+    heading: "Real work for businesses like yours",
+    otherEyebrow: "Same playbook, different trade",
+    otherHeading: "Recent work from other industries",
+    read: "Read the case study",
+    all: "All work",
+  },
+  faqs: { eyebrow: "Questions", heading: "What owners ask me first" },
+  others: { label: "Other industries I build for", all: "All industries" },
+  cta: {
+    eyebrow: "Free 15 minute call",
+    heading: "Find out what your website is costing you",
+    body: "I'll check your phone buttons, your forms and your Google listing, and tell you what to fix first, whether you hire me or not.",
+    secondaryCta: { label: "See pricing", href: "/pricing" },
+  },
 };

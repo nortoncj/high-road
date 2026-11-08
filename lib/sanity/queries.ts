@@ -56,11 +56,32 @@ export const POST_QUERY = `*[${LIVE_POST} && slug.current == $slug][0]{
   "latest": *[${LIVE_POST} && _id != ^._id] | order(publishedAt desc)[0...3]{ ${POST_CARD} }
 }`;
 
-export const INDUSTRIES_QUERY = `*[_type == "industry" && defined(slug.current)] | order(coalesce(sortOrder, 999) asc, name asc){
-  _id, name, group, line, clientWork, href,
+const INDUSTRY_ORDER = `order(coalesce(sortOrder, 999) asc, name asc)`;
+
+export const INDUSTRIES_QUERY = `*[_type == "industry" && defined(slug.current)] | ${INDUSTRY_ORDER}{
+  _id, name, group, line, clientWork,
   "slug": slug.current,
   "image": image${IMAGE},
-  "caseStudy": caseStudies[0]->{ "slug": slug.current, "name": coalesce(businessName, testimonial.authorBusiness, title) }
+  "hasCaseStudy": count(caseStudies[defined(@->slug.current)]) > 0
+}`;
+
+export const INDUSTRY_SLUGS_QUERY = `*[_type == "industry" && defined(slug.current)].slug.current`;
+
+// "highlight" is the case study's first result tile, or failing that its first outcome.
+export const INDUSTRY_QUERY = `*[_type == "industry" && slug.current == $slug][0]{
+  _id, name, group, line, clientWork, eyebrow, headline, intro, problemsHeading, problems,
+  solutionsHeading, solutions, stats, faqs, cta, seo,
+  "slug": slug.current,
+  "updatedAt": _updatedAt,
+  "image": image${IMAGE},
+  "caseStudies": caseStudies[defined(@->slug.current)]->{
+    ${CASE_STUDY_CARD},
+    "highlight": coalesce(results[0]{ label, value }, outcomes[0]{ "label": metric, "value": after }),
+    "testimonial": testimonial{ quote, authorName, authorBusiness }
+  },
+  "otherCaseStudies": *[_type == "caseStudy" && defined(slug.current) && !(_id in coalesce(^.caseStudies[]._ref, []))]
+    | order(featured desc, publishedAt desc)[0...3]{ ${CASE_STUDY_CARD} },
+  "others": *[_type == "industry" && defined(slug.current) && _id != ^._id] | ${INDUSTRY_ORDER}{ name, group, "slug": slug.current }
 }`;
 
 export const CASE_STUDY_SLUGS_QUERY = `*[_type == "caseStudy" && defined(slug.current)].slug.current`;
@@ -88,5 +109,6 @@ export const FEED_QUERY = `{
   },
   "caseStudies": *[_type == "caseStudy" && defined(slug.current)] | order(publishedAt desc){
     "slug": slug.current, "updatedAt": _updatedAt
-  }
+  },
+  "industries": *[_type == "industry" && defined(slug.current)]{ "slug": slug.current, "updatedAt": _updatedAt }
 }`;
