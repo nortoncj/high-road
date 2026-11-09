@@ -3,7 +3,7 @@
  * Icons are picked in the components by `icon` key so this file stays plain data.
  */
 
-export type NavIcon = "overview" | "leads" | "clients" | "projects" | "tasks" | "reports" | "settings" | "studio";
+export type NavIcon = "overview" | "leads" | "clients" | "projects" | "tasks" | "reports" | "settings" | "studio" | "content";
 
 export type NavItem = {
   label: string;
@@ -19,6 +19,7 @@ export const adminNav: NavItem[] = [
   { label: "Clients", href: "/admin/clients", icon: "clients" },
   { label: "Projects", href: "/admin/projects", icon: "projects" },
   { label: "Tasks", href: "/admin/tasks", icon: "tasks" },
+  { label: "Content", href: "/admin/content", icon: "content" },
   { label: "Studio", href: "/admin/studio", icon: "studio" },
   { label: "Reports", href: "/admin/reports", icon: "reports" },
   { label: "Settings", href: "/admin/settings", icon: "settings", soon: true },
@@ -627,6 +628,15 @@ export const settingsPage = {
 } as const;
 
 /* Studio */
+
+/** The Sanity Studio, embedded. Blog posts, case studies, industries. */
+export const contentPage = {
+  meta: { title: "Content" },
+  setup: {
+    title: "Sanity isn't connected",
+    body: "Add NEXT_PUBLIC_SANITY_PROJECT_ID and NEXT_PUBLIC_SANITY_DATASET to your env, then reload.",
+  },
+} as const;
 
 export const studioPage = {
   meta: { title: "Studio" },

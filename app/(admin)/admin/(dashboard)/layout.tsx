@@ -25,11 +25,12 @@ export default async function DashboardLayout({ children }: { children: ReactNod
       <AppSidebar admin={{ id: admin.id, name: admin.name, email: admin.email, role: admin.role }} newLeads={newLeads} dueTodos={dueTodos} />
       <SidebarInset className="bg-shore min-w-0">
         <TopBar />
-        {/* SidebarInset already renders <main>, so this is a div. */}
+        {/* SidebarInset already renders <main>, so this is a div. A child with data-bleed (the Sanity Studio)
+            gets the whole area: no padding, no max width. */}
         <div
           id="main"
           tabIndex={-1}
-          className="mx-auto flex w-full max-w-[1400px] flex-1 flex-col gap-5 p-4 pb-[max(1.5rem,env(safe-area-inset-bottom))] outline-none sm:gap-6 sm:p-6 lg:p-8"
+          className="mx-auto flex w-full max-w-[1400px] flex-1 flex-col gap-5 p-4 pb-[max(1.5rem,env(safe-area-inset-bottom))] outline-none sm:gap-6 sm:p-6 lg:p-8 has-[[data-bleed]]:max-w-none has-[[data-bleed]]:p-0"
         >
           {children}
         </div>

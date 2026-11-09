@@ -1,5 +1,6 @@
 import type { IconType } from "react-icons";
 import {
+  TbArticle,
   TbFolders,
   TbInbox,
   TbLayoutDashboard,
@@ -18,6 +19,7 @@ export const navIcons: Record<NavIcon, IconType> = {
   projects: TbFolders,
   tasks: TbListCheck,
   reports: TbReportAnalytics,
+  content: TbArticle,
   studio: TbPalette,
   settings: TbSettings,
 };

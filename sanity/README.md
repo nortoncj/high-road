@@ -1,23 +1,17 @@
 # WebTech Ninjas Studio
 
 Sanity Studio for the blog (`/blog`), industries (`/industries`, `/industries/[slug]`) and case studies (`/work/[slug]`).
-It's a separate project from the Next.js site, so the site's build on the server never installs or bundles it.
+It runs inside the admin at `/admin/content` (Content in the sidebar), so it's behind the admin sign-in.
+You also sign in to Sanity the first time you open it.
 
-## Run it
-
-```bash
-cd studio
-cp .env.example .env     # same project ID and dataset as the site's NEXT_PUBLIC_SANITY_* vars
-npm install
-npm run dev              # http://localhost:3333
-```
-
-`npm run deploy` publishes it to `<name>.sanity.studio` so you can edit from anywhere.
-The first deploy asks you to pick the name.
+- Config: `sanity.config.ts` at the project root. Schemas: `sanity/schemaTypes`. Sidebar: `sanity/structure.ts`.
+- Project ID and dataset come from `NEXT_PUBLIC_SANITY_PROJECT_ID` and `NEXT_PUBLIC_SANITY_DATASET`, same as the site.
+- Each origin you open it from needs to be in sanity.io/manage → API → CORS origins with "Allow credentials" on:
+  `http://localhost:3000` and `https://www.webtechninjas.com`.
 
 ## Seed
 
-`npm run seed` loads the wireframe content: 5 categories, the contact form post, 12 industries with
+`npm run sanity:seed` loads the wireframe content: 5 categories, the contact form post, 12 industries with
 starter page copy (`seed/industry-pages.ts`) and the John R Clark page sections, plus 8 draft posts.
 It only creates what's missing and only fills empty fields, so it's safe to run again. It uses your `npx sanity login`.
 

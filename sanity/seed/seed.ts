@@ -1,7 +1,7 @@
 /**
  * Loads the blog, the industries and the John R Clark case study page from the site wireframes.
  *
- *   cd studio && npm run seed        (uses your `npx sanity login`)
+ *   npm run sanity:seed        (uses your `npx sanity login`)
  *
  * Safe to run twice. It only creates documents that don't exist yet, and only fills case study
  * fields that are empty, so nothing you've edited in the Studio gets overwritten.
@@ -18,9 +18,9 @@ import { INDUSTRY_PAGES, statFor } from "./industry-pages";
 // "raw" so the existence checks below see drafts too; newer API versions hide them by default.
 const client = getCliClient({ apiVersion: "2026-10-01", perspective: "raw" });
 
-// Run from the studio folder (npm run seed does that).
-const imagesDir = resolve(process.cwd(), "seed/images");
-const publicDir = resolve(process.cwd(), "../public");
+// Run from the project root (npm run sanity:seed does that).
+const imagesDir = resolve(process.cwd(), "sanity/seed/images");
+const publicDir = resolve(process.cwd(), "public");
 
 /* ---------- Helpers ---------- */
 

@@ -1,5 +1,5 @@
 // Sanity project settings. The project ID and dataset are public (they ship to the browser anyway).
-// The Studio in /studio reads the same two values from its own .env file.
+// The Studio (sanity.config.ts, served at /admin/content) uses the same two values.
 
 export const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID ?? "";
 export const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET ?? "";

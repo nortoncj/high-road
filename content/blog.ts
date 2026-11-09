@@ -1,4 +1,4 @@
-// Copy for /blog and /blog/[slug]. The posts themselves live in Sanity (see /studio).
+// Copy for /blog and /blog/[slug]. The posts themselves live in Sanity (edit them at /admin/content).
 
 import { AboutHeadshot } from "@img/thumbnails";
 import { site } from "@/content/home";

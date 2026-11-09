@@ -1,4 +1,4 @@
-// Copy for /industries and /industries/[slug]. The industries themselves live in Sanity (see /studio).
+// Copy for /industries and /industries/[slug]. The industries themselves live in Sanity (edit them at /admin/content).
 
 import { site } from "@/content/home";
 import type { IndustryGroup } from "@/lib/sanity/types";

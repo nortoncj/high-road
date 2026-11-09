@@ -1,4 +1,4 @@
-// Labels for /work/[slug]. The case studies themselves live in Sanity (see /studio).
+// Labels for /work/[slug]. The case studies themselves live in Sanity (edit them at /admin/content).
 
 import { site } from "@/content/home";
 
