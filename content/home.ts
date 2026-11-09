@@ -22,7 +22,6 @@ import {
   reportBg,
 } from "@img/home";
 
-
 export type NavLink = { label: string; href: string };
 export type Img = { src: string; alt: string };
 
@@ -108,7 +107,7 @@ export const site = {
   bookHref: "/book",
   demoHref: "/demo",
   // priceFloor: "$1,500",
-  priceFloor:600,
+  priceFloor: 600,
   // TODO: point at the route that saves leads to Supabase.
   logo: {
     onDark: "/brand/wtn-wordmark-dark.svg",
@@ -126,13 +125,17 @@ export const navLinks: NavLink[] = [
 ];
 
 export const hero = {
-  eyebrow: "Websites for service businesses",
+  eyebrow: "Websites and lead systems for local service businesses",
   headline: "Leads you don't have to share.",
-  body: "I build websites that send the call straight to you, catch the 2 a.m. emergency, and help you hire good people. Fixed prices. Reports in plain English.",
+  body: "Turn local searches into direct inquiries. Give customers an easy way to call, request service, or book online, even when you're out on a job. Get a website built to capture opportunities and keep your business moving.",
   primaryCta: "Book a free call",
   secondaryCta: { label: "See how it works", href: "#how" },
-  reassurances: ["Free 15 minute call", "No tech talk", "Built for phones"],
-  pickerLabel: "Built for",
+  reassurances: [
+    "Free 15-minute call",
+    "Fixed price before work starts",
+    "Built for phones",
+  ],
+  pickerLabel: "BUILT FOR",
   rotateMs: 6000,
   trades: [
     {
@@ -151,6 +154,16 @@ export const hero = {
       image: {
         src: heroPlumbing.src,
         alt: "Plumber loading the van at sunrise",
+      },
+    },
+    {
+      id: "electricians",
+      label: "Electricians",
+      line: "When the power goes out, they call whoever can get there fast. Make it you.",
+      image: {
+        // src: heroElectricians.src,
+        src: "",
+        alt: "Electrician working on a home electrical panel",
       },
     },
     {
@@ -187,6 +200,7 @@ export const trades = {
   list: [
     "HVAC",
     "Plumbing",
+    "Electricians",
     "Roofing",
     "Cleaning",
     "Home care",
@@ -201,21 +215,21 @@ export const trades = {
 export const pillars = {
   eyebrow: "What you get",
   heading: "A website that works the night shift.",
-  body: "Most sites for service businesses are a brochure nobody reads. Yours should answer the phone, book the job and find your next hire while you're on a call.",
+  body: "Most websites for service businesses are digital brochures. They list services, display a phone number, and leave the customer to figure out what happens next.\n\nYour website should do more. It should turn local searches into direct inquiries, make it easy to request service after hours, and help your business stay organized as it grows.",
   items: [
     {
       tag: "Leads",
-      title: "Leads you don't share",
-      body: "Lead sites sell the same homeowner to five companies. Your own site and Google listing send the call to you, and only you.",
+      title: "Leads that come directly to you",
+      body: "Stop depending entirely on shared-lead marketplaces. Give customers a direct way to find your business, understand your services, and request a quote or service appointment through your own website.",
       image: {
         src: pillarLeads.src,
         alt: "Owner answering a call in the truck",
       },
     },
     {
-      tag: "After hours",
-      title: "Answers at 2 a.m.",
-      body: "Emergencies don't wait for business hours. Click-to-call on every page, online booking, and an after-hours request form that pings your phone the second it lands.",
+      tag: "After Hours",
+      title: "Your next customer doesn't keep business hours",
+      body: "A customer shouldn't have to wait until morning to get in touch. Click-to-call, online booking, and after-hours request forms make it easy to reach your business whenever the need arises. Get notified as soon as a new request comes in.",
       image: {
         src: pillarNight.src,
         alt: "Porch light on at night with a phone lit up",
@@ -223,16 +237,18 @@ export const pillars = {
     },
     {
       tag: "Hiring",
-      title: "A hiring pipeline",
-      body: "A careers page and an application form that asks the right questions up front, so you only call back the people worth calling.",
+      title:
+        "Growing your business means growing your team. A dedicated careers page and structured application process help you collect the right information upfront, filter applicants, and spend less time chasing incomplete applications.",
       image: {
         src: pillarHiring.src,
         alt: "Crew photo in front of the trucks",
       },
-      link: { label: "Try the demo application", href: "/demo" },
     },
-  ] satisfies Pillar[],
+  ],
 };
+
+export const alsoIncluded =
+  " The tools and integrations that connect your website to the way your business operates.";
 
 export const leadMath = {
   eyebrow: "Do the math",
@@ -436,8 +452,8 @@ export const packages = {
     {
       name: "Launch",
       blurb: "Get a real site up, fast.",
-      price: `\$${site.priceFloor.toLocaleString('en-US')}`,
-      priceNote: `one time, or $${Math.round(site.priceFloor * 1.192/12)}/mo for 12 months`,
+      price: `\$${site.priceFloor.toLocaleString("en-US")}`,
+      priceNote: `one time, or $${Math.round((site.priceFloor * 1.192) / 12)}/mo for 12 months`,
       features: [
         "Up to 5 pages, built for phones first",
         "Click-to-call on every page",
@@ -450,8 +466,8 @@ export const packages = {
     {
       name: "Grow",
       blurb: "The one most businesses need.",
-      price: `$${Math.round(site.priceFloor / 0.6).toLocaleString('en-US')}`,
-      priceNote: `one time, or $${Math.round(site.priceFloor * 1.1952 / 0.6 / 12)}/mo for 12 months`,
+      price: `$${Math.round(site.priceFloor / 0.6).toLocaleString("en-US")}`,
+      priceNote: `one time, or $${Math.round((site.priceFloor * 1.1952) / 0.6 / 12)}/mo for 12 months`,
       featured: true,
       badge: "Most popular",
       features: [
@@ -467,8 +483,8 @@ export const packages = {
       name: "Run",
       blurb: "For businesses ready to scale.",
       // price: "$4,500",
-      price: `$${Math.round(site.priceFloor / 0.6 / 0.55555).toLocaleString('en-US')}`,
-      priceNote: `one time, or $${Math.round(site.priceFloor * 1.064 / 0.6 / 0.55555 / 12)}/mo for 12 months`,
+      price: `$${Math.round(site.priceFloor / 0.6 / 0.55555).toLocaleString("en-US")}`,
+      priceNote: `one time, or $${Math.round((site.priceFloor * 1.064) / 0.6 / 0.55555 / 12)}/mo for 12 months`,
       features: [
         "Everything in Grow, up to 15 pages",
         "Lead dashboard to track every call and form",

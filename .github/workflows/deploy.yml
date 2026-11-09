@@ -29,6 +29,8 @@ jobs:
           host: ${{ secrets.SSH_HOST }}
           username: ubuntu
           key: ${{ secrets.SSH_KEY }}
+          # The embedded Sanity Studio roughly doubled build work; the server needs more than the 10m default.
+          command_timeout: 30m
           script: |
             export NVM_DIR="$HOME/.nvm"
             . "$NVM_DIR/nvm.sh"
