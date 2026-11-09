@@ -225,6 +225,10 @@ export const pillars = {
         src: pillarLeads.src,
         alt: "Owner answering a call in the truck",
       },
+      link: {
+        label: "Learn more",
+        href: "/services",
+      },
     },
     {
       tag: "After Hours",
@@ -234,15 +238,22 @@ export const pillars = {
         src: pillarNight.src,
         alt: "Porch light on at night with a phone lit up",
       },
+      link: {
+        label: "Learn more",
+        href: "/services",
+      },
     },
     {
       tag: "Hiring",
-      title:
-        "A better way to find your next hire",
+      title: "A better way to find your next hire",
       body: "Growing your business means growing your team. A dedicated careers page and structured application process collect the information you need upfront, helping you review applicants and spend less time chasing incomplete applications.",
       image: {
         src: pillarHiring.src,
         alt: "Crew photo in front of the trucks",
+      },
+      link: {
+        label: "Learn more",
+        href: "/services",
       },
     },
   ] satisfies Pillar[],
@@ -291,59 +302,59 @@ export const leadMath = {
 export const processSection = {
   eyebrow: "How it works",
   heading: "From first call to launch. No guesswork.",
-body: "A straightforward process, clear pricing, and your approval at every stage.",
+  body: "A straightforward process, clear pricing, and your approval at every stage.",
 
-steps: [
-  {
-    icon: "call",
-    title: "Start with a conversation",
-    body: "We'll review your website, Google Business Profile, and how customers currently reach your business. You'll get an honest assessment and a clear project quote.",
-    checklist: [
-      "Website and mobile experience reviewed",
-      "Google Business Profile reviewed",
-      "Scope and fixed price agreed upfront",
-    ],
-  },
-  {
-    icon: "browser",
-    title: "Built around your business",
-    body: "Your website is structured around your services, service areas, and the actions customers need to take. You'll review the design and content before anything goes live.",
-    checklist: [
-      "Phone-first website design",
-      "Service pages and customer-focused copy",
-      "Clear calls to action and contact options",
-    ],
-  },
-  {
-    icon: "pin",
-    title: "Launch and connect",
-    body: "I launch your website, connect the relevant business tools, and test every important customer action so inquiries reach the right place.",
-    checklist: [
-      "Forms and booking tested",
-      "Notifications connected",
-      "Google Business Profile configured where included",
-    ],
-  },
-  {
-    icon: "chart",
-    title: "Keep improving",
-    body: "With the optional care plan, your website stays maintained and monitored. You'll receive straightforward reporting that shows what's happening and what deserves attention next.",
-    checklist: [
-      "Hosting, updates, and backups",
-      "Website and lead performance reporting",
-      "Clear recommendations for improvement",
-    ],
-  },
+  steps: [
+    {
+      icon: "call",
+      title: "Start with a conversation",
+      body: "We'll review your website, Google Business Profile, and how customers currently reach your business. You'll get an honest assessment and a clear project quote.",
+      checklist: [
+        "Website and mobile experience reviewed",
+        "Google Business Profile reviewed",
+        "Scope and fixed price agreed upfront",
+      ],
+    },
+    {
+      icon: "browser",
+      title: "Built around your business",
+      body: "Your website is structured around your services, service areas, and the actions customers need to take. You'll review the design and content before anything goes live.",
+      checklist: [
+        "Phone-first website design",
+        "Service pages and customer-focused copy",
+        "Clear calls to action and contact options",
+      ],
+    },
+    {
+      icon: "pin",
+      title: "Launch and connect",
+      body: "I launch your website, connect the relevant business tools, and test every important customer action so inquiries reach the right place.",
+      checklist: [
+        "Forms and booking tested",
+        "Notifications connected",
+        "Google Business Profile configured where included",
+      ],
+    },
+    {
+      icon: "chart",
+      title: "Keep improving",
+      body: "With the optional care plan, your website stays maintained and monitored. You'll receive straightforward reporting that shows what's happening and what deserves attention next.",
+      checklist: [
+        "Hosting, updates, and backups",
+        "Website and lead performance reporting",
+        "Clear recommendations for improvement",
+      ],
+    },
   ] satisfies ProcessStep[],
 };
 
 export const report = {
-  eyebrow: "Every month",
-  heading: "A report you can read in two minutes.",
-  body: "Calls, bookings, reviews and where they came from. No jargon, no 40-page PDF. Just what moved and what I'm doing next.",
-  image: { src: reportBg.src, alt: "" },
-  title: "October report",
-  badge: "Example data",
+  eyebrow: "Know what's working",
+  heading: "See where your opportunities come from.",
+  body: "Track website calls, quote requests, bookings, and where customers found you. No jargon-heavy reports or 40-page PDFs. Just the numbers that matter, what changed, and what to improve next.",
+  title: "Sample monthly report",
+  badge: "Illustrative data",
+  image: { src: reportBg.src, alt: "October report" },
   stats: [
     {
       label: "Calls from your website",
@@ -386,15 +397,15 @@ export const report = {
 };
 
 export const recentWork = {
-  eyebrow: "Recent work",
-  heading: "Built for people who'd rather be on the job.",
-  aside: "Built and written by me.",
+  eyebrow: "Selected work",
+  heading: "Built around what each business needs.",
+  aside: "Strategy, design, and development.",
   featured: {
     name: "Casa de la Paz",
     industry: "Assisted living and senior housing",
     badge: "Senior care",
     highlight:
-      "Careers page and online application that keep good hires coming in",
+      "A clearer path for families and a streamlined hiring application",
     href: "https://www.cdpliving.com", // TODO: case study or live site
     summary:
       "Website for an assisted living and senior housing community in Sarasota, Florida. Built to attract families and caregivers, with a careers page and online application.",
@@ -414,7 +425,8 @@ export const recentWork = {
     {
       name: "Butcher Block Guy",
       industry: "Woodworking",
-      highlight: "Shows off the craft and keeps “Order now” one tap away",
+      highlight:
+        "Showcases the craftsmanship and makes ordering straightforward",
       href: "https://nortoncj.github.io/ButcherBlockGuy/",
       image: {
         src: ButcherBlockGroup.src,
@@ -424,7 +436,8 @@ export const recentWork = {
     {
       name: "John R Clark & Co",
       industry: "Property maintenance",
-      highlight: "Turns 30 years of word of mouth into a site that earns trust",
+      highlight:
+        "Organizes services and builds trust through a professional online presence",
       href: "https://johnrclarkco.com",
       image: {
         src: JohnRClark.src,
@@ -434,7 +447,7 @@ export const recentWork = {
     {
       name: "VFW Post 6827",
       industry: "Veterans post",
-      highlight: "Joining the post and finding it are one tap each",
+      highlight: "Makes membership information and directions easier to find",
       href: "https://vfwpost6827.org/",
       image: {
         src: VFW.src,
@@ -445,19 +458,22 @@ export const recentWork = {
 };
 
 export const packages = {
-  eyebrow: "Packages",
-  heading: "Three fixed prices. No surprise invoices.",
-  careToggle: "Add the care plan",
+  eyebrow: "Straightforward pricing",
+  heading: "Choose the right starting point.",
+  careToggle: "Add ongoing website care",
+
   careLine:
-    "+ Care plan: hosting, updates, backups and security monitoring. $79/mo",
-  careOnNote: "Care plan added. Cancel it any time.",
-  careOffNote: "Prices are fixed before I start. The care plan is optional.",
+    "+ Care plan: hosting, updates, backups, security monitoring, and monthly reporting. $79/mo",
+
+  careOnNote: "Care plan selected. Cancel any time.",
+  careOffNote: "One-time project pricing. The care plan is optional.",
   budgetNote:
     "Working with a smaller budget? Tell me what you've got and I'll tell you exactly what it buys. No pressure to upgrade.",
   tiers: [
     {
       name: "Launch",
-      blurb: "Get a real site up, fast.",
+      blurb:
+        "A professional website that gives customers a better way to reach you.",
       price: `\$${site.priceFloor.toLocaleString("en-US")}`,
       priceNote: `one time, or $${Math.round((site.priceFloor * 1.192) / 12)}/mo for 12 months`,
       features: [
@@ -471,7 +487,7 @@ export const packages = {
     },
     {
       name: "Grow",
-      blurb: "The one most businesses need.",
+      blurb: "A complete local presence built to turn searches into inquiries.",
       price: `$${Math.round(site.priceFloor / 0.6).toLocaleString("en-US")}`,
       priceNote: `one time, or $${Math.round((site.priceFloor * 1.1952) / 0.6 / 12)}/mo for 12 months`,
       featured: true,
@@ -487,7 +503,8 @@ export const packages = {
     },
     {
       name: "Run",
-      blurb: "For businesses ready to scale.",
+      blurb:
+        "For businesses ready to connect their website to more of their operation.",
       // price: "$4,500",
       price: `$${Math.round(site.priceFloor / 0.6 / 0.55555).toLocaleString("en-US")}`,
       priceNote: `one time, or $${Math.round((site.priceFloor * 1.064) / 0.6 / 0.55555 / 12)}/mo for 12 months`,
@@ -505,36 +522,44 @@ export const packages = {
 export const faq = {
   eyebrow: "FAQ",
   heading: "Straight answers.",
-  body: "Still wondering about something? Ask on the call. That's what it's for.",
+  body: "Here are a few things business owners usually want to know.",
   items: [
     {
-      q: "Who writes the words on my site?",
-      a: "Depends on the package. On Grow and Run, I write it. On Launch, you send what you have and I tighten it up.",
+      q: "Who writes the content for my website?",
+      a: "It depends on the package. With Launch, you provide the information and I refine it. With Grow and Run, I write the website copy around your services, customers, and service areas.",
     },
     {
-      q: "What happens on the free call?",
-      a: "Fifteen minutes, on the phone or on video. We look at your site and Google listing together and I tell you what's costing you calls. No pitch deck.",
+      q: "What happens during the free call?",
+      a: "We'll spend 15 minutes reviewing your website, Google Business Profile, and how customers currently contact you. You'll leave with an honest assessment and recommendations, whether we work together or not.",
     },
     {
-      q: "Do I have to buy the care plan?",
-      a: "No. It's an add-on, not a requirement. It covers hosting, updates, backups and the monthly report.",
+      q: "Do you guarantee a certain number of leads?",
+      a: "No. Results depend on factors like competition, demand, search visibility, and how quickly inquiries are handled. The goal is to build a stronger digital presence and make it easier for customers to contact your business.",
     },
     {
-      q: "How long does a build take?",
-      a: "[X to Y weeks], depending on the package and how fast I get your photos and details.",
+      q: "Is the care plan required?",
+      a: "No. The care plan is optional. It covers ongoing hosting, updates, backups, security monitoring, and monthly reporting.",
     },
     {
-      q: "Do you only work with one trade?",
-      a: "No. I build for service businesses that go to the customer: HVAC, plumbing, roofing, cleaning, home care, contractors and more.",
+      q: "How long does a website take to build?",
+      a: "Timelines depend on the size of the project, the package you select, and how quickly we receive the required information and assets. Your timeline is agreed upon before work begins.",
+    },
+    {
+      q: "Do you only work with one industry?",
+      a: "No. I work with local service businesses including HVAC, plumbing, electric, roofing, cleaning, home care, contractors, and other businesses that serve customers at their location.",
+    },
+    {
+      q: "Can my website connect to my existing business tools?",
+      a: "Yes. Depending on the project, websites can connect to booking tools, contact forms, notification systems, CRMs, and other business applications.",
     },
   ] satisfies Faq[],
 };
 
 export const book = {
-  eyebrow: "Free 15 minute call",
-  heading: "Let's make your phone ring.",
-  body: "We'll look at your site and your Google listing together. You'll leave knowing what's costing you calls, whether you hire me or not.",
-  image: { src: ctaBg.src, alt: "" },
+  eyebrow: "Free 15-minute call",
+  heading: "Let's make it easier to win the next job.",
+  body: "We'll review your website, Google listing, and how customers reach your business. You'll leave with a clearer picture of what's working, what's missing, and what could improve.",
+  image: { src: ctaBg.src, alt: "electrician walking towards van" },
   fields: {
     name: { label: "Your name", placeholder: "Dana Ruiz" },
     business: { label: "Business name", placeholder: "Ruiz Heating & Air" },
@@ -550,13 +575,13 @@ export const book = {
 
 export const about = {
   eyebrow: "Who you'll work with",
-  heading: "One person builds your site. Same one answers the phone.",
-  body: "No account managers, no handoffs. Book a free 15 minute call and I'll show you what's getting in the way of calls. No pressure, no tech talk.",
+  heading: "One person from the first call to launch.",
+  body: "You'll work directly with Chris, not an account manager or a revolving team of contractors. Every project is handled with a focus on the business, the customer experience, and the systems behind it.",
   primaryCta: "Book a free call",
   secondaryCta: "Try the demo application",
   name: "Chris Norton",
-  role: "Owner and lead developer",
-  bio: "I build every site myself and answer my own phone.",
+  role: "Founder & Lead Developer",
+  bio: "With a background spanning software development, engineering, and digital marketing, Chris builds websites that do more than look good. They help businesses capture opportunities and connect their digital presence to the way they operate.",
   photo: {
     // Must be YOU before launch: a stock face labeled as you is the fastest
     // way to lose a trust-first buyer.
