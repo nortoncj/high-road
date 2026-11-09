@@ -141,7 +141,7 @@ export const hero = {
     {
       id: "hvac",
       label: "HVAC",
-      line: "When the AC dies in July, they call whoever shows up first. Make it you.",
+      line: "When the AC fails in July, customers need a way to reach you fast. Make the next step obvious.",
       image: {
         src: heroHVAC.src,
         alt: "HVAC tech on a rooftop condenser at dusk",
@@ -150,7 +150,7 @@ export const hero = {
     {
       id: "plumbing",
       label: "Plumbing",
-      line: "Burst pipe at midnight? They're calling whoever answers. Make it you.",
+      line: "A burst pipe can't wait. Put your services and contact options one tap away.",
       image: {
         src: heroPlumbing.src,
         alt: "Plumber loading the van at sunrise",
@@ -169,7 +169,7 @@ export const hero = {
     {
       id: "roofing",
       label: "Roofing",
-      line: "After the storm, the first roofer they trust gets the job. Make it you.",
+      line: "After a storm, homeowners compare roofers quickly. Show your work and make requesting an inspection easy.",
       image: {
         src: heroRoofing.src,
         alt: "Roofing crew on a pitched roof at golden hour",
@@ -178,7 +178,7 @@ export const hero = {
     {
       id: "cleaning",
       label: "Cleaning",
-      line: "Regulars want to rebook in ten seconds, not ten texts. Make it easy.",
+      line: "Make it easy to compare services, request a quote, and book recurring cleanings.",
       image: {
         src: heroCleaning.src,
         alt: "Cleaner finishing a bright kitchen",
@@ -187,7 +187,7 @@ export const hero = {
     {
       id: "homecare",
       label: "Home care",
-      line: "Families pick the agency that feels safe at first glance. Make it yours.",
+      line: "Families need to trust the people caring for a loved one. Make your services, team, and next steps clear.",
       image: {
         src: heroHomecare.src,
         alt: "Caregiver and client talking on a porch",
@@ -215,12 +215,12 @@ export const trades = {
 export const pillars = {
   eyebrow: "What you get",
   heading: "A website that works the night shift.",
-  body: "Most websites for service businesses are digital brochures. They list services, display a phone number, and leave the customer to figure out what happens next.\n\nYour website should do more. It should turn local searches into direct inquiries, make it easy to request service after hours, and help your business stay organized as it grows.",
+  body: "Most websites for service businesses are digital brochures. They list services, display a phone number, and leave customers to figure out what happens next.\n\nYour website should do more. It should help local customers find your business, make it easy to request service, and keep new inquiries moving, even when you're busy on the job.",
   items: [
     {
       tag: "Leads",
-      title: "Leads that come directly to you",
-      body: "Stop depending entirely on shared-lead marketplaces. Give customers a direct way to find your business, understand your services, and request a quote or service appointment through your own website.",
+      title: "A direct line to your business",
+      body: "Stop relying entirely on shared-lead marketplaces. Build a direct channel where customers can find your services, explore what you offer, and contact your business. Your website and Google Business Profile give you a digital presence you control.",
       image: {
         src: pillarLeads.src,
         alt: "Owner answering a call in the truck",
@@ -229,7 +229,7 @@ export const pillars = {
     {
       tag: "After Hours",
       title: "Your next customer doesn't keep business hours",
-      body: "A customer shouldn't have to wait until morning to get in touch. Click-to-call, online booking, and after-hours request forms make it easy to reach your business whenever the need arises. Get notified as soon as a new request comes in.",
+      body: "Make it easy to reach your business whenever the need arises. Click-to-call, online booking, and after-hours request forms give customers a clear next step. New inquiries can trigger email and text notifications so you know when someone reaches out.",
       image: {
         src: pillarNight.src,
         alt: "Porch light on at night with a phone lit up",
@@ -238,22 +238,24 @@ export const pillars = {
     {
       tag: "Hiring",
       title:
-        "Growing your business means growing your team. A dedicated careers page and structured application process help you collect the right information upfront, filter applicants, and spend less time chasing incomplete applications.",
+        "A better way to find your next hire",
+      body: "Growing your business means growing your team. A dedicated careers page and structured application process collect the information you need upfront, helping you review applicants and spend less time chasing incomplete applications.",
       image: {
         src: pillarHiring.src,
         alt: "Crew photo in front of the trucks",
       },
     },
-  ],
+  ] satisfies Pillar[],
 };
 
 export const alsoIncluded =
-  " The tools and integrations that connect your website to the way your business operates.";
+  "Need more than a website? Add lead tracking, CRM connections, reporting, and workflow automations that help your business stay organized as it grows.";
 
 export const leadMath = {
   eyebrow: "Do the math",
-  heading: "What is renting leads really costing you?",
-  body: "Move the sliders to match your month. Your numbers stay on this page.",
+  heading: "What are shared leads costing your business?",
+  body: "Enter your numbers to estimate what you're spending on purchased leads each year. Compare that with building a direct channel through your own website.",
+
   sliders: {
     leads: {
       label: "Leads you buy each month",
@@ -277,57 +279,61 @@ export const leadMath = {
       initial: 4,
     },
   },
-  resultLabel: "You spend each year renting leads",
+
+  resultLabel: "Your estimated annual lead spend",
+
   footnote:
-    "Every dollar of that builds their platform, not your business. A site you own keeps working after you stop paying for clicks.",
+    "This estimates what you spend buying leads. It doesn't measure booked jobs or guarantee savings. Your own website gives customers a direct way to find and contact your business.",
+
   cta: "Show me what I'd own instead",
 };
 
 export const processSection = {
   eyebrow: "How it works",
-  heading: "Four steps. You approve everything.",
-  body: "One call to start. You sign off before anything goes live.",
-  steps: [
-    {
-      icon: "call",
-      title: "Free 15 minute call",
-      body: "I look at your site, your Google listing and how leads reach you today. You leave with a plan whether you hire me or not.",
-      checklist: [
-        "Your site checked on a phone",
-        "Your Google Business Profile reviewed",
-        "A fixed price before any work starts",
-      ],
-    },
-    {
-      icon: "browser",
-      title: "I build it",
-      body: "Depending on your package, I write the words and build a site made for phones first. You approve it before launch.",
-      checklist: [
-        "Copy written for how your customers search",
-        "Click-to-call and booking on every page",
-        "Built in [X] weeks from kickoff",
-      ],
-    },
-    {
-      icon: "pin",
-      title: "Launch and get found",
-      body: "I launch, connect your Google listing and make sure every call, form and booking lands where you'll see it.",
-      checklist: [
-        "Google Business Profile tuned up",
-        "After-hours requests ping your phone",
-        "Careers form ready for your next hire",
-      ],
-    },
-    {
-      icon: "chart",
-      title: "Grow every month",
-      body: "Add the care plan and I keep the site fast, safe and current, then send a report you can read in two minutes.",
-      checklist: [
-        "Hosting, updates and backups handled",
-        "A plain-English report every month",
-        "A short list of what I'm doing next",
-      ],
-    },
+  heading: "From first call to launch. No guesswork.",
+body: "A straightforward process, clear pricing, and your approval at every stage.",
+
+steps: [
+  {
+    icon: "call",
+    title: "Start with a conversation",
+    body: "We'll review your website, Google Business Profile, and how customers currently reach your business. You'll get an honest assessment and a clear project quote.",
+    checklist: [
+      "Website and mobile experience reviewed",
+      "Google Business Profile reviewed",
+      "Scope and fixed price agreed upfront",
+    ],
+  },
+  {
+    icon: "browser",
+    title: "Built around your business",
+    body: "Your website is structured around your services, service areas, and the actions customers need to take. You'll review the design and content before anything goes live.",
+    checklist: [
+      "Phone-first website design",
+      "Service pages and customer-focused copy",
+      "Clear calls to action and contact options",
+    ],
+  },
+  {
+    icon: "pin",
+    title: "Launch and connect",
+    body: "I launch your website, connect the relevant business tools, and test every important customer action so inquiries reach the right place.",
+    checklist: [
+      "Forms and booking tested",
+      "Notifications connected",
+      "Google Business Profile configured where included",
+    ],
+  },
+  {
+    icon: "chart",
+    title: "Keep improving",
+    body: "With the optional care plan, your website stays maintained and monitored. You'll receive straightforward reporting that shows what's happening and what deserves attention next.",
+    checklist: [
+      "Hosting, updates, and backups",
+      "Website and lead performance reporting",
+      "Clear recommendations for improvement",
+    ],
+  },
   ] satisfies ProcessStep[],
 };
 

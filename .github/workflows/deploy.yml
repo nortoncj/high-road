@@ -2,50 +2,83 @@ name: Deploy
 on:
   push:
     branches: [main]
+  workflow_dispatch:
 
 concurrency:
   group: deploy
 
 jobs:
-  # Type check here, where there's memory to spare. The server can't fit tsc alongside the build.
-  typecheck:
+  # Build here, not on the server: the Lightsail box doesn't have the memory for `next build`.
+  # The server only receives .next/standalone (server.js + the node_modules it needs) and runs it.
+  deploy:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      SSH_HOST: ${{ secrets.SSH_HOST }}
+      SSH_KEY: ${{ secrets.SSH_KEY }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 24
           cache: npm
+
+      - name: Set up SSH
+        run: |
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "$SSH_KEY" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -H "$SSH_HOST" >> ~/.ssh/known_hosts 2>/dev/null
+          cat > ~/.ssh/config <<EOF
+          Host lightsail
+            HostName $SSH_HOST
+            User ubuntu
+            IdentityFile ~/.ssh/deploy_key
+          EOF
+
+      # The server's .env.production stays the one source of truth. NEXT_PUBLIC_ values are baked
+      # in at build time and pages prerender with the real Sanity/Supabase data, so the build needs it.
+      - name: Fetch env from server
+        run: scp -q lightsail:app/.env.production .env.production
+
       - run: npm ci
-      - run: npx next typegen
-      - run: npx tsc --noEmit
 
-  deploy:
-    needs: typecheck
-    runs-on: ubuntu-latest
-    steps:
-      - uses: appleboy/ssh-action@v1
+      - uses: actions/cache@v4
         with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ubuntu
-          key: ${{ secrets.SSH_KEY }}
-          # The embedded Sanity Studio roughly doubled build work; the server needs more than the 10m default.
-          command_timeout: 30m
-          script: |
-            export NVM_DIR="$HOME/.nvm"
-            . "$NVM_DIR/nvm.sh"
-            # Already type checked by the typecheck job above.
-            export SKIP_TYPECHECK=1
-            ~/deploy.sh || exit 1
+          path: .next/cache
+          key: next-${{ hashFiles('package-lock.json') }}-${{ github.sha }}
+          restore-keys: next-${{ hashFiles('package-lock.json') }}-
 
-            # Warm the image cache so the first visitor (and PageSpeed) doesn't wait on resizes
-            sleep 10
-            SITE="https://www.webtechninjas.com"
-            curl -s -A "Mozilla/5.0 (Linux; Android 11)" "$SITE/" \
-              | grep -o '/_next/image?url=[^" ,]*' \
-              | sed 's/&amp;/\&/g' \
-              | sort -u \
-              | while read -r u; do
-                  curl -s -o /dev/null -H "Accept: image/avif,image/webp,*/*" "$SITE$u"
-                done
-            echo "Image cache warmed"
+      # Type checks too; the runner has the memory the server didn't.
+      - run: npm run build
+
+      - name: Assemble release
+        run: |
+          cp -r public .next/standalone/
+          cp -r .next/static .next/standalone/.next/
+          # The server adds its own copy at activation; never ship secrets in the upload.
+          rm -f .next/standalone/.env*
+
+      - name: Upload and activate
+        run: |
+          ssh lightsail "mkdir -p releases/${GITHUB_SHA}"
+          rsync -az --delete .next/standalone/ "lightsail:releases/${GITHUB_SHA}/"
+          scp -q deploy/deploy.sh lightsail:deploy.sh
+          ssh lightsail "chmod +x deploy.sh && ./deploy.sh releases/${GITHUB_SHA}"
+
+      # Warm the image cache so the first visitor (and PageSpeed) doesn't wait on resizes
+      - name: Warm image cache
+        run: |
+          SITE="https://www.webtechninjas.com"
+          curl -s -A "Mozilla/5.0 (Linux; Android 11)" "$SITE/" \
+            | grep -o '/_next/image?url=[^" ,]*' \
+            | sed 's/&amp;/\&/g' \
+            | sort -u \
+            | while read -r u; do
+                curl -s -o /dev/null -H "Accept: image/avif,image/webp,*/*" "$SITE$u"
+              done
+          echo "Image cache warmed"
+
+      - name: Clean up secrets
+        if: always()
+        run: rm -f .env.production ~/.ssh/deploy_key

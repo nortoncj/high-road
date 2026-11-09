@@ -17,8 +17,9 @@ function deploymentId() {
 
 const nextConfig: NextConfig = {
   deploymentId: deploymentId(),
-  /* config options here */
-  // next.config.js
+  // The Deploy workflow builds on GitHub's runner and ships .next/standalone (a self-contained
+  // server.js plus only the node_modules it needs). The Lightsail box only runs it; it can't build.
+  output: "standalone",
   experimental: {
     agentFeedback: true,
     inlineCss:true,
@@ -27,12 +28,6 @@ const nextConfig: NextConfig = {
   },
   cacheComponents: true,
   partialPrefetching: true,
-  // The server runs out of memory type checking (tsc needs ~550MB). The Deploy workflow type checks
-  // on GitHub's runner first and only then builds on the server with SKIP_TYPECHECK=1.
-  // Local `next build` still type checks.
-  typescript: {
-    ignoreBuildErrors: process.env.SKIP_TYPECHECK === "1",
-  },
   turbopack: {
     rules: {
       "*.css": {
