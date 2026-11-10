@@ -14,6 +14,7 @@ import {
   heroCleaning,
   heroHomecare,
   heroHVAC,
+  heroElectricians,
   heroPlumbing,
   heroRoofing,
   pillarHiring,
@@ -161,8 +162,7 @@ export const hero = {
       label: "Electricians",
       line: "When the power goes out, they call whoever can get there fast. Make it you.",
       image: {
-        // src: heroElectricians.src,
-        src: "",
+        src: heroElectricians.src,
         alt: "Electrician working on a home electrical panel",
       },
     },
