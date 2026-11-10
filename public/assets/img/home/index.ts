@@ -5,7 +5,7 @@ export { default as heroCleaning } from "./hero-cleaning.webp";
 export { default as heroHomecare } from "./hero-homecare.webp";
 export { default as heroHVAC } from "./hero-hvac.webp";
 export { default as heroPlumbing } from "./hero-plumbing.webp";
-export { default as heroElectricians } from "./hero-electricians.webp";
+export { default as heroElectrician } from "./hero-electrician.webp";
 export { default as heroRoofing } from "./hero-roofing.webp";
 export { default as pillarHiring } from "./pillar-hiring.webp";
 export { default as pillarLeads } from "./pillar-leads.webp";
