@@ -1,5 +1,6 @@
 import { useEffect, useRef, type ClipboardEvent, type KeyboardEvent } from "react";
-import { AddIcon, TrashIcon } from "@sanity/icons";
+import { AddIcon } from "@sanity/icons/Add";
+import { TrashIcon } from "@sanity/icons/Trash";
 import { Button, Card, Flex, Stack, Text, TextInput } from "@sanity/ui";
 import { insert, set, setIfMissing, unset, useFormValue, type ObjectInputProps } from "sanity";
 
