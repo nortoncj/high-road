@@ -33,7 +33,7 @@
       "id": "caregiver-porch",
       "model": "flux-2-pro",
       "mode": "t2i",
-      "prompt": "A female caregiver in her 30s in light blue scrubs sits beside an elderly man on a wooden porch swing; both laugh at something off camera, each holding a coffee mug. Screened porch with potted plants, late afternoon side light. Subjects in the left half of the frame. Candid documentary photo, shot on Sony A7IV, 35mm lens, f/2.8, natural light, warm cinematic color grade, slight film grain, shallow depth of field, real skin texture, unposed, suburban American neighborhood. No text, no logos, no lettering, no watermarks.",
+      "prompt": "A female caregiver in her 30s in light blue scrubs sits beside an elderly man on a wooden porch swing; both chuckle at something off camera, each holding a coffee mug. Screened porch with potted plants, late afternoon side light. Subjects in the left half of the frame. Candid documentary photo, shot on Sony A7IV, 35mm lens, f/2.8, natural light, warm cinematic color grade, slight film grain, shallow depth of field, real skin texture, unposed, suburban American neighborhood. No text, no logos, no lettering, no watermarks.",
       "count": 2,
       "params": {
         "image_size": {
