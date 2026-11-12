@@ -1,4 +1,5 @@
 import { defineArrayMember, defineField, defineType } from "sanity";
+import { TagsInput } from "../components/TagsInput";
 
 export default defineType({
   name: "caseStudy",
@@ -161,6 +162,7 @@ export default defineType({
       title: "Tags",
       type: "array",
       of: [defineArrayMember({ type: "reference", to: [{ type: "tag" }] })],
+      components: { input: TagsInput },
     }),
 
     // ─── The Meat: Case Study Sections ───────────────────────────

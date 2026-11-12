@@ -1,0 +1,598 @@
+/* /services/[slug] below the hero. Reveal flips data-reveal from "pending" to "done" as cards scroll in. */
+
+.section {
+  padding-block: var(--section-y);
+  scroll-margin-top: var(--nav-height);
+}
+
+.sunken {
+  background: var(--surface-sunken);
+  border-block: 1px solid var(--border);
+}
+
+/* Two plain sections in a row share one gap instead of stacking two */
+.section:not(.sunken) + .section:not(.sunken) {
+  padding-top: 0;
+}
+
+/* For when the section above comes from another module and already left the gap */
+.flush {
+  padding-top: 0;
+}
+
+.sectionHead {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+  max-width: 760px;
+  margin-bottom: 32px;
+}
+
+.heading {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(32px, 5.5vw, 46px);
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+
+.lead {
+  margin: 0;
+  max-width: 640px;
+  font-size: 18px;
+  line-height: 1.6;
+  color: var(--ink-muted);
+}
+
+.more {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--brand-text);
+  text-underline-offset: 3px;
+}
+
+.more svg {
+  transition: transform var(--dur-base) var(--ease-settle);
+}
+
+.more:hover svg {
+  transform: translateX(3px);
+}
+
+/* Shared card entrance */
+.pain,
+.tool {
+  transition:
+    opacity 600ms ease calc(var(--i, 0) * 90ms),
+    transform 600ms var(--ease-settle) calc(var(--i, 0) * 90ms);
+}
+
+.pain[data-reveal="pending"],
+.tool[data-reveal="pending"] {
+  opacity: 0;
+  transform: translateY(16px);
+}
+
+/* ---------- Sound familiar? ---------- */
+
+.pains {
+  display: grid;
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pain {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  height: 100%;
+  padding: 22px 24px 26px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface-card);
+  box-shadow: var(--shadow-rest);
+}
+
+.quoteMark {
+  font-size: 28px;
+  color: var(--accent);
+}
+
+.painText {
+  margin: 0;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 20px;
+  line-height: 1.45;
+  color: var(--ink);
+}
+
+/* ---------- What you get: picture and copy, zigzagging down the page ---------- */
+
+.features {
+  display: flex;
+  flex-direction: column;
+  gap: 56px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.feature {
+  display: grid;
+  gap: 28px;
+  align-items: center;
+}
+
+.visual {
+  min-width: 0;
+  transition:
+    opacity 600ms ease,
+    transform 800ms var(--ease-settle);
+}
+
+.visual[data-reveal="pending"] {
+  opacity: 0;
+  transform: translateY(24px);
+}
+
+.photo {
+  position: relative;
+  display: block;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  background: var(--surface-photo);
+  box-shadow: var(--shadow-lift);
+}
+
+.img {
+  object-fit: cover;
+}
+
+.featureCopy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+  min-width: 0;
+}
+
+.featureNum {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 15px;
+  letter-spacing: 0.08em;
+  color: var(--brand-text);
+}
+
+.featureTitle {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(26px, 4.5vw, 34px);
+  line-height: 1.15;
+  text-wrap: balance;
+}
+
+.featureBody {
+  margin: 0;
+  max-width: 560px;
+  font-size: 17px;
+  line-height: 1.65;
+  color: var(--ink-muted);
+}
+
+.points {
+  display: grid;
+  gap: 10px;
+  margin: 4px 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: 16px;
+  line-height: 1.45;
+  color: var(--ink);
+}
+
+.points li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.tick {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--brand);
+  color: var(--on-brand);
+  font-size: 13px;
+}
+
+/* The honest line under the features */
+.note {
+  max-width: 760px;
+  margin: 56px 0 0;
+  padding-left: 18px;
+  border-left: 3px solid var(--accent);
+  font-family: var(--font-display);
+  font-size: 21px;
+  line-height: 1.45;
+  color: var(--ink);
+}
+
+/* ---------- What it's built with ---------- */
+
+.tools {
+  display: grid;
+  gap: 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tool {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  height: 100%;
+  padding: 20px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface-card);
+}
+
+.toolIcon {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-md);
+  /* Muted teal on warm white, same as the icon tiles on the old services page */
+  background: color-mix(in srgb, var(--brand) 10%, var(--surface-card));
+  color: var(--brand-text);
+  font-size: 26px;
+}
+
+.toolName {
+  margin: 0 0 4px;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 1.25;
+}
+
+.toolWhat {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--ink-muted);
+}
+
+/* ---------- What it costs ---------- */
+
+.pricing {
+  display: grid;
+  gap: 32px;
+  align-items: start;
+}
+
+.pricingCopy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+  max-width: 520px;
+}
+
+.priceCard {
+  padding: 4px 22px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface-card);
+  box-shadow: var(--shadow-float);
+}
+
+.prices {
+  margin: 0;
+}
+
+.priceRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px 20px;
+  padding: 18px 0;
+}
+
+.priceRow + .priceRow {
+  border-top: 1px solid var(--border);
+}
+
+/* Wraps the price under the label when there isn't room beside it */
+.priceRow dt {
+  display: flex;
+  flex: 1 1 220px;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.priceLabel {
+  font-weight: 700;
+  font-size: 17px;
+  color: var(--ink);
+}
+
+.priceNote {
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--ink-muted);
+}
+
+.price {
+  margin: 0 0 0 auto;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 26px;
+  line-height: 1.15;
+  font-variant-numeric: tabular-nums;
+  color: var(--brand-text);
+  text-align: right;
+}
+
+.priceFine {
+  margin: 0;
+  padding: 14px 0 18px;
+  border-top: 1px solid var(--border);
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--ink-muted);
+}
+
+/* ---------- Questions ---------- */
+
+.faqs {
+  max-width: 860px;
+  border-top: 1px solid var(--border);
+}
+
+.faq {
+  border-bottom: 1px solid var(--border);
+}
+
+.faq summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 64px;
+  padding-block: 16px;
+  cursor: pointer;
+  list-style: none;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 1.4;
+}
+
+.faq summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq summary:hover {
+  color: var(--brand-text);
+}
+
+.chevron {
+  flex: none;
+  font-size: 22px;
+  color: var(--brand-text);
+  transition: transform var(--dur-base) var(--ease-settle);
+}
+
+.faq[open] .chevron {
+  transform: rotate(180deg);
+}
+
+.faq p {
+  max-width: 68ch;
+  margin: 0;
+  padding-bottom: 20px;
+  font-size: 17px;
+  line-height: 1.65;
+  color: var(--ink-muted);
+}
+
+/* ---------- Other services ---------- */
+
+.others {
+  padding-block: 0 var(--section-y);
+}
+
+.othersHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px 32px;
+  margin-bottom: 24px;
+}
+
+.othersTitles {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.othersHeading {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(26px, 4.5vw, 34px);
+  line-height: 1.15;
+}
+
+.otherGrid {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.otherGrid > li {
+  min-width: 0;
+}
+
+/* A row on phones: thumbnail on the left. A card on desktop: thumbnail on top. */
+.otherCard {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  height: 100%;
+  padding: 10px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface-card);
+  color: var(--ink);
+  text-decoration: none;
+  transition:
+    transform var(--dur-base) var(--ease-settle),
+    box-shadow var(--dur-base) var(--ease-settle),
+    border-color var(--dur-quick) ease;
+}
+
+.otherCard:hover {
+  transform: translateY(-3px);
+  border-color: var(--brand-tint-border);
+  box-shadow: var(--shadow-lift);
+}
+
+.otherMedia {
+  position: relative;
+  flex: none;
+  width: 96px;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  background: var(--surface-photo);
+}
+
+.otherBody {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.otherLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--brand-text);
+}
+
+.otherTitle {
+  font-family: var(--font-display);
+  font-size: 18px;
+  line-height: 1.25;
+  text-wrap: balance;
+}
+
+/* ---------- Wider screens ---------- */
+
+@media (min-width: 720px) {
+  .tools,
+  .otherGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+}
+
+@media (min-width: 900px) {
+  .pains {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+  }
+}
+
+@media (min-width: 1080px) {
+  .features {
+    gap: 88px;
+  }
+
+  .feature {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 64px;
+  }
+
+  /* Alternate sides so the page zigzags instead of stacking the same block three times */
+  .feature:nth-child(even) .visual {
+    order: 2;
+  }
+
+  .note {
+    margin-top: 72px;
+    font-size: 23px;
+  }
+
+  .tools {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .pricing {
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+    gap: 64px;
+  }
+
+  .priceCard {
+    padding: 4px 32px;
+  }
+
+  .otherGrid {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+
+  .otherCard {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: 0;
+  }
+
+  .otherMedia {
+    width: 100%;
+    border-radius: 0;
+  }
+
+  .otherBody {
+    padding: 14px 16px 18px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .otherCard:hover {
+    transform: none;
+  }
+
+  .chevron {
+    transition: none;
+  }
+}

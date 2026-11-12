@@ -1,171 +1,141 @@
 // Copy for /services/website-design. Edit words here, not in components.
-// Anything in [brackets] is a placeholder you still need to fill.
+// The overview card on /services reads label, title, summary, highlights, price and image.
 
-import { about, recentWork, site } from "@/content/home";
+import { serviceWebsites } from "@img/services";
+import { price } from "./prices";
+import type { Service } from "./types";
 
-export type Problem = {
-  number: string;
-  title: string;
-  /** Composite "sound familiar?" line. Not a testimonial: never put a name on it. */
-  voice: string;
-  fixes: string[];
-  icon: "bolt" | "sparkles" | "chart";
-  /** Which mockup sits beside it: a phone getting the lead, an old vs new site, a lead-source report. */
-  visual: "alerts" | "makeover" | "report";
-};
-
-export type Basic = {
-  icon: "phone" | "call" | "form" | "approve" | "search" | "chart" | "person";
-  title: string;
-  body: string;
-};
-
-export const meta = {
-  title: "Website design for local businesses",
-  description:
-    "Fast, phone-first websites for local businesses that live on calls, bookings and form leads. Instant lead alerts, call tracking and a plain English monthly report. Fixed prices.",
-  path: "/services/website-design",
-};
-
-export const hero = {
-  eyebrow: "Website design for local businesses",
-  headline: "A website that makes your phone ring, not just one that looks nice.",
-  body: "If you make money when someone calls, books or fills out a form, I build the site that gets them to do it, then texts you the second they do.",
-  primaryCta: { label: "Book a free call", href: site.bookHref },
-  secondaryCta: { label: "See my work", href: "/#work" },
-  reassurances: ["Free 15 minute call", "Fixed prices, no surprise invoices", "No tech talk"],
-  // The animated lead timeline on the right. Example only, labelled as such.
-  timelineLabel: "What happens when a lead comes in",
-  timeline: [
-    { time: "2:14:06 PM", title: "New form lead", meta: "Water heater install · Kitchen leak" },
-    { time: "2:14:08 PM", title: "Text sent to you", meta: "Dana R. · (555) 555-0142 · Tap to call" },
-    { time: "2:14:08 PM", title: "Auto reply sent to Dana", meta: "Thanks! I'll call you within the hour." },
-    { time: "2:14:08 PM", title: "Source logged", meta: "Google Maps · Mobile" },
+export const websiteDesign: Service = {
+  slug: "website-design",
+  label: "Websites",
+  icon: "website",
+  title: "A website that makes your phone ring",
+  summary: "A fast, good-looking site built for phones and written to get calls, not just compliments.",
+  highlights: ["Built for phones first", "Click-to-call on every page", "You approve every word"],
+  price: `From ${price.launch}`,
+  image: {
+    src: serviceWebsites,
+    alt: "Landscaping business owner smiling at a tablet on the tailgate of his truck",
+  },
+  meta: {
+    title: "Website design for local businesses",
+    description: `Fast, phone-first websites for local businesses that live on calls, bookings and form leads. Click-to-call on every page, copy written for you, fixed prices from ${price.launch}.`,
+  },
+  hero: {
+    eyebrow: "Website design for local businesses",
+    intro:
+      "If you make money when someone calls, books or fills out a form, I build the site that gets them to do it, then texts you the second they do.",
+    badge: `Fixed price from ${price.launch}`,
+    reassurances: ["Free 15 minute call", "Fixed prices, no surprise invoices", "No tech talk"],
+  },
+  pains: {
+    heading: "Most small business websites lose customers in the same three places.",
+    items: [
+      "My website looks like I built it in 2014, because I did. People assume I'm the cheap option.",
+      "Someone filled out my contact form on Friday. I saw it Tuesday. They'd already hired the other guy.",
+      "I'm paying for a website and I have no idea if anyone has ever called because of it.",
+    ],
+  },
+  features: {
+    heading: "What I build in",
+    items: [
+      {
+        title: "Look like the business you actually are",
+        body: "Most people look you up before they call. A clean, modern site tells them you're the real deal, not the cheap option.",
+        points: [
+          "A modern design built for phones first",
+          // TODO: only promise a load time if you check every launch in PageSpeed Insights.
+          "Fast pages that don't make people wait",
+          "Plain English copy: what you do, where, and why you",
+          "Real reviews and real photos up front",
+        ],
+        visual: { mockup: "makeover" },
+      },
+      {
+        title: "One tap to call, from any page",
+        body: "Most of your customers find you on a phone. Every page keeps your number under their thumb, and forms are short enough to finish standing in a driveway.",
+        points: [
+          "Click-to-call and click-to-text on every page",
+          "Short forms people actually finish",
+          "Big buttons and easy-to-read text",
+          "A page for each service and town you cover",
+        ],
+        visual: { mockup: "phone" },
+      },
+      {
+        title: "Every lead lands on your phone",
+        body: "With Grow and Run, a new lead texts you the second it comes in, and the customer gets an instant reply so they stop calling around.",
+        points: [
+          "A text and email the moment a lead comes in",
+          "An auto reply that says when you'll call",
+          "Every lead saved, even if an email fails",
+        ],
+        visual: { mockup: "alerts" },
+        link: { label: "More on lead alerts", href: "/services/lead-alerts-and-booking" },
+      },
+    ],
+  },
+  work: true,
+  tools: {
+    items: [
+      {
+        icon: "wordpress",
+        name: "WordPress",
+        what: "For sites you want to edit yourself. It's the most popular website builder there is, so you're never stuck waiting on me to fix a typo.",
+      },
+      {
+        icon: "code",
+        name: "Custom code",
+        what: "For everything else. Pages are built ahead of time, so they open fast, even on a weak phone signal.",
+      },
+      {
+        icon: "speed",
+        name: "Google PageSpeed",
+        what: "Google's own test for speed and ease of use. I run it on every site before launch and aim for 90 or better.",
+      },
+      {
+        icon: "lock",
+        name: "SSL padlock",
+        what: "The lock next to your web address. Without it, browsers warn customers that your site isn't safe.",
+      },
+      {
+        icon: "google",
+        name: "Google Search Console",
+        what: "Tells Google your site exists, and shows which searches are bringing people to it.",
+      },
+      {
+        icon: "chart",
+        name: "Call and form tracking",
+        what: "Every call and form is counted from day one, so you're never guessing whether the site works.",
+      },
+    ],
+  },
+  pricing: {
+    heading: "Three fixed prices",
+    body: "You know the price before I start, you see every page before it goes live, and you own the site when we're done.",
+    lines: [
+      { label: "Launch", price: price.launch, note: "Up to 5 pages, click-to-call and a contact form that lands in your inbox" },
+      { label: "Grow", price: price.grow, note: "Up to 10 pages, copy written for you, booking with text alerts, Google set up" },
+      { label: "Run", price: price.run, note: "Up to 15 pages, a lead dashboard and 2 custom automations" },
+    ],
+    note: "Or pay monthly over 12 months, with no money down.",
+  },
+  faqs: [
+    {
+      q: "How long does a website take?",
+      a: "About 2 weeks for Launch, 3 to 4 weeks for Grow and 5 to 6 weeks for Run, as long as photos and approvals come back on time.",
+    },
+    {
+      q: "Who writes the words?",
+      a: "On Grow and Run, I write your copy. On Launch, you send the words and I tighten them. Either way, you approve every word before it goes live.",
+    },
+    {
+      q: "Can I update the site myself?",
+      a: "Yes, if you want to. I'll build it so you can change text, photos and prices yourself. If you'd rather not, a care plan covers small edits and you just text me.",
+    },
+    {
+      q: "Do I own my website?",
+      a: "Yes. Your domain, your content and your photos are yours. If you ever leave, I'll hand over your files or move the site wherever you want.",
+    },
   ],
-  timelineNote: "Example lead",
-};
-
-export const problems = {
-  eyebrow: "Where leads leak",
-  heading: "Most small business websites lose customers in the same three places.",
-  voiceLabel: "Sound familiar?",
-  fixesLabel: "What I build in",
-  items: [
-    {
-      number: "01",
-      icon: "bolt",
-      visual: "alerts",
-      title: "Stop losing people who were ready to buy",
-      voice:
-        "Someone filled out my contact form on Friday. I saw it Tuesday. They'd already hired the other guy.",
-      fixes: [
-        "Click-to-call on every page",
-        "Short forms people actually finish",
-        "A text to you the second a lead comes in",
-        "An auto reply so they stop shopping around",
-      ],
-    },
-    {
-      number: "02",
-      icon: "sparkles",
-      visual: "makeover",
-      title: "Look like the business you actually are",
-      voice: "My website looks like I built it in 2014, because I did. People assume I'm the cheap option.",
-      fixes: [
-        "A modern design built for phones first",
-        // TODO: only say "under 2 seconds" if you check every launch in PageSpeed Insights.
-        "Fast pages that don't make people wait",
-        "Plain English copy: what you do, for who, why you",
-        "Real reviews and real photos up front",
-      ],
-    },
-    {
-      number: "03",
-      icon: "chart",
-      visual: "report",
-      title: "Get found, then know what's working",
-      voice: "I'm paying for a website and I have no idea if anyone has ever called because of it.",
-      fixes: [
-        "Service and area pages built for local search",
-        "Google Business Profile set up and connected",
-        "Every call and form tracked to its source",
-        "A plain English monthly report",
-      ],
-    },
-  ] satisfies Problem[],
-  // Mockup copy. The report is example data and says so on screen.
-  mock: {
-    notifications: [
-      { app: "Text", title: "New lead: Dana R.", body: "Water heater install · Tap to call" },
-      { app: "Website", title: "Auto reply sent", body: "\u201cThanks! I'll call you within the hour.\u201d" },
-    ],
-    before: { label: "Typical DIY site", title: "Welcome to our website!", body: "Click here for more info about our services" },
-    after: { label: "A site I built", project: recentWork.projects[1] },
-    report: {
-      title: "Where your leads came from",
-      note: "Example data",
-      total: "42 leads this month",
-      sources: [
-        { name: "Google search", value: 18 },
-        { name: "Google Maps", value: 14 },
-        { name: "Referrals", value: 7 },
-        { name: "Facebook", value: 3 },
-      ],
-    },
-  },
-  honesty:
-    "Nobody honest can promise you a #1 ranking. I promise a site built the way Google and your customers expect, and the numbers to show what's working.",
-};
-
-export const basics = {
-  eyebrow: "Included",
-  heading: "Every site comes with the basics done right.",
-  items: [
-    { icon: "phone", title: "Built for phones first", body: "Big buttons, readable text, fast pages." },
-    { icon: "call", title: "Click to call everywhere", body: "One tap to reach you from every page." },
-    { icon: "form", title: "Forms that get finished", body: "Short, clear, and they land in your inbox instantly." },
-    { icon: "approve", title: "You approve everything", body: "Nothing goes live until you sign off." },
-    { icon: "search", title: "Search basics", body: "Clean titles and structure, so Google knows what you do and where." },
-    { icon: "chart", title: "Tracking from day one", body: "You're never guessing where visitors came from." },
-    { icon: "person", title: "One person, start to finish", body: "I build every site myself and answer my own phone." },
-  ] satisfies Basic[],
-};
-
-// Real client sites, pulled from the homepage so the two never drift apart.
-export const work = {
-  eyebrow: "Recent work",
-  heading: "Real sites for real local businesses.",
-  link: { label: "See all my work", href: "/work" },
-  projects: [recentWork.featured, ...recentWork.projects],
-};
-
-export const fit = {
-  eyebrow: "Who it's for",
-  heading: "Built for local businesses that live on leads.",
-  good: {
-    title: "A good fit if",
-    items: [
-      "Your business makes money when someone calls, books or fills out a form",
-      "Your website is out of date, slow, hard to update, or missing",
-      "You've had leads slip through the cracks and want that to stop",
-      "You'd rather work with one person who answers the phone than a big agency",
-    ],
-  },
-  bad: {
-    title: "Not a fit if",
-    items: [
-      "You need a large online store with hundreds of products",
-      "You want guaranteed rankings. Nobody honest can promise that.",
-    ],
-  },
-};
-
-export const cta = {
-  eyebrow: "Free 15 minute call",
-  heading: "Find out what your website is costing you.",
-  body: "I'll look at your site the way a customer would and show you where leads slip away. Hire me or not, you'll know what to fix first.",
-  person: { name: about.name, line: "Answers his own phone", photo: about.photo },
-  primaryCta: { label: "Book a free call", href: site.bookHref },
-  secondaryCta: { label: "See my work", href: "/#work" },
-  fine: `Website packages start at $${site.priceFloor}.`,
 };

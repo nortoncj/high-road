@@ -1,5 +1,6 @@
 import { MetadataRoute } from "next";
 import { cacheLife, cacheTag } from "next/cache";
+import { serviceHref, services } from "@/content/services";
 import { SANITY_TAG, getFeed } from "@/lib/sanity/data";
 import { SITE_URL } from "@/lib/seo";
 
@@ -17,6 +18,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "/pricing",
     "/privacy",
     "/services",
+    ...services.map((s) => serviceHref(s.slug)),
     "/work",
     "/industries",
     "/blog",

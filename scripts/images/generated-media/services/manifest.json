@@ -1,0 +1,140 @@
+[
+  {
+    "ts": "2026-11-12T01:20:05",
+    "job": "websites",
+    "model": "flux-2-pro",
+    "endpoint": "fal-ai/flux-2-pro",
+    "est_cost": 0.045,
+    "request_id": "01a1ce69-8b47-7cc3-8114-7cb74d27182c",
+    "files": [
+      "generated-media/services/websites-1.jpg"
+    ],
+    "prompt": "A landscaping company owner in his late 40s with a sun-weathered face and a short gray beard, wearing a plain olive work shirt with no logos, sits on the open tailgate of a plain white pickup truck with no logos or text and smiles as he scrolls through a tablet held in both hands; the tablet screen faces him, away from the camera. A utility trailer with a riding mower and a freshly striped green lawn behind him, golden hour backlight. Subject centered in the frame with space around him. Candid documentary photo, shot on Sony A7IV, 35mm lens, f/2.8, natural light, warm cinematic color grade, slight film grain, shallow depth of field, real skin texture, unposed, suburban American neighborhood. No text, no logos, no lettering, no watermarks.",
+    "client": "WebTech Ninjas",
+    "params": {
+      "image_size": {
+        "width": 1600,
+        "height": 1200
+      }
+    },
+    "refs": [],
+    "remote_urls": [
+      "https://v3b.fal.media/files/b/0ab222a8/ap5t64I6vCrfCVueihyt6_cm2gAKaX.jpg"
+    ]
+  },
+  {
+    "ts": "2026-11-12T01:20:28",
+    "job": "local-seo",
+    "model": "flux-2-pro",
+    "endpoint": "fal-ai/flux-2-pro",
+    "est_cost": 0.045,
+    "request_id": "01a1ce69-d757-7712-a4aa-c4f04c717037",
+    "files": [
+      "generated-media/services/local-seo-1.jpg"
+    ],
+    "prompt": "Over-the-shoulder view of a homeowner in her early 40s standing in her kitchen, holding a smartphone in both hands; the screen shows a simple street map with a few red location pins and is softly out of focus. Behind her the cabinet under the sink is open, with a towel and a small bucket on the floor beneath a dripping pipe. Morning window light. Subject and phone centered in the frame. Candid documentary photo, shot on Sony A7IV, 35mm lens, f/2.8, natural light, warm cinematic color grade, slight film grain, shallow depth of field, real skin texture, unposed, suburban American neighborhood. No text, no logos, no lettering, no watermarks.",
+    "client": "WebTech Ninjas",
+    "params": {
+      "image_size": {
+        "width": 1600,
+        "height": 1200
+      }
+    },
+    "refs": [],
+    "remote_urls": [
+      "https://v3b.fal.media/files/b/0ab222aa/MUd-H4GYyyw8VDIFkk50D_7crTkM3C.jpg"
+    ]
+  },
+  {
+    "ts": "2026-11-12T01:20:58",
+    "job": "lead-alerts",
+    "model": "flux-2-pro",
+    "endpoint": "fal-ai/flux-2-pro",
+    "est_cost": 0.045,
+    "request_id": "01a1ce6a-33fa-7c22-9134-888da71241f0",
+    "files": [
+      "generated-media/services/lead-alerts-1.jpg"
+    ],
+    "prompt": "A plumber in his early 30s in a plain navy work shirt with no logos kneels in front of an open kitchen sink cabinet with an adjustable wrench in one hand, turning to look at his smartphone lying face up on a folded towel beside his open toolbox; the phone screen glows with a new notification and is out of focus. Bright suburban kitchen, morning light. Subject centered in the frame. Candid documentary photo, shot on Sony A7IV, 35mm lens, f/2.8, natural light, warm cinematic color grade, slight film grain, shallow depth of field, real skin texture, unposed, suburban American neighborhood. No text, no logos, no lettering, no watermarks.",
+    "client": "WebTech Ninjas",
+    "params": {
+      "image_size": {
+        "width": 1600,
+        "height": 1200
+      }
+    },
+    "refs": [],
+    "remote_urls": [
+      "https://v3b.fal.media/files/b/0ab222ad/dAFD0OTPdi1uYRXjVeDEo_oMPrjqRY.jpg"
+    ]
+  },
+  {
+    "ts": "2026-11-12T01:21:16",
+    "job": "hiring",
+    "model": "flux-2-pro",
+    "endpoint": "fal-ai/flux-2-pro",
+    "est_cost": 0.045,
+    "request_id": "01a1ce6a-a8f1-70a3-a682-35d3aec9042f",
+    "files": [
+      "generated-media/services/hiring-1.jpg"
+    ],
+    "prompt": "A heating and air conditioning business owner in his late 50s with gray stubble shakes hands with a new technician in his early 20s on his first day; both smile, both wear plain navy work polos with no logos. They stand in front of the open roll-up door of a small service shop with metal shelving, ladders and equipment boxes inside, late afternoon light. Subjects centered in the frame, shot waist-up. Candid documentary photo, shot on Sony A7IV, 35mm lens, f/2.8, natural light, warm cinematic color grade, slight film grain, shallow depth of field, real skin texture, unposed, suburban American neighborhood. No text, no logos, no lettering, no watermarks.",
+    "client": "WebTech Ninjas",
+    "params": {
+      "image_size": {
+        "width": 1600,
+        "height": 1200
+      }
+    },
+    "refs": [],
+    "remote_urls": [
+      "https://v3b.fal.media/files/b/0ab222af/PD6WS-j194U-XwT-LNmdp_4vN9Yr10.jpg"
+    ]
+  },
+  {
+    "ts": "2026-11-12T01:21:42",
+    "job": "tracking",
+    "model": "flux-2-pro",
+    "endpoint": "fal-ai/flux-2-pro",
+    "est_cost": 0.045,
+    "request_id": "01a1ce6a-edee-77e2-96a6-51495b0a79aa",
+    "files": [
+      "generated-media/services/tracking-1.jpg"
+    ],
+    "prompt": "The office manager of a small plumbing company, a woman in her late 40s with reading glasses pushed up in her hair, sits at a cluttered wooden desk in a small shop office and smiles at a laptop showing a simple colorful bar chart; the screen is softly out of focus. Behind her, a whiteboard covered in a grid of colored magnets. A coffee mug and a clipboard on the desk, soft window light. Subject centered in the frame. Candid documentary photo, shot on Sony A7IV, 35mm lens, f/2.8, natural light, warm cinematic color grade, slight film grain, shallow depth of field, real skin texture, unposed, suburban American neighborhood. No text, no logos, no lettering, no watermarks.",
+    "client": "WebTech Ninjas",
+    "params": {
+      "image_size": {
+        "width": 1600,
+        "height": 1200
+      }
+    },
+    "refs": [],
+    "remote_urls": [
+      "https://v3b.fal.media/files/b/0ab222b1/KNB_6AcBm-W6QQxbKkybZ_NW9J8WmA.jpg"
+    ]
+  },
+  {
+    "ts": "2026-11-12T01:21:59",
+    "job": "website-care",
+    "model": "flux-2-pro",
+    "endpoint": "fal-ai/flux-2-pro",
+    "est_cost": 0.045,
+    "request_id": "01a1ce6b-5434-7811-be98-e8b858520731",
+    "files": [
+      "generated-media/services/website-care-1.jpg"
+    ],
+    "prompt": "A house cleaning business owner in her mid 30s sits at her kitchen table in the evening and closes her laptop with a relaxed smile, a mug of tea beside it, warm pendant light overhead, a cozy lived-in kitchen softly lit behind her. Subject centered in the frame. Candid documentary photo, shot on Sony A7IV, 35mm lens, f/2.8, natural light, warm cinematic color grade, slight film grain, shallow depth of field, real skin texture, unposed, suburban American neighborhood. No text, no logos, no lettering, no watermarks.",
+    "client": "WebTech Ninjas",
+    "params": {
+      "image_size": {
+        "width": 1600,
+        "height": 1200
+      }
+    },
+    "refs": [],
+    "remote_urls": [
+      "https://v3b.fal.media/files/b/0ab222b3/f1Mwj7AJ7dSS4_hxKbObx_Op2ZbwsM.jpg"
+    ]
+  }
+]

@@ -1,12 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
 import { TbArrowRight, TbLock } from "react-icons/tb";
-import { work } from "@/content/services/website-design";
+import { servicePage } from "@/content/services";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import { Reveal } from "@/components/ui/Reveal";
 import styles from "./WorkStrip.module.css";
 
 const host = (href: string) => new URL(href).hostname.replace(/^www\./, "");
+const { work } = servicePage;
 
 /** Proof before pitch: real client sites in browser frames, right under the hero. */
 export function WorkStrip() {

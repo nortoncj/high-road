@@ -1,5 +1,5 @@
 import { TbCheck, TbX } from "react-icons/tb";
-import { fit } from "@/content/services/website-design";
+import { fit } from "@/content/services";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import styles from "./FitCheck.module.css";
 

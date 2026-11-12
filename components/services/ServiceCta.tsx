@@ -1,10 +1,11 @@
 import Image from "next/image";
-import { cta } from "@/content/services/website-design";
+import { servicesCta as cta } from "@/content/services";
 import { Button } from "@/components/ui/Button";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import styles from "./ServiceCta.module.css";
 
-export function ServiceCta() {
+/** Closing band on /services and every service page. A service page can swap the heading and text. */
+export function ServiceCta({ heading = cta.heading, body = cta.body }: { heading?: string; body?: string }) {
   return (
     <section className={styles.section} aria-labelledby="service-cta-heading">
       <div className="container">
@@ -12,9 +13,9 @@ export function ServiceCta() {
           <div className={styles.copy}>
             <Eyebrow>{cta.eyebrow}</Eyebrow>
             <h2 id="service-cta-heading" className={styles.heading}>
-              {cta.heading}
+              {heading}
             </h2>
-            <p className={styles.body}>{cta.body}</p>
+            <p className={styles.body}>{body}</p>
           </div>
           <div className={styles.side}>
             <div className={styles.person}>

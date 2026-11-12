@@ -1,6 +1,6 @@
-export { ServiceHero } from "./ServiceHero";
+export { ServiceGrid, ServiceGuide, ServicesHero } from "./ServicesOverview";
+export { ServiceHero, serviceCrumbs } from "./ServiceHero";
+export { OtherServices, ServiceFaqs, ServiceFeatures, ServicePains, ServicePricing, ServiceTools } from "./ServiceSections";
 export { WorkStrip } from "./WorkStrip";
-export { Problems } from "./Problems";
-export { Basics } from "./Basics";
 export { FitCheck } from "./FitCheck";
 export { ServiceCta } from "./ServiceCta";

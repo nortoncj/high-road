@@ -1,4 +1,5 @@
 import { defineField, defineType, defineArrayMember } from "sanity";
+import { TagsInput } from "../components/TagsInput";
 
 export default defineType({
   name: "post",
@@ -312,6 +313,7 @@ export default defineType({
       title: "Tags",
       type: "array",
       of: [{ type: "reference", to: [{ type: "tag" }] }],
+      components: { input: TagsInput },
       validation: (rule) => rule.max(8),
     }),
 

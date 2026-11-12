@@ -1,289 +1,274 @@
-// Every word and image on /services lives here.
-// Images are Pexels stock placeholders. Per your request, each alt text is the
-// PHOTO SUGGESTION for that spot. When you swap in a real photo, rewrite the alt
-// to describe what the real photo actually shows (screen readers and Google read it).
+// Copy for /services and the frame around every /services/<slug> page. Edit words here, not in components.
+// Each service's own copy lives in content/services/<slug>.ts. Add one there, then list it below.
 
-import { pexels } from "./pexels";
+import { about, recentWork, site } from "@/content/home";
+import { mockupPhoneSite } from "@img/services";
+import { hiringPages } from "./services/hiring-pages";
+import { leadAlerts } from "./services/lead-alerts-and-booking";
+import { localSeo } from "./services/local-seo";
+import { price } from "./services/prices";
+import { trackingAndAutomation } from "./services/tracking-and-automation";
+import type { Service } from "./services/types";
+import { websiteCare } from "./services/website-care";
+import { websiteDesign } from "./services/website-design";
 
-export type Img = { src: string; alt: string };
+/** In the order they show on /services: the site, getting found, getting the call, then everything around it. */
+export const services: Service[] = [websiteDesign, localSeo, leadAlerts, hiringPages, trackingAndAutomation, websiteCare];
 
-export type PainPoint = {
-  id: string;
-  number: string;
-  title: string;
-  quote: string;
-  body: string;
-  bullets: string[];
-  image: Img;
-  note?: string;
-};
-
-export type IncludedItem = {
-  icon: "pencil" | "phone" | "eye" | "call" | "careers" | "chart" | "search" | "people";
-  title: string;
-  body: string;
-};
-
-export type Package = {
-  name: string;
-  price: string;
-  bestFor: string;
-  includes: string[];
-  featured?: boolean;
-};
-
-export type FaqItem = { question: string; answer: string };
+export const serviceHref = (slug: string) => `/services/${slug}`;
+export const getService = (slug: string) => services.find((s) => s.slug === slug);
 
 export const servicesMeta = {
-  title: "Home Care Website Design in Sarasota and Orlando, FL",
+  title: "Services for local service businesses",
   description:
-    "Websites for home care agencies that hire caregivers, catch after-hours calls, and bring families straight to you. Bilingual, built for phones. Free call.",
+    "Websites, Google Maps, lead alerts and booking, hiring pages, lead tracking and website care for local businesses that run on calls. Plain English, prices up front.",
   path: "/services",
 };
 
 export const servicesHero = {
-  eyebrow: "Home care website design for Sarasota and Orlando",
-  headline: "Websites that hire caregivers, catch every call, and bring families to you",
-  body:
-    "Most home care sites are a brochure. Yours should work the night shift. I build bilingual, phone-first websites that bring in caregiver applications, catch the 9pm call from a worried daughter, and send families straight to you instead of through a lead site.",
-  primaryCta: "Book a free call",
-  secondaryCta: "Try the demo application",
-  reassurances: ["Free 15 minute call", "No pressure, no tech talk", "Se habla español"],
-  image: {
-    // Pexels 18459198
-    src: pexels(18459198, 1600),
-    alt: "Photo suggestion: a real caregiver from a client agency helping an older client at home, warm window light, both faces visible, shot with a signed release",
-  },
-  jumpHeading: "What I fix",
+  eyebrow: "Services",
+  headline: "Everything between a Google search and a booked job",
+  body: "I build your website, get you on the map, text you every new lead, and show you what's working. Pick the one thing you need, or let me set up the whole system. Plain English, prices up front.",
+  primaryCta: { label: "Book a free call", href: site.bookHref },
+  secondaryCta: { label: "Not sure where to start?", href: "#where-to-start" },
+  menuLabel: "What I do",
 };
 
-export const painIntro = {
-  eyebrow: "What I fix",
-  heading: "Three problems cost home care agencies the most. Your website can fix all three.",
+export const serviceGrid = {
+  eyebrow: "What I do",
+  heading: "Six services, explained in plain English",
+  more: "See how it works",
 };
 
-export const painPoints: PainPoint[] = [
-  {
-    id: "hiring",
-    number: "01",
-    title: "Hire caregivers without living on Indeed",
-    quote:
-      "I could take on more clients tomorrow if I had the staff. I post on Indeed, get a pile of applications, a few show up, and one actually starts.",
-    body:
-      "Good caregivers are looking for work on their phones, on their break, often in Spanish. If your site makes them hunt for a careers page or fill out a desktop form, they apply somewhere else. I turn your website into the place caregivers apply first.",
-    bullets: [
-      "A careers page that leads with pay, hours, and benefits, so the right people apply",
-      "A page for every role you hire (HHA, CNA, companion caregiver), built to show up when caregivers search near you",
-      "A three step application they finish on a phone in about three minutes, in English or Spanish",
-      "An instant text and email to you when someone applies, plus an auto reply so they know you got it",
-      "Every application logged in one sheet, so nobody gets lost in your inbox",
-      "Job posts you can update yourself, or text me and I'll do it",
-    ],
-    image: {
-      // Pexels 6097957
-      src: pexels(6097957, 1200),
-      alt: "Photo suggestion: a caregiver in scrubs on a break, coffee in one hand, applying on her phone with the other",
-    },
-  },
-  {
-    id: "after-hours",
-    number: "02",
-    title: "Never miss the 9pm call",
-    quote:
-      "Dad gets discharged tomorrow. His daughter is panicking at night, she calls three agencies, and whoever picks up first wins. If I'm asleep, I lose.",
-    body:
-      "Families don't search for home care on your schedule. They search at night, after a hospital visit, often from another state. Your site should catch them when you can't.",
-    bullets: [
-      "A click to call button on every page, so families on a phone reach you in one tap",
-      "An after hours callback form that asks only what you need: name, phone, best time, and city",
-      "An instant text and email to you or your on-call person when a request comes in",
-      "A clear what happens next message, so the family knows when you'll call and stops dialing your competitors",
-    ],
-    image: {
-      // Pexels 18227764
-      src: pexels(18227764, 1200),
-      alt: "Photo suggestion: an adult daughter at her kitchen table at night, phone to her ear, lit by a single lamp",
-    },
-  },
-  {
-    id: "families",
-    number: "03",
-    title: "Bring families straight to you, not through a lead site",
-    quote:
-      "I'm paying a fortune per referral, and the same family gets sent to four other agencies. By the time I call back, someone already got them. I'm renting my customers.",
-    body:
-      "Shared lead services can fill gaps, but every lead is one you pay for and compete for. A website that shows up when families search for home care in your city brings you inquiries you own: no per-lead fee, no race against four other agencies.",
-    bullets: [
-      "Pages for the services families search for: companion care, personal care, respite care, 24 hour care",
-      "Pages for the towns you serve, so you show up close to home",
-      "A trust page with your license, how you screen caregivers, real team photos, and real reviews",
-      "A payment options page (private pay, long term care insurance, VA benefits) that cuts calls that go nowhere",
-      "Call and form tracking, so you can see how many families came from your site each month",
-    ],
-    image: {
-      // Pexels 3831156
-      src: pexels(3831156, 1200),
-      alt: "Photo suggestion: an adult daughter and her older father on the couch at home, looking at care options together on a laptop",
-    },
-    note:
-      "Search results take time and nobody can promise you a ranking. What I can promise is a site built the way search engines and families both expect, with the numbers to show you what's working.",
-  },
-];
-
-export const included = {
-  eyebrow: "Included in every site",
-  heading: "Every site comes with the basics done right",
+export const serviceGuide = {
+  eyebrow: "Where to start",
+  heading: "Start with what's bugging you",
+  body: "Pick the line that sounds like you. Each one goes to the service that fixes it.",
   items: [
-    { icon: "pencil", title: "Written for you", body: "I write the words. You review and approve before anything goes live." },
-    { icon: "phone", title: "Built for phones first", body: "Big buttons, readable text, fast pages. That's where families and caregivers find you." },
-    { icon: "eye", title: "Easy to read at any age", body: "Large type, strong contrast, and plain language for the dad and the daughter helping him." },
-    { icon: "call", title: "Click to call everywhere", body: "One tap to reach you from every page, day or night." },
-    { icon: "careers", title: "Careers page and application", body: "Even the starter package hires. Caregivers apply from their phone." },
-    { icon: "chart", title: "Call and form tracking", body: "A plain English look at how many calls, inquiries, and applications came in." },
-    { icon: "search", title: "Search basics", body: "Clean titles, descriptions, and structure, so Google knows what you do and where." },
-    { icon: "people", title: "Real people, not stock", body: "Your team's real faces wherever you can share them. Families trust people they can see." },
-  ] satisfies IncludedItem[],
-};
-
-export const packages = {
-  eyebrow: "Packages",
-  heading: "Three ways to start. Every price stated up front.",
-  items: [
-    {
-      name: "Front Porch",
-      price: "$1,300",
-      bestFor: "New or small agencies that need to look legit and start collecting applications",
-      includes: ["Up to 5 pages, written for you", "Careers page with a mobile application", "Click to call on every page", "Call and form tracking"],
-    },
-    {
-      name: "Hiring Ready",
-      price: "$1,800",
-      bestFor: "Established agencies that are short on caregivers",
-      featured: true,
-      includes: [
-        "Everything in Front Porch, up to 8 pages",
-        "A page for every role you hire",
-        "Application alerts and auto replies",
-        "Every application logged in one sheet",
-        "Payment options and trust pages",
-        "A site you can edit yourself",
-      ],
-    },
-    {
-      name: "Fully Staffed",
-      price: "$2,500",
-      bestFor: "Growing agencies covering several towns",
-      includes: [
-        "Everything in Hiring Ready, up to 12 pages",
-        "A page for each town you serve",
-        "Blog setup with 2 articles",
-        "Google Business Profile cleanup",
-        "Logo refresh and a walkthrough call",
-      ],
-    },
-  ] satisfies Package[],
-  carePlan: {
-    title: "Care Plan",
-    price: "$129 a month",
-    body: "Hosting, backups, security updates, up to 2 hours of changes, job post updates whenever you're hiring, and a plain English monthly report of calls, inquiries, and applications.",
-  },
-  spanish: {
-    title: "Spanish version",
-    price: "$500 add-on",
-    body: "A full Spanish site and caregiver application, written for the reader, not run through a translation tool.",
-  },
-  cta: "See full pricing",
-  ctaHref: "/pricing",
+    { quote: "I don't have a website, or I'm embarrassed by mine.", service: websiteDesign },
+    { quote: "People can't find me on Google Maps.", service: localSeo },
+    { quote: "I miss calls while I'm on a job.", service: leadAlerts },
+    { quote: "I can't find good help.", service: hiringPages },
+    { quote: "I can't tell which marketing actually works.", service: trackingAndAutomation },
+    { quote: "My site works, but nobody's looking after it.", service: websiteCare },
+  ],
 };
 
 export const fit = {
-  eyebrow: "Who this is for",
-  heading: "Built for independent home care agencies",
-  good: [
-    "You own an independent home care or senior care agency in Sarasota, Venice, North Port, Lakewood Ranch, or Orlando",
-    "You could take on more clients if you had more caregivers",
-    "You pay for shared leads and want families who come to you first",
-    "Your website is out of date, hard to update, or missing",
-    "You serve Spanish speaking families or hire Spanish speaking caregivers",
-  ],
-  notFit: [
-    "You run a franchise location. Your corporate office controls your website.",
-    "You want guaranteed rankings. Nobody honest can promise that.",
-  ],
+  eyebrow: "Who it's for",
+  heading: "Built for local businesses that live on leads.",
+  good: {
+    title: "A good fit if",
+    items: [
+      "Your business makes money when someone calls, books or fills out a form",
+      "Your website is out of date, slow, hard to update, or missing",
+      "You've had leads slip through the cracks and want that to stop",
+      "You'd rather work with one person who answers the phone than a big agency",
+    ],
+  },
+  bad: {
+    title: "Not a fit if",
+    items: [
+      "You need a large online store with hundreds of products",
+      "You want guaranteed rankings. Nobody honest can promise that.",
+    ],
+  },
 };
 
-export const faq = {
-  eyebrow: "FAQ",
-  heading: "Questions home care owners ask",
+export const servicesFaq = {
+  eyebrow: "Questions",
+  heading: "What owners ask before they pick",
   items: [
     {
-      question: "How much does a website for a home care agency cost?",
-      answer:
-        "My home care websites cost $1,300 to $2,500 to build, depending on how many pages and hiring tools you need. Hosting, updates, and a monthly report are $129 a month on the Care Plan. Every price is listed on the pricing page, with no surprise fees.",
+      q: "Do I have to buy everything?",
+      a: "No. Most owners start with a website and add the rest when they're ready. Several of these come bundled in the Grow and Run packages, so you don't pay for them twice.",
     },
     {
-      question: "How long does it take to build a home care website?",
-      answer:
-        "Most sites take 2 to 6 weeks. A starter site takes about 2 weeks, and the largest package takes 5 to 6. The biggest factor is how quickly you can send photos and approve the copy.",
+      // TODO: confirm which services you take on for sites you didn't build.
+      q: "I already have a website. Can you still help?",
+      a: "Often, yes. I can set up your Google Business Profile, speed up a slow site, or look after hosting and updates. If your current site is fighting you, I'll tell you honestly whether a fix or a rebuild costs less.",
     },
     {
-      question: "Can a website really help me recruit caregivers?",
-      answer:
-        "Yes, if it's built for it. Caregivers search for jobs on their phones, so a careers page with pay up front, a page for each role, and a short mobile application gets you more finished applications than a generic contact form. You also get an alert the moment someone applies, so you can call while they're still interested.",
+      q: "Do I need to understand any of the tech?",
+      a: "No. You'll get texts, a simple lead list and a plain English report. I handle the rest, and I'm happy to explain anything you're curious about without the jargon.",
     },
     {
-      question: "How do I get home care clients without paying for referral services?",
-      answer:
-        "You need a website that shows up when families search for care in your town and gives them a reason to call you. That means pages for each service and town you cover, a trust page with your license and screening process, and real reviews. Those inquiries are yours alone, with no per-lead fee and no other agencies getting the same family.",
+      q: "Who will I actually be working with?",
+      a: "Me, Chris. I build every site myself and answer my own phone. No account managers, no handoffs.",
     },
     {
-      question: "What happens when a family contacts us after hours?",
-      answer:
-        "They can tap to call or fill out a short callback form. You or your on-call person get a text and an email right away, and the family sees a message telling them when you'll call back. Nobody falls through the cracks overnight.",
+      q: "How much does it cost?",
+      a: `Website packages start at ${price.launch}, care plans start at ${price.hosted}, and every price is on the pricing page. You'll know the exact price before I start.`,
     },
-    {
-      question: "Is the website HIPAA compliant?",
-      answer:
-        "The forms are built to keep you out of HIPAA territory. They ask only for contact details and the best time to call, never health conditions or medical history, and they include a note asking families not to share medical details. Your intake process still needs its own HIPAA review. I'm a web developer, not a lawyer.",
-    },
-    {
-      question: "Do you build websites in Spanish?",
-      answer:
-        "Yes. I'm bilingual, and I can build a full Spanish version of your site and your caregiver application. It's written for Spanish speaking families and caregivers, not run through a translation tool.",
-    },
-    {
-      question: "Can I update job posts and photos myself?",
-      answer:
-        "Yes. The Hiring Ready and Fully Staffed sites let you edit pages and job posts yourself. If you'd rather not, Care Plan clients can text me changes and I'll handle them.",
-    },
-    {
-      question: "Will my site show up on Google?",
-      answer:
-        "Every site is built with the search basics done right: clear titles, service pages, town pages, and fast loading on phones. Nobody can honestly guarantee a ranking, and anyone who does is selling something. What I can show you is a monthly report of the calls, inquiries, and applications your site brings in.",
-    },
-    {
-      question: "Do I own my website?",
-      // TODO: finish once you decide what happens to hosting and files if a client cancels the Care Plan.
-      answer: "Yes. Your domain, your content, and your photos belong to you. [Finish this answer with your hosting and file policy.]",
-    },
-    {
-      question: "What areas do you serve?",
-      answer:
-        "I work with home care agencies in Sarasota, Venice, North Port, Lakewood Ranch, and Orlando. Calls and reviews happen over the phone or video, so you don't need to be local to work with me.",
-    },
-    {
-      question: "Do you work with franchise home care agencies?",
-      answer:
-        "No. Franchise locations usually have their website controlled by the corporate office. I work with independent agencies who can make their own decisions.",
-    },
-  ] satisfies FaqItem[],
+  ],
 };
 
+/** The closing band on /services and every service page. A service can swap the heading and text. */
 export const servicesCta = {
-  heading: "Find out what your site is costing you",
-  body:
-    "On a free 15 minute call, I'll look at your current site the way a caregiver and a worried daughter would. You'll leave knowing where applicants drop off, where after-hours calls get lost, and what to fix first, whether you hire me or not.",
-  primaryCta: "Book a free call",
-  secondaryCta: "Try the demo application",
-  fine: "Packages start at $1,300. Se habla español.",
+  eyebrow: "Free 15 minute call",
+  heading: "Not sure which one you need?",
+  body: "Tell me how customers find you today. I'll look at your site and your Google listing the way a customer would and tell you what I'd fix first, whether you hire me or not.",
+  person: { name: about.name, line: "Answers his own phone", photo: about.photo },
+  primaryCta: { label: "Book a free call", href: site.bookHref },
+  secondaryCta: { label: "See pricing", href: "/pricing" },
+  fine: `Website packages start at ${price.launch}.`,
+};
+
+/** Labels for the frame around every /services/<slug> page. Anything a service fills in wins. */
+export const servicePage = {
+  crumbs: { home: { label: "Services", href: "/services" } },
+  primaryCta: { label: "Book a free call", href: site.bookHref },
+  pricingLink: { label: "See what it costs", href: "#pricing" },
+  pains: { eyebrow: "Sound familiar?" },
+  features: { eyebrow: "What you get" },
+  tools: {
+    eyebrow: "Under the hood",
+    heading: "What it's built with",
+    body: "You don't need to know any of this to work with me. But if you're curious, here's what's doing the work, in plain English.",
+  },
+  pricing: { eyebrow: "What it costs", link: { label: "See full pricing", href: "/pricing" } },
+  faqs: { eyebrow: "Questions", heading: "What owners ask me first" },
+  others: { eyebrow: "More ways I help", heading: "Other services", all: "All services" },
+  cta: {
+    heading: "Find out what your website is costing you.",
+    body: "I'll look at your site and your Google listing the way a customer would and show you where leads slip away. Hire me or not, you'll know what to fix first.",
+  },
+  // Real client sites, pulled from the homepage so the two never drift apart.
+  work: {
+    eyebrow: "Recent work",
+    heading: "Real sites for real local businesses.",
+    link: { label: "See all my work", href: "/work" },
+    projects: [recentWork.featured, ...recentWork.projects],
+  },
+};
+
+/** Words inside the pictures drawn in code. Each picture says "Example" on screen. */
+export const mockups = {
+  example: "Example",
+  business: "Ruiz Heating & Air",
+  timeline: {
+    label: "What happens when a lead comes in",
+    events: [
+      { time: "2:14:06 PM", title: "New form lead", meta: "Water heater install · Kitchen leak" },
+      { time: "2:14:08 PM", title: "Text sent to you", meta: "Dana R. · (555) 555-0142 · Tap to call" },
+      { time: "2:14:08 PM", title: "Auto reply sent to Dana", meta: "Thanks! I'll call you within the hour." },
+      { time: "2:14:08 PM", title: "Lead saved, source logged", meta: "Google Maps · Mobile" },
+    ],
+  },
+  alerts: {
+    clock: "2:14",
+    date: "Friday, October 17",
+    now: "now",
+    notifications: [
+      { app: "Text", title: "New lead: Dana R.", body: "Water heater install · Tap to call" },
+      { app: "Website", title: "Auto reply sent", body: "“Thanks! I'll call you within the hour.”" },
+    ],
+    call: "Tap to call",
+  },
+  makeover: {
+    before: {
+      label: "Typical DIY site",
+      nav: ["HOME", "ABOUT US", "SERVICES", "CONTACT"],
+      title: "Welcome to our website!",
+      body: "Click here for more info about our services",
+    },
+    after: { label: "A site I built", project: recentWork.projects[1] },
+  },
+  phone: { image: mockupPhoneSite, call: "Tap to call" },
+  report: {
+    title: "Where your leads came from",
+    total: "42 leads this month",
+    sources: [
+      { name: "Google search", value: 18 },
+      { name: "Google Maps", value: 14 },
+      { name: "Referrals", value: 7 },
+      { name: "Facebook", value: 3 },
+    ],
+  },
+  maps: {
+    search: "ac repair near me",
+    rating: "4.9",
+    reviews: "87 reviews",
+    category: "Air conditioning contractor",
+    hours: "Open · Closes 6 PM",
+    actions: ["Call", "Directions", "Website"],
+  },
+  reviews: {
+    message: "Thanks for choosing Ruiz Heating & Air! Mind leaving a quick review? It really helps a small business.",
+    link: "g.page/r/review",
+    reply: "Done! Thanks for coming out so fast.",
+    review: {
+      name: "Dana R.",
+      when: "Just now",
+      text: "Showed up the same day and had the AC running in an hour. Fair price, great guy.",
+    },
+  },
+  booking: {
+    title: "Book a visit",
+    service: "AC tune-up · 1 hour",
+    days: [
+      { day: "Mon", date: "13" },
+      { day: "Tue", date: "14" },
+      { day: "Wed", date: "15" },
+      { day: "Thu", date: "16" },
+      { day: "Fri", date: "17" },
+    ],
+    times: ["8:00 AM", "10:00 AM", "12:30 PM", "3:00 PM"],
+    pickedDay: 1,
+    pickedTime: 1,
+    button: "Book Tue, 10:00 AM",
+    confirm: "Booked. It's on your calendar.",
+  },
+  application: {
+    title: "Join our crew",
+    role: "HVAC technician",
+    meta: "Full time · $24 to $32 an hour",
+    step: "Step 2 of 3",
+    fields: [
+      { label: "Years in the trade", value: "2 to 5 years" },
+      { label: "EPA 608 certified?", value: "Yes" },
+      { label: "When can you start?", value: "Within 2 weeks" },
+    ],
+    button: "Next",
+    alert: { app: "Text", title: "New applicant: Marcus T.", body: "HVAC technician · Can start in 2 weeks" },
+  },
+  // tone picks the status color: "new" teal, "open" brass, "done" green.
+  leads: {
+    title: "This week's leads",
+    rows: [
+      { name: "Dana R.", detail: "Water heater install · Google Maps", status: "New", tone: "new" },
+      { name: "Mike S.", detail: "AC not cooling · Google search", status: "Called", tone: "open" },
+      { name: "Lisa P.", detail: "Duct cleaning quote · Referral", status: "Booked", tone: "open" },
+      { name: "Tom W.", detail: "New thermostat · Facebook", status: "Won", tone: "done" },
+    ],
+  },
+  applicants: {
+    title: "Applicants",
+    rows: [
+      { name: "Marcus T.", detail: "HVAC technician · 2 to 5 years", status: "New", tone: "new" },
+      { name: "Jess L.", detail: "Install helper · Can start now", status: "Called", tone: "open" },
+      { name: "Andre K.", detail: "HVAC technician · EPA certified", status: "Interview", tone: "open" },
+      { name: "Ray M.", detail: "Service tech · 10+ years", status: "Hired", tone: "done" },
+    ],
+  },
+  automation: {
+    label: "Runs on its own",
+    steps: [
+      { title: "Job marked done", body: "In your calendar or job app" },
+      { title: "Review request texted", body: "Two hours later, with your Google link" },
+      { title: "New 5-star review", body: "On your Google listing" },
+    ],
+  },
+  care: {
+    title: "Site health",
+    site: "yourbusiness.com",
+    status: "All good",
+    rows: [
+      { label: "Online", value: "100% this month" },
+      { label: "Backup saved", value: "Today, 3:00 AM" },
+      { label: "Updates", value: "Installed Tuesday" },
+      { label: "Padlock (SSL)", value: "Renews on its own" },
+    ],
+    uptime: "Last 30 days",
+  },
 };

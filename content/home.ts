@@ -227,7 +227,7 @@ export const pillars = {
       },
       link: {
         label: "Learn more",
-        href: "/services",
+        href: "/services/local-seo",
       },
     },
     {
@@ -240,7 +240,7 @@ export const pillars = {
       },
       link: {
         label: "Learn more",
-        href: "/services",
+        href: "/services/lead-alerts-and-booking",
       },
     },
     {
@@ -253,7 +253,7 @@ export const pillars = {
       },
       link: {
         label: "Learn more",
-        href: "/services",
+        href: "/services/hiring-pages",
       },
     },
   ] satisfies Pillar[],
