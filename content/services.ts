@@ -49,8 +49,8 @@ export const serviceGuide = {
     { quote: "People can't find me on Google Maps.", service: localSeo },
     { quote: "I miss calls while I'm on a job.", service: leadAlerts },
     { quote: "I can't find good help.", service: hiringPages },
-    { quote: "I can't tell which marketing actually works.", service: trackingAndAutomation },
-    { quote: "My site works, but nobody's looking after it.", service: websiteCare },
+    { quote: "I can't tell what marketing channels actually work.", service: trackingAndAutomation },
+    { quote: "I have a website and my website works, but it needs updates.", service: websiteCare },
   ],
 };
 
