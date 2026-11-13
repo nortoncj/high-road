@@ -1,9 +1,10 @@
 import Image from "next/image";
 import type { CSSProperties, ReactNode } from "react";
-import { TbAlertTriangle, TbChartBar, TbChevronDown, TbListCheck, TbQuote } from "react-icons/tb";
+import { TbAlertTriangle, TbChartBar, TbChevronDown, TbExternalLink, TbListCheck, TbQuote } from "react-icons/tb";
 import { caseStudyPage as copy } from "@/content/case-study";
 import { PortableBody, Thumb } from "@/components/blog";
 import { Breadcrumbs, type Crumb } from "@/components/ui/Breadcrumbs";
+import { Button } from "@/components/ui/Button";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import { Reveal } from "@/components/ui/Reveal";
 import { toImg } from "@/lib/sanity/image";
@@ -32,6 +33,16 @@ export function caseStudySections(c: CaseStudyDetail) {
   };
 }
 
+/** The live site's link and its bare domain ("johnrclark.com"), or null if it's missing or not a web address. */
+function liveSite(url: string | null) {
+  try {
+    const u = new URL(url?.trim() ?? "");
+    return u.protocol.startsWith("http") ? { href: u.href, host: u.hostname.replace(/^www\./, "") } : null;
+  } catch {
+    return null;
+  }
+}
+
 function SectionHead({ id, eyebrow, heading, children }: { id: string; eyebrow: string; heading: string; children?: ReactNode }) {
   return (
     <header className={styles.sectionHead}>
@@ -49,6 +60,7 @@ function SectionHead({ id, eyebrow, heading, children }: { id: string; eyebrow: 
 export function CaseStudyArticle({ study: c }: { study: CaseStudyDetail }) {
   const has = caseStudySections(c);
   const cover = toImg(c.image, { width: 1200, aspect: 4 / 3 });
+  const site = liveSite(c.liveUrl);
 
   return (
     <>
@@ -83,6 +95,14 @@ export function CaseStudyArticle({ study: c }: { study: CaseStudyDetail }) {
                   </div>
                 ))}
               </dl>
+            ) : null}
+            {site ? (
+              <p className={`settle ${styles.visit}`} style={stagger(5)}>
+                <Button href={site.href} external icon={<TbExternalLink />}>
+                  {copy.visit}
+                </Button>
+                <span className={styles.visitHost}>{site.host}</span>
+              </p>
             ) : null}
           </div>
           {cover ? (

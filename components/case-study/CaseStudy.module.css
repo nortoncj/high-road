@@ -149,6 +149,21 @@
   line-height: 1.35;
 }
 
+.visit {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 14px;
+  margin: 8px 0 0;
+}
+
+.visitHost {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  color: var(--ink-muted);
+  overflow-wrap: anywhere;
+}
+
 .cover {
   position: relative;
   aspect-ratio: 4 / 3;

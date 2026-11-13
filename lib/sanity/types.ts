@@ -175,6 +175,8 @@ export type CaseStudyDetail = CaseStudyCard & {
   updatedAt: string;
   publishedAt: string | null;
   headline: string | null;
+  /** The finished site. Empty until it goes live. */
+  liveUrl: string | null;
   facts: Fact[] | null;
   summary: { problem?: string | null; plan?: string | null; result?: string | null } | null;
   problemHeading: string | null;

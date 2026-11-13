@@ -88,7 +88,7 @@ export const CASE_STUDY_SLUGS_QUERY = `*[_type == "caseStudy" && defined(slug.cu
 
 export const CASE_STUDY_QUERY = `*[_type == "caseStudy" && slug.current == $slug][0]{
   ${CASE_STUDY_CARD},
-  title, publishedAt, headline, facts, summary, problemHeading, beforeAfter,
+  title, publishedAt, headline, liveUrl, facts, summary, problemHeading, beforeAfter,
   steps, results, resultsChart, outcomes, takeaways, underTheHood, techStack,
   problem, solution, systemBuilt, seo,
   "updatedAt": _updatedAt,

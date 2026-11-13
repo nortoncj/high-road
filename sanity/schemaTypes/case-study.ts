@@ -93,6 +93,15 @@ export default defineType({
     }),
     defineField({ name: "location", title: "Location", type: "string", group: "page", description: "e.g. 'Tarpon Springs, FL'" }),
     defineField({
+      name: "liveUrl",
+      title: "Live website link",
+      type: "url",
+      group: "page",
+      description:
+        "Paste the full address of the finished site, e.g. 'https://johnrclark.com'. Adds a 'Visit the site' button at the top of the page. Leave blank if the site isn't live yet.",
+      validation: (Rule) => Rule.uri({ scheme: ["http", "https"] }),
+    }),
+    defineField({
       name: "headline",
       title: "Headline",
       type: "string",

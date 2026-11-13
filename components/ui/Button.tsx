@@ -14,6 +14,8 @@ type ButtonProps = {
   arrow?: boolean;
   /** Stretch to the container width (mobile stacks). */
   block?: boolean;
+  /** Another site: opens in a new tab and says so to screen readers. */
+  external?: boolean;
   className?: string;
 };
 
@@ -26,6 +28,7 @@ export function Button({
   icon,
   arrow = false,
   block = false,
+  external = false,
   className,
 }: ButtonProps) {
   const classes = [
@@ -39,13 +42,16 @@ export function Button({
     .join(" ");
 
   return (
-    <Link href={href} className={classes}>
+    <Link href={href} className={classes} {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}>
       {icon ? (
         <span className={styles.icon} aria-hidden="true">
           {icon}
         </span>
       ) : null}
-      <span>{children}</span>
+      <span>
+        {children}
+        {external ? <span className="visually-hidden"> (opens in a new tab)</span> : null}
+      </span>
       {arrow ? (
         <TbArrowRight className={styles.arrow} aria-hidden="true" />
       ) : null}
